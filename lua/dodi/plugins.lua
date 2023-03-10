@@ -18,6 +18,8 @@ return require("packer").startup(function(use)
 
     use "tpope/vim-surround"
 
+    use "f-person/auto-dark-mode.nvim"
+
     use {
         "terrortylor/nvim-comment",
         config = function()
