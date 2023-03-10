@@ -23,6 +23,13 @@ return require("packer").startup(function(use)
     use "lukas-reineke/indent-blankline.nvim"
 
     use {
+        "folke/zen-mode.nvim",
+        config = function()
+            require("zen-mode").setup()
+        end
+    }
+
+    use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         config = function()
