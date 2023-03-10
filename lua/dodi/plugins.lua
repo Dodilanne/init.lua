@@ -32,6 +32,8 @@ return require("packer").startup(function(use)
         end
     }
 
+    use "akinsho/toggleterm.nvim"
+
     use "github/copilot.vim"
 
     use {
