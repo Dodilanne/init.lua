@@ -52,7 +52,7 @@ lsp.set_preferences({
 lsp.configure("eslint", {
     on_attach = function(client, bufnr)
       local opts = { buffer = bufnr, remap = false }
-      vim.keymap.set("n", "<leader>fe", function()
+      vim.keymap.set("n", "<leader>fm", function()
         vim.cmd("EslintFixAll")
       end, opts)
     end
