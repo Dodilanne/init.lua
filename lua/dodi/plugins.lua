@@ -4,6 +4,8 @@ vim.cmd [[packadd packer.nvim]]
 return require("packer").startup(function(use)
   use "wbthomason/packer.nvim"
 
+  use "christoomey/vim-tmux-navigator"
+
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.1',
     requires = { { 'nvim-lua/plenary.nvim' } }
@@ -13,7 +15,7 @@ return require("packer").startup(function(use)
     'goolord/alpha-nvim',
     requires = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require 'alpha'.setup(require 'alpha.themes.startify'.config)
+      require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
     end
   }
 
