@@ -309,11 +309,11 @@ return {
 
   -- buffer remove
   {
-    "echasnovski/mini.bufremove",
-    -- stylua: ignore
+    "kazhala/close-buffers.nvim",
     keys = {
-      { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
-      { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
+      { "<leader>bcc", function() require('close_buffers').delete({ type = 'this' }) end },
+      { "<leader>bca", function() require('close_buffers').wipe({ type = 'all' }) end },
+      { "<leader>bco", function() require('close_buffers').wipe({ type = 'other' }) end },
     },
   },
 
