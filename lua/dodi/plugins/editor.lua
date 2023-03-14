@@ -38,6 +38,14 @@ return {
       end
     end,
     opts = {
+      event_handlers = {
+        {
+          event = "file_opened",
+          handler = function ()
+            require("neo-tree").close_all()
+          end
+        }
+      },
       filesystem = {
         bind_to_cwd = false,
         follow_current_file = true,
