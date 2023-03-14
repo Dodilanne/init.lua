@@ -3,6 +3,10 @@ return {
     "github/copilot.vim",
   },
 
+  {
+    "tpope/vim-abolish",
+  },
+
   -- snippets
   {
     "L3MON4D3/LuaSnip",
