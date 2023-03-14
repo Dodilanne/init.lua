@@ -13,7 +13,6 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
     opts = {},
   },
 
@@ -24,11 +23,18 @@ return {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
       { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
     },
-    dependencies = { "kyazdani42/nvim-web-devicons" },
     opts = {
       options = {
         diagnostics = "nvim_lsp",
         always_show_bufferline = false,
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "Neo-tree",
+            highlight = "Directory",
+            text_align = "left",
+          },
+        },
       },
     },
   },
@@ -82,4 +88,10 @@ return {
       require("alpha").setup(dashboard.opts)
     end,
   },
+
+   -- icons
+  { "nvim-tree/nvim-web-devicons", lazy = true },
+
+  -- ui components
+  { "MunifTanjim/nui.nvim", lazy = true },
 }

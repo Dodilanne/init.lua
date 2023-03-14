@@ -1,5 +1,7 @@
 local M = {}
 
+M.root_patterns = { ".git", "lua" }
+
 -- this will return a function that calls telescope.
 -- cwd will default to lazyvim.util.get_root
 -- for `files`, git_files or find_files will be chosen depending on .git
