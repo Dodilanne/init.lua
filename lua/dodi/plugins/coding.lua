@@ -1,4 +1,7 @@
 return {
+  {
+    "github/copilot.vim",
+  },
 
   -- snippets
   {
