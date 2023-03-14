@@ -60,15 +60,6 @@ return {
 
       lsp.setup_nvim_cmp({ mapping = cmp_mappings })
 
-      lsp.configure("eslint", {
-        on_attach = function(client, bufnr)
-          local opts = { buffer = bufnr, remap = false }
-          vim.keymap.set("n", "<leader>cf", function()
-            vim.cmd("EslintFixAll")
-          end, opts)
-        end
-      })
-
       lsp.on_attach(function(client, bufnr)
         local opts = {buffer = bufnr, remap = false}
 
@@ -79,6 +70,7 @@ return {
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
         vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
+        vim.keymap.set("n", "<leader>ce", vim.cmd.EslintFixAll, opts)
         vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, opts)
         vim.keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, opts)
         vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
