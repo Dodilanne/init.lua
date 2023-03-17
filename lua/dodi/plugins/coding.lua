@@ -37,6 +37,10 @@ return {
     },
   },
 
+  {
+    "windwp/nvim-ts-autotag",
+  },
+
   -- auto pairs
   {
     "echasnovski/mini.pairs",
