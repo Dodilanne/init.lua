@@ -319,9 +319,9 @@ return {
   {
     "kazhala/close-buffers.nvim",
     keys = {
-      { "<leader>bcc", function() require('close_buffers').delete({ type = 'this' }) end },
-      { "<leader>bca", function() require('close_buffers').wipe({ type = 'all' }) end },
-      { "<leader>bco", function() require('close_buffers').wipe({ type = 'other' }) end },
+      { "<leader>bc", function() require('close_buffers').delete({ type = 'this' }) end },
+      { "<leader>ba", function() require('close_buffers').wipe({ type = 'all' }) end },
+      { "<leader>bo", function() require('close_buffers').wipe({ type = 'other' }) end },
     },
   },
 
