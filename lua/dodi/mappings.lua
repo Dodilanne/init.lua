@@ -21,7 +21,7 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "Q", "<nop>")
 
-vim.keymap.set("n", "<leader>k", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 
 vim.keymap.set("n", "<leader>gu", ":Gitui<CR>", { noremap = true, silent = true })
