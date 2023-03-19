@@ -39,8 +39,8 @@ return {
 		keys = {
 			{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
 			{ "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-			{ "<leader>bb", "<Cmd>BufferLineCyclePrev<CR>", desc = "Go to previous buffer" },
-			{ "<leader>bn", "<Cmd>BufferLineCycleNext<CR>", desc = "Go to next buffer" },
+			{ "H", "<Cmd>BufferLineCyclePrev<CR>", desc = "Go to previous buffer" },
+			{ "L", "<Cmd>BufferLineCycleNext<CR>", desc = "Go to next buffer" },
 		},
 		opts = {
 			options = {
