@@ -1,11 +1,5 @@
 return {
-	{
-		"github/copilot.vim",
-	},
-
-	{
-		"tpope/vim-abolish",
-	},
+	{ "tpope/vim-abolish" },
 
 	-- snippets
 	{
