@@ -23,7 +23,7 @@ vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>q", "<cmd>cclose<CR>")
+vim.keymap.set("n", "<leader>qc", "<cmd>cclose<CR>")
 
 vim.keymap.set("n", "<leader>gg", ":Gitui<CR>", { noremap = true, silent = true })
 
