@@ -25,6 +25,19 @@ vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>qc", "<cmd>cclose<CR>")
 
+vim.keymap.set(
+	"n",
+	"<leader>cc",
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	{ desc = "Replace under cursor" }
+)
+vim.keymap.set(
+	"v",
+	"<leader>cc",
+	[["hy:%s/<C-r>h//gI<Left><Left><Left>]],
+	{ desc = "Replace all occurences of selected text" }
+)
+
 vim.keymap.set("n", "<leader>gg", ":Gitui<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
