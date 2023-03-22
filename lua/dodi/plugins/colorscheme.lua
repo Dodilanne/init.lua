@@ -1,40 +1,28 @@
 return {
-  -- {
-  --   "f-person/auto-dark-mode.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   dependencies = {
-  --     "shaunsingh/nord.nvim",
-  --   },
-  --   config = function()
-  --     local auto_dark_mode = require('auto-dark-mode')
-  --
-  --     auto_dark_mode.setup({
-  --       update_interval = 1000,
-  --       set_dark_mode = function()
-  --         vim.api.nvim_set_option('background', 'dark')
-  --         vim.cmd('colorscheme ayu-dark')
-  --       end,
-  --       set_light_mode = function()
-  --         vim.api.nvim_set_option('background', 'light')
-  --         vim.cmd('colorscheme ayu-light')
-  --       end,
-  --     })
-  --
-  --     auto_dark_mode.init()
-  --   end,
-  -- },
+	{
+		"f-person/auto-dark-mode.nvim",
+		lazy = false,
+		priority = 1000,
+		dependencies = { "Shatur/neovim-ayu" },
+		config = function()
+			local auto_dark_mode = require("auto-dark-mode")
 
-  {
-    "shaunsingh/nord.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd("colorscheme nord")
-    end,
-  },
+			auto_dark_mode.setup({
+				update_interval = 1000,
+				set_dark_mode = function()
+					vim.api.nvim_set_option("background", "dark")
+					vim.cmd("colorscheme ayu-dark")
+				end,
+				set_light_mode = function()
+					vim.api.nvim_set_option("background", "light")
+					vim.cmd("colorscheme ayu-light")
+				end,
+			})
 
-  {"EdenEast/nightfox.nvim"},
+			auto_dark_mode.init()
+		end,
+	},
 
-  { "Shatur/neovim-ayu" },
+	{ "shaunsingh/nord.nvim", lazy = true },
+	{ "EdenEast/nightfox.nvim", lazy = true },
 }
