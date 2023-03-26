@@ -38,6 +38,6 @@ vim.keymap.set(
 	{ desc = "Replace all occurences of selected text" }
 )
 
-vim.keymap.set("n", "<leader>gg", ":Gitui<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gu", ":Gitui<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
