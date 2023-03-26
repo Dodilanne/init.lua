@@ -3,7 +3,7 @@ return {
 		"f-person/auto-dark-mode.nvim",
 		lazy = false,
 		priority = 1000,
-		dependencies = { "Shatur/neovim-ayu" },
+		dependencies = { "EdenEast/nightfox.nvim" },
 		config = function()
 			local auto_dark_mode = require("auto-dark-mode")
 
@@ -11,11 +11,11 @@ return {
 				update_interval = 1000,
 				set_dark_mode = function()
 					vim.api.nvim_set_option("background", "dark")
-					vim.cmd("colorscheme ayu-dark")
+					vim.cmd("colorscheme terafox")
 				end,
 				set_light_mode = function()
 					vim.api.nvim_set_option("background", "light")
-					vim.cmd("colorscheme ayu-light")
+					vim.cmd("colorscheme dayfox")
 				end,
 			})
 
@@ -24,5 +24,5 @@ return {
 	},
 
 	{ "shaunsingh/nord.nvim", lazy = true },
-	{ "EdenEast/nightfox.nvim", lazy = true },
+	{ "Shatur/neovim-ayu", lazy = true },
 }
