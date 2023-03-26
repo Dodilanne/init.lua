@@ -43,6 +43,8 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"saadparwaiz1/cmp_luasnip",
+			"mattn/emmet-vim",
+			"dcampos/cmp-emmet-vim",
 		},
 		opts = function()
 			local cmp = require("cmp")
@@ -73,6 +75,7 @@ return {
 					{ name = "luasnip" },
 					{ name = "buffer" },
 					{ name = "path" },
+					{ name = "emmet_vim" },
 				}),
 				formatting = {
 					format = function(_, item)
