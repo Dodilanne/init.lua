@@ -32,6 +32,11 @@ return {
 			---@type lspconfig.options
 			servers = {
 				jsonls = {},
+				rust_analyzer = {
+					diagnostics = {
+						disabled = { "unresolved-proc-macro" },
+					},
+				},
 				lua_ls = {
 					-- mason = false, -- set to false if you don't want this server to be installed with mason
 					settings = {
