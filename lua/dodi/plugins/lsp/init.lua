@@ -32,6 +32,12 @@ return {
 			---@type lspconfig.options
 			servers = {
 				jsonls = {},
+				eslint = {
+					settings = {
+						-- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+						workingDirectory = { mode = "auto" },
+					},
+				},
 				rust_analyzer = {
 					diagnostics = {
 						disabled = { "unresolved-proc-macro" },
@@ -54,7 +60,17 @@ return {
 			-- you can do any additional lsp server setup here
 			-- return true if you don't want this server to be setup with lspconfig
 			---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-			setup = {},
+			setup = {
+				eslint = function()
+					require("dodi.util").on_attach(function(client)
+						if client.name == "eslint" then
+							client.server_capabilities.documentFormattingProvider = true
+						elseif client.name == "tsserver" then
+							client.server_capabilities.documentFormattingProvider = false
+						end
+					end)
+				end,
+			},
 		},
 		---@param opts PluginLspOpts
 		config = function(_, opts)
@@ -132,9 +148,6 @@ return {
 					nls.builtins.formatting.stylua,
 					nls.builtins.formatting.shfmt,
 					nls.builtins.diagnostics.flake8,
-					nls.builtins.diagnostics.eslint_d,
-					nls.builtins.formatting.eslint_d,
-					nls.builtins.code_actions.eslint_d,
 				},
 			}
 		end,
@@ -150,7 +163,6 @@ return {
 			ensure_installed = {
 				"stylua",
 				"shfmt",
-				"eslint_d",
 				"prettierd",
 			},
 		},
