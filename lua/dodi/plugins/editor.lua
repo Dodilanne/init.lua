@@ -51,6 +51,7 @@ return {
 				follow_current_file = true,
 			},
 			window = {
+				width = 100,
 				mappings = {
 					["<space>"] = "none",
 				},
