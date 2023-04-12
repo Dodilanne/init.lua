@@ -363,7 +363,4 @@ return {
       { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
     },
 	},
-
-	{ "godlygeek/tabular" },
-	{ "preservim/vim-markdown" },
 }
