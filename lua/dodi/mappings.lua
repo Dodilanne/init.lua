@@ -38,6 +38,13 @@ vim.keymap.set(
 	{ desc = "Replace all occurences of selected text" }
 )
 
-vim.keymap.set("n", "<leader>gu", ":Gitui<CR>", { noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>l",
+	[["nyiwoconsole.log("<C-r>n", <C-r>n);<Esc>]],
+	{ desc = "Add console log statement for symbol under the cursor" }
+)
+
+vim.keymap.set("n", "<leader>gu", ":Gitui<CR>", { noremap = true, silent = true, desc = "Open Gitui" })
 
 vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
