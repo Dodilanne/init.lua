@@ -1,9 +1,17 @@
 return {
 	{
+		"rose-pine/neovim",
+		priority = 1000,
+		lazy = false,
+		name = "rose-pine",
+		config = function()
+			require("rose-pine").setup()
+			vim.cmd("colorscheme rose-pine")
+		end,
+	},
+	{
 		"f-person/auto-dark-mode.nvim",
 		lazy = false,
-		priority = 1000,
-		dependencies = { "EdenEast/nightfox.nvim" },
 		config = function()
 			local auto_dark_mode = require("auto-dark-mode")
 
@@ -11,18 +19,15 @@ return {
 				update_interval = 1000,
 				set_dark_mode = function()
 					vim.api.nvim_set_option("background", "dark")
-					vim.cmd("colorscheme terafox")
+					-- vim.cmd(string.format("colorscheme %s", dark_theme))
 				end,
 				set_light_mode = function()
 					vim.api.nvim_set_option("background", "light")
-					vim.cmd("colorscheme dayfox")
+					-- vim.cmd(string.format("colorscheme %s", light_theme))
 				end,
 			})
 
 			auto_dark_mode.init()
 		end,
 	},
-
-	{ "shaunsingh/nord.nvim", lazy = true },
-	{ "Shatur/neovim-ayu", lazy = true },
 }
