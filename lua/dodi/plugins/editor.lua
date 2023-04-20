@@ -109,11 +109,6 @@ return {
 			{ "<leader>sw", Util.telescope("grep_string"), desc = "Word (root dir)" },
 			{ "<leader>sW", Util.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
 			{
-				"<leader>uC",
-				Util.telescope("colorscheme", { enable_preview = true }),
-				desc = "Colorscheme with preview",
-			},
-			{
 				"<leader>ss",
 				Util.telescope("lsp_document_symbols", {
 					symbols = {
@@ -245,7 +240,6 @@ return {
 				["<leader>gh"] = { name = "+hunks" },
 				["<leader>q"] = { name = "+quit/session" },
 				["<leader>s"] = { name = "+search" },
-				["<leader>u"] = { name = "+ui" },
 				["<leader>w"] = { name = "+windows" },
 				["<leader>x"] = { name = "+diagnostics/quickfix" },
 			}
@@ -362,5 +356,11 @@ return {
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
     },
+	},
+
+	{
+		"mbbill/undotree",
+		lazy = true,
+		keys = { { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undo Tree" } },
 	},
 }
