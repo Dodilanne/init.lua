@@ -11,6 +11,14 @@ return {
 		keys = {
 			{ "<leader>zm", ":ZenMode<cr>", desc = "Increment selection" },
 		},
-		opts = {},
+		opts = {
+			window = {
+				width = 120,
+				options = {
+					number = true,
+				},
+			},
+			plugins = {},
+		},
 	},
 }
