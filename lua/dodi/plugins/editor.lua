@@ -234,6 +234,7 @@ return {
 				["["] = { name = "+prev" },
 				["<leader><tab>"] = { name = "+tabs" },
 				["<leader>b"] = { name = "+buffer" },
+				["<leader>d"] = { name = "+debugger" },
 				["<leader>c"] = { name = "+code" },
 				["<leader>f"] = { name = "+file/find" },
 				["<leader>g"] = { name = "+git" },
