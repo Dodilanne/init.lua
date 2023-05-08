@@ -31,7 +31,11 @@ return {
 			-- LSP Server Settings
 			---@type lspconfig.options
 			servers = {
-				jsonls = {},
+				jsonls = {
+					init_options = {
+						provideFormatter = false,
+					},
+				},
 				gdscript = {},
 				eslint = {
 					settings = {
@@ -149,6 +153,9 @@ return {
 					nls.builtins.formatting.stylua,
 					nls.builtins.formatting.shfmt,
 					nls.builtins.formatting.gdformat,
+					nls.builtins.formatting.prettierd.with({
+						filetypes = { "json", "jsonc", "yaml", "markdown" },
+					}),
 					nls.builtins.diagnostics.flake8,
 				},
 			}
