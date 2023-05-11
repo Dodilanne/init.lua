@@ -28,6 +28,7 @@ function M.get()
       { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
       { "<leader>cf", format, desc = "Format Document", has = "documentFormatting" },
       { "<leader>cf", format, desc = "Format Range", mode = "v", has = "documentRangeFormatting" },
+      { "<leader>fe", "<cmd>EslintFixAll<cr>", desc = "Eslint Fix All", mode = "n", has = "documentFormatting" },
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
       {
         "<leader>cA",

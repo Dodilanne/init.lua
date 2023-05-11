@@ -11,9 +11,7 @@ vim.opt.guicursor = ""
 vim.opt.smartindent = true
 vim.opt.smartcase = true
 
-vim.opt.wrap = true
-vim.opt.list = true
-vim.opt.listchars = "tab:> ,trail:-,nbsp:+"
+vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false

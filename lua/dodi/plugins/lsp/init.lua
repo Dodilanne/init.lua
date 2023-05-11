@@ -153,9 +153,7 @@ return {
 					nls.builtins.formatting.stylua,
 					nls.builtins.formatting.shfmt,
 					nls.builtins.formatting.gdformat,
-					nls.builtins.formatting.prettierd.with({
-						filetypes = { "json", "jsonc", "yaml", "markdown" },
-					}),
+					nls.builtins.formatting.prettierd,
 					nls.builtins.diagnostics.flake8,
 				},
 			}
