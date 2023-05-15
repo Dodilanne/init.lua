@@ -362,4 +362,11 @@ return {
 		lazy = true,
 		keys = { { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undo Tree" } },
 	},
+
+	{
+		"smjonas/inc-rename.nvim",
+		lazy = true,
+		keys = { { "<leader>cr", ":IncRename ", desc = "Rename" } },
+		opts = {},
+	},
 }

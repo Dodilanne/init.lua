@@ -46,20 +46,6 @@ function M.get()
         has = "codeAction",
       }
     }
-		if require("dodi.util").has("inc-rename.nvim") then
-			M._keys[#M._keys + 1] = {
-				"<leader>cr",
-				function()
-					require("inc_rename")
-					return ":IncRename " .. vim.fn.expand("<cword>")
-				end,
-				expr = true,
-				desc = "Rename",
-				has = "rename",
-			}
-		else
-			M._keys[#M._keys + 1] = { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
-		end
 	end
 	return M._keys
 end
