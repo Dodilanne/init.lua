@@ -37,6 +37,7 @@ return {
 		end,
 		opts = {
 			event_handlers = {
+				-- close explorer when opening a file
 				{
 					event = "file_opened",
 					handler = function()
@@ -49,6 +50,7 @@ return {
 				follow_current_file = true,
 			},
 			window = {
+				position = "right",
 				width = 100,
 				mappings = {
 					["<space>"] = "none",
