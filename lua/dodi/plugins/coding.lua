@@ -1,6 +1,11 @@
 return {
 	{ "tpope/vim-abolish" },
 
+	{
+		"max397574/better-escape.nvim",
+		opts = { mapping = { "jk" } },
+	},
+
 	-- snippets
 	{
 		"L3MON4D3/LuaSnip",
