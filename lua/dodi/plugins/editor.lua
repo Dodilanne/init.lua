@@ -71,17 +71,15 @@ return {
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
 		version = false, -- telescope did only one release, so use HEAD for now
+		dependencies = {
+			"smilovanovic/telescope-search-dir-picker.nvim",
+		},
 		keys = {
-			{ "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-			{
-				"<leader>/",
-				Util.telescope("live_grep"),
-				desc = "Find in Files (Grep)",
-			},
+			{ "<leader>/", Util.telescope("live_grep"), desc = "Find in Files (Grep)" },
 			{ "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 			-- find
 			{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-			{ "<leader><space>", Util.telescope("files", { cwd = false }), desc = "Find Files (root dir)" },
+			{ "<leader><leader>", Util.telescope("files", { cwd = false }), desc = "Find Files (root dir)" },
 			{ "<leader>ff", Util.telescope("files"), desc = "Find Files (cwd)" },
 			{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
 			-- git
@@ -94,6 +92,7 @@ return {
 			{ "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
 			{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
 			{ "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+			{ "<leader>sd", "<cmd>Telescope search_dir_picker<cr>", desc = "Search Dir Picker" },
 			{ "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
 			{ "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
 			{
@@ -145,6 +144,11 @@ return {
 				desc = "Goto Symbol (Workspace)",
 			},
 		},
+		config = function(opts)
+			local telescope = require("telescope")
+			telescope.setup(opts)
+			telescope.load_extension("search_dir_picker")
+		end,
 		opts = {
 			defaults = {
 				prompt_prefix = " ",
