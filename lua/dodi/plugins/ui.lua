@@ -13,7 +13,11 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			options = {
+				globalstatus = true,
+			},
+		},
 	},
 
 	{

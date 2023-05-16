@@ -56,6 +56,10 @@ return {
 					["<space>"] = "none",
 				},
 			},
+			source_selector = {
+				winbar = true,
+				statusline = false,
+			},
 			default_component_configs = {
 				indent = {
 					with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
