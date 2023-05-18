@@ -4,6 +4,26 @@ return {
 	"christoomey/vim-tmux-navigator",
 
 	{
+		"toppair/peek.nvim",
+		build = "deno task --quiet build:fast",
+		opts = { app = "browser" },
+		keys = {
+			{
+				"<leader>mp",
+				function()
+					local peek = require("peek")
+					if peek.is_open() then
+						peek.close()
+					else
+						peek.open()
+					end
+				end,
+				desc = "Peek Open",
+			},
+		},
+	},
+
+	{
 		-- file explorer
 		"nvim-neo-tree/neo-tree.nvim",
 		cmd = "Neotree",
@@ -77,6 +97,7 @@ return {
 		version = false, -- telescope did only one release, so use HEAD for now
 		dependencies = {
 			"smilovanovic/telescope-search-dir-picker.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		keys = {
 			{ "<leader>/", Util.telescope("live_grep"), desc = "Find in Files (Grep)" },
@@ -95,9 +116,12 @@ return {
 			{ "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 			{ "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
 			{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-			{ "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
-			{ "<leader>sd", "<cmd>Telescope search_dir_picker<cr>", desc = "Search Dir Picker" },
-			{ "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+			{ "<leader>sg", Util.telescope("live_grep"), desc = "Grep (cwd)" },
+			{
+				"<leader>sG",
+				Util.telescope("live_grep", { cwd = false }),
+				desc = "Grep (root dir)",
+			},
 			{ "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
 			{
 				"<leader>sH",
@@ -148,49 +172,39 @@ return {
 				desc = "Goto Symbol (Workspace)",
 			},
 		},
-		config = function(opts)
+		config = function(_, opts)
 			local telescope = require("telescope")
+			local previewers = require("telescope.previewers")
+			local Job = require("plenary.job")
+
+			-- Don't preview binary files
+			local buffer_previewer_maker = function(filepath, bufnr, opts)
+				filepath = vim.fn.expand(filepath)
+				Job:new({
+					command = "file",
+					args = { "--mime-type", "-b", filepath },
+					on_exit = function(j)
+						local mime_type = vim.split(j:result()[1], "/")[1]
+						if mime_type == "text" then
+							previewers.buffer_previewer_maker(filepath, bufnr, opts)
+						else
+							-- maybe we want to write something to the buffer here
+							vim.schedule(function()
+								vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
+							end)
+						end
+					end,
+				}):sync()
+			end
+
+			opts.defaults.buffer_previewer_maker = buffer_previewer_maker
+
 			telescope.setup(opts)
 			telescope.load_extension("search_dir_picker")
+			telescope.load_extension("fzf")
 		end,
 		opts = {
-			defaults = {
-				prompt_prefix = " ",
-				selection_caret = " ",
-				mappings = {
-					i = {
-						["<c-t>"] = function(...)
-							return require("trouble.providers.telescope").open_with_trouble(...)
-						end,
-						["<a-t>"] = function(...)
-							return require("trouble.providers.telescope").open_selected_with_trouble(...)
-						end,
-						["<a-i>"] = function()
-							Util.telescope("find_files", { no_ignore = true })()
-						end,
-						["<a-h>"] = function()
-							Util.telescope("find_files", { hidden = true })()
-						end,
-						["<C-Down>"] = function(...)
-							return require("telescope.actions").cycle_history_next(...)
-						end,
-						["<C-Up>"] = function(...)
-							return require("telescope.actions").cycle_history_prev(...)
-						end,
-						["<C-f>"] = function(...)
-							return require("telescope.actions").preview_scrolling_down(...)
-						end,
-						["<C-b>"] = function(...)
-							return require("telescope.actions").preview_scrolling_up(...)
-						end,
-					},
-					n = {
-						["q"] = function(...)
-							return require("telescope.actions").close(...)
-						end,
-					},
-				},
-			},
+			defaults = {},
 		},
 	},
 
