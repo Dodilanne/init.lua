@@ -76,10 +76,6 @@ return {
 					["<space>"] = "none",
 				},
 			},
-			source_selector = {
-				winbar = true,
-				statusline = false,
-			},
 			default_component_configs = {
 				indent = {
 					with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
@@ -116,12 +112,9 @@ return {
 			{ "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 			{ "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
 			{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+			{ "<leader>sf", "<cmd>Telescope search_dir_picker<cr>", desc = "Grep (choose dir)" },
 			{ "<leader>sg", Util.telescope("live_grep"), desc = "Grep (cwd)" },
-			{
-				"<leader>sG",
-				Util.telescope("live_grep", { cwd = false }),
-				desc = "Grep (root dir)",
-			},
+			{ "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (root dir)" },
 			{ "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
 			{
 				"<leader>sH",
