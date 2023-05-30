@@ -43,4 +43,5 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>gu", ":Gitui<CR>", { noremap = true, silent = true, desc = "Open Gitui" })
 
-vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
+vim.keymap.set({ "n", "v", "i" }, "<C-s>", "<esc>:w<CR>", { desc = "Save file" })
+vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file" })
