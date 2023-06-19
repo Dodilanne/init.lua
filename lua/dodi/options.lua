@@ -30,3 +30,11 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.g.mapleader = " "
+
+vim.opt.matchpairs:append("<:>")
+
+vim.filetype.add({
+	extension = {
+		mdx = "mdx",
+	},
+})
