@@ -4,6 +4,14 @@ return {
 	"christoomey/vim-tmux-navigator",
 
 	{
+		"nvim-pack/nvim-spectre",
+		lazy = true,
+		keys = {
+			{ "<leader>sr", '<cmd>lua require("spectre").open()<CR>', desc = "Open spectre" },
+		},
+	},
+
+	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		opts = { app = "browser" },
