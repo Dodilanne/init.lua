@@ -6,6 +6,7 @@ return {
 		opts = {
 			mapping = {
 				"tn",
+				"hh",
 			},
 		},
 	},
