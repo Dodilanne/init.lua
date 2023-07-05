@@ -38,31 +38,6 @@ return {
 	},
 
 	{
-		"akinsho/bufferline.nvim",
-		event = "VeryLazy",
-		keys = {
-			{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-			{ "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-			{ "H", "<Cmd>BufferLineCyclePrev<CR>", desc = "Go to previous buffer" },
-			{ "L", "<Cmd>BufferLineCycleNext<CR>", desc = "Go to next buffer" },
-		},
-		opts = {
-			options = {
-				diagnostics = "nvim_lsp",
-				always_show_bufferline = true,
-				offsets = {
-					{
-						filetype = "neo-tree",
-						text = "Neo-tree",
-						highlight = "Directory",
-						text_align = "left",
-					},
-				},
-			},
-		},
-	},
-
-	{
 		"goolord/alpha-nvim",
 		event = "VimEnter",
 		keys = {

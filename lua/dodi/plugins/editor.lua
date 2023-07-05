@@ -4,6 +4,89 @@ return {
 	"christoomey/vim-tmux-navigator",
 
 	{
+		"ThePrimeagen/harpoon",
+		event = "BufEnter",
+		opts = {
+			tabline = true,
+			menu = {
+				width = math.ceil(vim.api.nvim_win_get_width(0) * 0.8),
+			},
+		},
+		keys = {
+			{
+				"<leader>hg",
+				function()
+					require("harpoon.mark").add_file()
+				end,
+				desc = "Add to Harpoon",
+			},
+			{
+				"<leader>he",
+				function()
+					require("harpoon.ui").toggle_quick_menu()
+				end,
+				desc = "Open Harpoon quick menu",
+			},
+			{
+				"<leader>ha",
+				function()
+					require("harpoon.ui").nav_file(1)
+				end,
+				desc = "Navigate to file 1",
+			},
+			{
+				"<leader>hr",
+				function()
+					require("harpoon.ui").nav_file(2)
+				end,
+				desc = "Navigate to file 2",
+			},
+			{
+				"<leader>hs",
+				function()
+					require("harpoon.ui").nav_file(3)
+				end,
+				desc = "Navigate to file 3",
+			},
+			{
+				"<leader>ht",
+				function()
+					require("harpoon.ui").nav_file(4)
+				end,
+				desc = "Navigate to file 4",
+			},
+			{
+				"<leader>hz",
+				function()
+					require("harpoon.ui").nav_file(5)
+				end,
+				desc = "Navigate to file 5",
+			},
+			{
+				"<leader>hx",
+				function()
+					require("harpoon.ui").nav_file(6)
+				end,
+				desc = "Navigate to file 6",
+			},
+			{
+				"<leader>hc",
+				function()
+					require("harpoon.ui").nav_file(7)
+				end,
+				desc = "Navigate to file 7",
+			},
+			{
+				"<leader>hd",
+				function()
+					require("harpoon.ui").nav_file(8)
+				end,
+				desc = "Navigate to file 8",
+			},
+		},
+	},
+
+	{
 		"nvim-pack/nvim-spectre",
 		lazy = true,
 		keys = {
@@ -231,6 +314,7 @@ return {
 				["]"] = { name = "+next" },
 				["["] = { name = "+prev" },
 				["<leader><tab>"] = { name = "+tabs" },
+				["<leader>h"] = { name = "+harpoon" },
 				["<leader>b"] = { name = "+buffer" },
 				["<leader>d"] = { name = "+debugger" },
 				["<leader>c"] = { name = "+code" },
@@ -327,17 +411,6 @@ return {
 			{ "<leader>ba", ":BWipeout all<cr>", silent = true },
 			{ "<leader>bo", ":BWipeout other<cr>:e<cr>", silent = true },
 		},
-		opts = {
-			next_buffer_cmd = function(windows)
-				require("bufferline").cycle(1)
-				local bufnr = vim.api.nvim_get_current_buf()
-
-				for _, window in ipairs(windows) do
-					vim.api.nvim_win_set_buf(window, bufnr)
-				end
-			end,
-		},
-		dependencies = { "akinsho/bufferline.nvim" },
 	},
 
 	-- todo comments
