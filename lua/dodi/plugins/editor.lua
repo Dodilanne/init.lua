@@ -4,10 +4,16 @@ return {
 	"christoomey/vim-tmux-navigator",
 
 	{
+		"smithbm2316/centerpad.nvim",
+		keys = {
+			{ "<leader>ch", "<cmd>lua require('centerpad').toggle()<CR>", desc = "Center horizontally", silent = true },
+		},
+	},
+
+	{
 		"ThePrimeagen/harpoon",
-		event = "BufEnter",
 		opts = {
-			tabline = true,
+			tabline = false,
 			menu = {
 				width = math.ceil(vim.api.nvim_win_get_width(0) * 0.8),
 			},
@@ -438,7 +444,17 @@ return {
 	{
 		"smjonas/inc-rename.nvim",
 		lazy = true,
-		keys = { { "<leader>cr", ":IncRename ", desc = "Rename" } },
+		keys = {
+			{ "<leader>cr", ":IncRename ", desc = "Rename" },
+			{
+				"<leader>cs",
+				function()
+					return ":IncRename " .. vim.fn.expand("<cword>")
+				end,
+				desc = "Rename (fill in word)",
+				expr = true,
+			},
+		},
 		opts = {},
 	},
 }
