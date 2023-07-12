@@ -167,7 +167,7 @@ return {
 				follow_current_file = true,
 			},
 			window = {
-				position = "right",
+				position = "current",
 				width = 100,
 				mappings = {
 					["<space>"] = "none",
