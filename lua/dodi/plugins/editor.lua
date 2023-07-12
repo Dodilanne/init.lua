@@ -140,14 +140,22 @@ return {
 			{
 				"<leader>e",
 				function()
-					require("neo-tree.command").execute({ toggle = true, dir = require("dodi.util").get_root() })
+					require("neo-tree.command").execute({
+						toggle = true,
+						dir = require("dodi.util").get_root(),
+						reveal = true,
+					})
 				end,
 				desc = "Explorer NeoTree (root dir)",
 			},
 			{
 				"<leader>E",
 				function()
-					require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+					require("neo-tree.command").execute({
+						toggle = true,
+						dir = vim.loop.cwd(),
+						reveal = true,
+					})
 				end,
 				desc = "Explorer NeoTree (cwd)",
 			},
