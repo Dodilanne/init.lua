@@ -11,8 +11,8 @@ return {
 				"<leader>ch",
 				function()
 					require("centerpad").toggle({
-						leftpad = math.ceil((vim.api.nvim_win_get_width(0) - 100) / 2),
-						rightpad = math.ceil((vim.api.nvim_win_get_width(0) - 100) / 2),
+						leftpad = math.ceil((vim.api.nvim_win_get_width(0) - 120) / 2),
+						rightpad = math.ceil((vim.api.nvim_win_get_width(0) - 120) / 2),
 					})
 				end,
 				desc = "Center horizontally",
