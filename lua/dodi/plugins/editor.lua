@@ -2,6 +2,7 @@ local Util = require("dodi.util")
 
 return {
 	"christoomey/vim-tmux-navigator",
+	"nvim-treesitter/nvim-treesitter-context",
 
 	{
 		"smithbm2316/centerpad.nvim",
@@ -228,7 +229,7 @@ return {
 			{ "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
 			{ "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 			{ "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-			{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+			{ "<leader>sd", "<cmd>Trouble document_diagnostics<cr>", desc = "Diagnostics" },
 			{ "<leader>sf", "<cmd>Telescope search_dir_picker<cr>", desc = "Grep (choose dir)" },
 			{ "<leader>sg", Util.telescope("live_grep"), desc = "Grep (cwd)" },
 			{ "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (root dir)" },
@@ -266,6 +267,7 @@ return {
 			{
 				"<leader>sS",
 				Util.telescope("lsp_workspace_symbols", {
+
 					symbols = {
 						"Class",
 						"Function",
@@ -282,15 +284,21 @@ return {
 				desc = "Goto Symbol (Workspace)",
 			},
 		},
-		config = function(_, opts)
+		config = function()
 			local telescope = require("telescope")
-			telescope.setup(opts)
+			local trouble = require("trouble.providers.telescope")
+
+			telescope.setup({
+				defaults = {
+					mappings = {
+						i = { ["<c-t>"] = trouble.open_with_trouble },
+						n = { ["<c-t>"] = trouble.open_with_trouble },
+					},
+				},
+			})
 			telescope.load_extension("search_dir_picker")
 			telescope.load_extension("fzf")
 		end,
-		opts = {
-			defaults = {},
-		},
 	},
 
 	-- easily jump to any location and enhanced f/t motions for Leap
@@ -436,6 +444,16 @@ return {
 			{ "<leader>bc", ":BDelete this<cr>", silent = true },
 			{ "<leader>ba", ":BWipeout all<cr>", silent = true },
 			{ "<leader>bo", ":BWipeout other<cr>:e<cr>", silent = true },
+		},
+	},
+
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
 		},
 	},
 

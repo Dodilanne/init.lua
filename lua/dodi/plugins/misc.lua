@@ -6,19 +6,10 @@ return {
 	},
 
 	{
-		"folke/zen-mode.nvim",
-		lazy = true,
+		"eandrju/cellular-automaton.nvim",
 		keys = {
-			{ "<leader>zm", ":ZenMode<cr>", desc = "Increment selection" },
-		},
-		opts = {
-			window = {
-				width = 120,
-				options = {
-					number = true,
-				},
-			},
-			plugins = {},
+			{ "<leader>mir", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make it rain" } },
+			{ "<leader>gol", "<cmd>CellularAutomaton game_of_life<CR>", { desc = "Game of life" } },
 		},
 	},
 }
