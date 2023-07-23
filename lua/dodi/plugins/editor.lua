@@ -358,6 +358,7 @@ return {
 				["<leader>q"] = { name = "+quit/session" },
 				["<leader>s"] = { name = "+search" },
 				["<leader>x"] = { name = "+diagnostics/quickfix" },
+				["<leader>n"] = { name = "+neorg" },
 			}
 			wk.register(keymaps)
 		end,
@@ -494,5 +495,55 @@ return {
 			},
 		},
 		opts = {},
+	},
+
+	{
+		"nvim-neorg/neorg",
+		build = ":Neorg sync-parsers",
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+		keys = {
+			{ "<leader>ni", "<cmd>Neorg index<cr>", desc = "Neorg index" },
+			{ "<leader>nt", "<cmd>Neorg journal<cr>", desc = "Neorg journal" },
+		},
+		opts = {
+			load = {
+				["core.defaults"] = {},
+				["core.journal"] = { config = { workspace = "personal" } },
+				["core.concealer"] = { config = { folds = false } },
+				["core.completion"] = { config = { engine = "nvim-cmp" } },
+				["core.keybinds"] = {
+					config = {
+						hook = function(keybinds)
+							keybinds.map("norg", "n", "<localleader>r", "<cmd>Neorg return<CR>")
+						end,
+					},
+				},
+				["core.dirman"] = {
+					config = {
+						workspaces = {
+							personal = "~/OneDrive/Documents/notes/personal",
+							work = "~/OneDrive/Documents/notes/work",
+						},
+						default_workspace = "work",
+					},
+				},
+				["core.integrations.telescope"] = {},
+			},
+		},
+		config = function(_, opts)
+			local neorg_callbacks = require("neorg.callbacks")
+			neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
+				keybinds.map_event_to_mode("norg", {
+					n = {
+						{ "<localleader>f", "core.integrations.telescope.find_linkable" },
+						{ "<C-l>", "core.integrations.telescope.insert_link" },
+					},
+					i = {
+						{ "<C-l>", "core.integrations.telescope.insert_link" },
+					},
+				}, { silent = true, noremap = true })
+			end)
+			require("neorg").setup(opts)
+		end,
 	},
 }

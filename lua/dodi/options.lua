@@ -30,6 +30,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 vim.opt.matchpairs:append("<:>")
 
@@ -38,3 +39,6 @@ vim.filetype.add({
 		mdx = "mdx",
 	},
 })
+
+vim.opt.conceallevel = 2
+vim.opt.concealcursor = "n"
