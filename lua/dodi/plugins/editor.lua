@@ -185,7 +185,7 @@ return {
 				},
 			},
 			filesystem = {
-				bind_to_cwd = true,
+				bind_to_cwd = false,
 				follow_current_file = true,
 			},
 			window = {
@@ -514,7 +514,13 @@ return {
 				["core.keybinds"] = {
 					config = {
 						hook = function(keybinds)
-							keybinds.map("norg", "n", "q", "<cmd>Neorg return<CR>")
+							keybinds.map(
+								"norg",
+								"n",
+								"<localleader>q",
+								":w<CR><cmd>Neorg return<CR>",
+								{ silent = true }
+							)
 						end,
 					},
 				},

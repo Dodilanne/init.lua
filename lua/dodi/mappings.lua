@@ -57,4 +57,4 @@ vim.keymap.set({ "n", "v", "i" }, "<C-s>", "<esc>:w<CR>", { desc = "Save file", 
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file", silent = true })
 
 -- Remap increment to prevent clashing with tmux prefix command
-vim.keymap.set({ "n", "v", "i" }, "<C-i>", "<C-a>", { desc = "Increment", silent = true })
+vim.keymap.set({ "n", "v", "i" }, "<C-c>", "<C-a>", { desc = "Increment", silent = true })

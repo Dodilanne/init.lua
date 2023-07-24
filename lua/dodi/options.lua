@@ -40,5 +40,6 @@ vim.filetype.add({
 	},
 })
 
-vim.opt.conceallevel = 2
-vim.opt.concealcursor = "n"
+-- Todo: Find a way to activate this only for norg files
+-- vim.opt.conceallevel = 2
+-- vim.opt.concealcursor = "n"
