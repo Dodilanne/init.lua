@@ -144,7 +144,7 @@ return {
 					require("neo-tree.command").execute({
 						toggle = true,
 						dir = require("dodi.util").get_root(),
-						reveal = true,
+						reveal_force_cwd = true,
 					})
 				end,
 				desc = "Explorer NeoTree (root dir)",
@@ -155,7 +155,7 @@ return {
 					require("neo-tree.command").execute({
 						toggle = true,
 						dir = vim.loop.cwd(),
-						reveal = true,
+						reveal_force_cwd = true,
 					})
 				end,
 				desc = "Explorer NeoTree (cwd)",
@@ -184,12 +184,11 @@ return {
 				},
 			},
 			filesystem = {
-				bind_to_cwd = false,
+				bind_to_cwd = true,
 				follow_current_file = true,
 			},
 			window = {
 				position = "current",
-				width = 100,
 				mappings = {
 					["<space>"] = "none",
 				},
