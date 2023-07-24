@@ -27,6 +27,7 @@ return {
 		"ThePrimeagen/harpoon",
 		opts = {
 			tabline = false,
+			excluded_filetypes = { "neorg" },
 			menu = {
 				width = math.ceil(vim.api.nvim_win_get_width(0) * 0.8),
 			},
@@ -513,17 +514,16 @@ return {
 				["core.keybinds"] = {
 					config = {
 						hook = function(keybinds)
-							keybinds.map("norg", "n", "<localleader>r", "<cmd>Neorg return<CR>")
+							keybinds.map("norg", "n", "q", "<cmd>Neorg return<CR>")
 						end,
 					},
 				},
 				["core.dirman"] = {
 					config = {
 						workspaces = {
-							personal = "~/OneDrive/Documents/notes/personal",
-							work = "~/OneDrive/Documents/notes/work",
+							notes = "~/OneDrive/Documents/notes",
 						},
-						default_workspace = "work",
+						default_workspace = "notes",
 					},
 				},
 				["core.integrations.telescope"] = {},
