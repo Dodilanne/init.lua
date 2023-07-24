@@ -8,8 +8,8 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
 	command = "checktime",
 })
 
-vim.api.nvim_create_autocmd({ "QuitPre" }, {
-	group = augroup("Close Centerpad"),
+vim.api.nvim_create_autocmd("QuitPre", {
+	group = augroup("close_centerpad"),
 	callback = function()
 		if vim.g.center_buf_enabled == true then
 			require("centerpad").toggle()
