@@ -1,5 +1,5 @@
 return {
-	-- { "xiyaowong/transparent.nvim" },
+	{ "xiyaowong/transparent.nvim" },
 
 	{
 		"rose-pine/neovim",
@@ -21,6 +21,7 @@ return {
 			require("kanagawa").setup({
 				theme = "dragon",
 				background = { dark = "dragon", light = "lotus" },
+				transparent = true,
 				colors = {
 					theme = {
 						all = {
