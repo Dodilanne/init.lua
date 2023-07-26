@@ -468,8 +468,8 @@ return {
     keys = {
       { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
-      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>xt", function() vim.cmd("TodoTrouble cwd=" .. vim.api.nvim_buf_get_name(0)) end, desc = "Todo current buffer (Trouble)" },
+      { "<leader>xT", "<cmd>TodoTrouble<cr>",      desc = "Todo project (Trouble)" },
       { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
     },
 	},
