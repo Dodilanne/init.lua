@@ -2,7 +2,15 @@ local Util = require("dodi.util")
 
 return {
 	"christoomey/vim-tmux-navigator",
-	"nvim-treesitter/nvim-treesitter-context",
+
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		lazy = false,
+		-- stylua: ignore
+		keys = {
+		    { "[c", function() require("treesitter-context").go_to_context() end, { silent = true }, },
+		  },
+	},
 
 	{
 		"smithbm2316/centerpad.nvim",
@@ -435,16 +443,6 @@ return {
 		keys = {
 			{ "]]", desc = "Next Reference" },
 			{ "[[", desc = "Prev Reference" },
-		},
-	},
-
-	-- buffer remove
-	{
-		"kazhala/close-buffers.nvim",
-		keys = {
-			{ "<leader>bc", ":BDelete this<cr>", silent = true },
-			{ "<leader>ba", ":BWipeout all<cr>", silent = true },
-			{ "<leader>bo", ":BWipeout other<cr>:e<cr>", silent = true },
 		},
 	},
 
