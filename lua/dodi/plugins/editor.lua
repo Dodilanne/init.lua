@@ -183,6 +183,7 @@ return {
 			end
 		end,
 		opts = {
+			enable_normal_mode_for_inputs = true,
 			event_handlers = {
 				-- close explorer when opening a file
 				{
@@ -449,10 +450,9 @@ return {
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
+		opts = {},
+		keys = {
+			{ "<leader>tc", "<cmd>TroubleClose<cr>", desc = "Close trouble buffer" },
 		},
 	},
 

@@ -171,6 +171,7 @@ return {
 				"stylua",
 				"shfmt",
 				"prettierd",
+				"codelldb",
 			},
 		},
 		---@param opts MasonSettings | {ensure_installed: string[]}
