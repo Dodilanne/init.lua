@@ -7,8 +7,10 @@ return {
 		lazy = false,
 		name = "rose-pine",
 		config = function()
-			require("rose-pine").setup({ disable_italics = true })
-			-- vim.cmd("colorscheme rose-pine")
+			require("rose-pine").setup({
+				disable_italics = true,
+			})
+			vim.cmd("colorscheme rose-pine")
 		end,
 	},
 
@@ -32,7 +34,7 @@ return {
 					},
 				},
 			})
-			vim.cmd("colorscheme kanagawa")
+			-- vim.cmd("colorscheme kanagawa")
 		end,
 	},
 
@@ -46,7 +48,7 @@ return {
 				update_interval = 1000,
 				set_dark_mode = function()
 					vim.api.nvim_set_option("background", "dark")
-					vim.cmd("colorscheme kanagawa")
+					vim.cmd("colorscheme rose-pine")
 				end,
 				set_light_mode = function()
 					vim.api.nvim_set_option("background", "light")
