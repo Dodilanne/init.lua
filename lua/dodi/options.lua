@@ -1,3 +1,5 @@
+vim.opt.background = os.getenv("NEOVIM_BACKGROUND") or "dark"
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 

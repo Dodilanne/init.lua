@@ -1,9 +1,7 @@
 return {
-	{ "xiyaowong/transparent.nvim" },
-
 	{
 		"rose-pine/neovim",
-		priority = 1000,
+		priority = 1001,
 		lazy = false,
 		name = "rose-pine",
 		config = function()
@@ -13,33 +11,9 @@ return {
 			vim.cmd("colorscheme rose-pine")
 		end,
 	},
-
-	{
-		"rebelot/kanagawa.nvim",
-		priority = 1000,
-		lazy = false,
-		name = "kanagawa",
-		config = function()
-			require("kanagawa").setup({
-				theme = "dragon",
-				background = { dark = "dragon", light = "lotus" },
-				transparent = true,
-				colors = {
-					theme = {
-						all = {
-							ui = {
-								bg_gutter = "none",
-							},
-						},
-					},
-				},
-			})
-			-- vim.cmd("colorscheme kanagawa")
-		end,
-	},
-
 	{
 		"f-person/auto-dark-mode.nvim",
+		priority = 1000,
 		lazy = false,
 		config = function()
 			local auto_dark_mode = require("auto-dark-mode")
@@ -48,11 +22,9 @@ return {
 				update_interval = 1000,
 				set_dark_mode = function()
 					vim.api.nvim_set_option("background", "dark")
-					vim.cmd("colorscheme rose-pine")
 				end,
 				set_light_mode = function()
 					vim.api.nvim_set_option("background", "light")
-					vim.cmd("colorscheme rose-pine")
 				end,
 			})
 
