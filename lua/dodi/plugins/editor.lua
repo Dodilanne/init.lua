@@ -457,6 +457,11 @@ return {
 		opts = {},
 	},
 
+	{
+		"tpope/vim-fugitive",
+		event = "VeryLazy",
+	},
+
 	-- references
 	{
 		"RRethy/vim-illuminate",
