@@ -19,8 +19,6 @@ vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>qc", "<cmd>cclose<CR>")
 
-vim.keymap.set("v", "af", "<esc>ggVG")
-
 -- Match escape key behaviour when exiting visual block mode
 vim.keymap.set("i", "<C-c>", "<Esc>")
 

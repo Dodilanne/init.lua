@@ -33,14 +33,7 @@ function M.get()
       {
         "<leader>cA",
         function()
-          vim.lsp.buf.code_action({
-            context = {
-              only = {
-                "source",
-              },
-              diagnostics = {},
-            },
-          })
+          vim.lsp.buf.code_action({ context = { only = { "source", }, diagnostics = {}, }, })
         end,
         desc = "Source Action",
         has = "codeAction",
