@@ -299,40 +299,13 @@ return {
 			{ "<leader>sW", Util.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
 			{
 				"<leader>ss",
-				Util.telescope("lsp_document_symbols", {
-					symbols = {
-						"Class",
-						"Function",
-						"Method",
-						"Constructor",
-						"Interface",
-						"Module",
-						"Struct",
-						"Trait",
-						"Field",
-						"Property",
-					},
-				}),
-				desc = "Goto Symbol",
+				Util.telescope("lsp_document_symbols", { ignore_symbols = { "Property" } }),
+				desc = "Document symbols",
 			},
 			{
 				"<leader>sS",
-				Util.telescope("lsp_workspace_symbols", {
-
-					symbols = {
-						"Class",
-						"Function",
-						"Method",
-						"Constructor",
-						"Interface",
-						"Module",
-						"Struct",
-						"Trait",
-						"Field",
-						"Property",
-					},
-				}),
-				desc = "Goto Symbol (Workspace)",
+				Util.telescope("lsp_workspace_symbols"),
+				desc = "Workspace symbols",
 			},
 		},
 		config = function()
