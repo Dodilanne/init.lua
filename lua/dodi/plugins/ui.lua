@@ -20,6 +20,13 @@ return {
 		},
 	},
 
+	{
+		"j-hui/fidget.nvim",
+		tag = "legacy",
+		event = "LspAttach",
+		config = true,
+	},
+
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
 
 	{ "MunifTanjim/nui.nvim", lazy = true },

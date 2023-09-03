@@ -47,6 +47,9 @@ return {
 					diagnostics = {
 						disabled = { "unresolved-proc-macro" },
 					},
+					cachePriming = {
+						enable = false,
+					},
 				},
 				lua_ls = {
 					-- mason = false, -- set to false if you don't want this server to be installed with mason
