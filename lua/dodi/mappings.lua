@@ -56,3 +56,10 @@ vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file", silent = true }
 
 -- Remap increment to prevent clashing with tmux prefix command
 vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>", { desc = "Increment", silent = true })
+
+vim.keymap.set(
+	"n",
+	"<leader>fpy",
+	"<cmd>!realpath % | pbcopy<cr><cr>",
+	{ desc = "Copy current buffer path to system clipboard", silent = true }
+)
