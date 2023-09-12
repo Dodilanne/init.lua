@@ -273,8 +273,8 @@ return {
 			{ "<leader>ff", Util.telescope("files"), desc = "Find Files (cwd)" },
 			{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
 			-- git
-			{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
-			{ "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+			{ "<leader>gtc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+			{ "<leader>gts", "<cmd>Telescope git_status<CR>", desc = "status" },
 			-- search
 			{ "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
 			{ "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
@@ -433,6 +433,11 @@ return {
 	{
 		"tpope/vim-fugitive",
 		event = "VeryLazy",
+		keys = {
+			{ "<leader>gs", ":Git<cr>", desc = "Status" },
+			{ "<leader>gc", ":Git commit<cr>i", desc = "Commit" },
+			{ "<leader>gw", ":Gwrite<cr>", desc = "Stage current buffer" },
+		},
 	},
 
 	-- references
