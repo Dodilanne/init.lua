@@ -13,25 +13,6 @@ return {
 	},
 
 	{
-		"smithbm2316/centerpad.nvim",
-		cmd = "Centerpad",
-		keys = {
-			{
-				"<leader>ch",
-				function()
-					require("centerpad").toggle({
-						leftpad = math.ceil((vim.api.nvim_win_get_width(0) - 120) / 2),
-						rightpad = math.ceil((vim.api.nvim_win_get_width(0) - 120) / 2),
-					})
-				end,
-				desc = "Center horizontally",
-				silent = true,
-				noremap = true,
-			},
-		},
-	},
-
-	{
 		"ThePrimeagen/harpoon",
 		opts = {
 			tabline = false,

@@ -29,8 +29,6 @@ return {
     },
 	},
 
-	"windwp/nvim-ts-autotag",
-
 	-- auto completion
 	{
 		"hrsh7th/nvim-cmp",
@@ -87,15 +85,6 @@ return {
 					},
 				},
 			}
-		end,
-	},
-
-	-- auto pairs
-	{
-		"echasnovski/mini.pairs",
-		event = "VeryLazy",
-		config = function(_, opts)
-			require("mini.pairs").setup(opts)
 		end,
 	},
 
