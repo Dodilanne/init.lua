@@ -13,12 +13,7 @@ vim.opt.guicursor = ""
 vim.opt.smartindent = true
 vim.opt.smartcase = true
 
-vim.opt.wrap = false
-
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
+vim.opt.wrap = true
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
@@ -36,8 +31,11 @@ vim.g.maplocalleader = ","
 
 vim.opt.matchpairs:append("<:>")
 
-vim.filetype.add({
-	extension = {
-		mdx = "mdx",
+vim.g.firenvim_config = {
+	localSettings = {
+		[".*"] = {
+			cmdline = "neovim",
+			takeover = "never",
+		},
 	},
-})
+}

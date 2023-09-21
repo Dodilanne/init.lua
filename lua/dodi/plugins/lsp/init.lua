@@ -90,11 +90,6 @@ return {
 				require("dodi.plugins.lsp.mappings").on_attach(client, buffer)
 			end)
 
-			-- diagnostics
-			for name, icon in pairs(require("dodi.config").icons.diagnostics) do
-				name = "DiagnosticSign" .. name
-				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-			end
 			vim.diagnostic.config(opts.diagnostics)
 
 			local servers = opts.servers

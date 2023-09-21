@@ -4,7 +4,6 @@ return {
 		lazy = true,
 		cmd = "VimBeGood",
 	},
-
 	{
 		"eandrju/cellular-automaton.nvim",
 		keys = {
