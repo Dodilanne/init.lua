@@ -12,6 +12,21 @@ return {
     config = true,
   },
   {
+    "echasnovski/mini.comment",
+    version = false,
+    event = { "BufNewFile", "BufReadPost" },
+    opts = {
+      options = {
+        ignore_blank_line = true,
+      },
+      mappings = {
+        comment = "h",
+        comment_line = "hh",
+        textobject = "h",
+      },
+    },
+  },
+  {
     "echasnovski/mini.clue",
     version = false,
     event = "VeryLazy",
@@ -55,6 +70,10 @@ return {
           -- Surround commands
           { mode = "n", keys = "s" },
           { mode = "x", keys = "s" },
+
+          -- Comment commands
+          { mode = "n", keys = "h" },
+          { mode = "x", keys = "h" },
         },
 
         window = {
