@@ -51,6 +51,10 @@ return {
           -- `z` key
           { mode = "n", keys = "z" },
           { mode = "x", keys = "z" },
+
+          -- Surround commands
+          { mode = "n", keys = "s" },
+          { mode = "x", keys = "s" },
         },
 
         window = {
