@@ -63,9 +63,6 @@ return {
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Goto next diagnostic", buffer = bufnr })
       end)
 
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require("lspconfig").lua_ls.setup(lua_opts)
-
       local cmp = require("cmp")
 
       cmp.setup({
@@ -83,15 +80,14 @@ return {
       require("mason-lspconfig").setup({
         handlers = {
           lsp_zero.default_setup,
-          eslint = function()
-            require("lspconfig").eslint.setup({
-              on_attach = function(_, bufnr)
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                  command = "EslintFixAll",
-                  buffer = bufnr,
-                })
+          lua_ls = function()
+            local lua_opts = lsp_zero.nvim_lua_ls({
+              on_init = function(client)
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentFormattingRangeProvider = false
               end,
             })
+            require("lspconfig").lua_ls.setup(lua_opts)
           end,
         },
       })
