@@ -20,9 +20,9 @@ return {
         ignore_blank_line = true,
       },
       mappings = {
-        comment = "h",
-        comment_line = "hh",
-        textobject = "h",
+        comment = "m",
+        comment_line = "mm",
+        textobject = "m",
       },
     },
   },

@@ -2,6 +2,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     version = "0.1.x",
+
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
       {
@@ -9,7 +10,14 @@ return {
         function()
           require("telescope.builtin").find_files()
         end,
-        desc = "Open file picker",
+        desc = "Open file picker in root dir",
+      },
+      {
+        "<leader>F",
+        function()
+          require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir() })
+        end,
+        desc = "Open file picker in curr dir",
       },
       {
         "<leader>/",
