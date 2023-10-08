@@ -6,7 +6,6 @@ local lsps = {
   "cssmodules_ls",
   "dockerls",
   "emmet_language_server",
-  "eslint",
   "html",
   "intelephense",
   "jqls",
@@ -67,16 +66,15 @@ return {
       local lua_opts = lsp_zero.nvim_lua_ls()
       require("lspconfig").lua_ls.setup(lua_opts)
 
-      local cmp = require('cmp')
-
+      local cmp = require("cmp")
 
       cmp.setup({
         mapping = cmp.mapping.preset.insert({
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
         }),
-        preselect = 'item',
+        preselect = "item",
         completion = {
-          completeopt = 'menu,menuone,noinsert'
+          completeopt = "menu,menuone,noinsert",
         },
       })
 
@@ -94,8 +92,8 @@ return {
                 })
               end,
             })
-          end
-        }
+          end,
+        },
       })
     end,
     dependencies = {
@@ -106,6 +104,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/nvim-cmp",
       "L3MON4D3/LuaSnip",
-    }
+    },
   },
 }
