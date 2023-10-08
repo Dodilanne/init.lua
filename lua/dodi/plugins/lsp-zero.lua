@@ -5,6 +5,7 @@ local lsps = {
   "cssmodules_ls",
   "dockerls",
   "emmet_language_server",
+  "eslint",
   "html",
   "intelephense",
   "jqls",
@@ -12,7 +13,6 @@ local lsps = {
   "lua_ls",
   "marksman",
   "prismals",
-  "pylsp",
   "rust_analyzer",
   "svelte",
   "tailwindcss",
@@ -23,7 +23,6 @@ local lsps = {
 
 local linters_and_formatters = {
   -- Linters
-  "eslint_d",
   "markdownlint",
   "phpcs",
   "proselint",
@@ -77,9 +76,10 @@ return {
         },
       })
 
-      -- Setu lsps
-      require("mason").setup({ ensure_installed = lsps })
+      -- Setup lsps
+      require("mason").setup()
       require("mason-lspconfig").setup({
+        ensure_installed = lsps,
         handlers = {
           lsp_zero.default_setup,
           lua_ls = function()
@@ -91,6 +91,20 @@ return {
             })
             require("lspconfig").lua_ls.setup(lua_opts)
           end,
+          eslint = function()
+            require("lspconfig").eslint.setup({
+              on_init = function(client)
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentFormattingRangeProvider = false
+              end,
+              on_attach = function(_, bufnr)
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                  buffer = bufnr,
+                  command = "EslintFixAll",
+                })
+              end,
+            })
+          end,
         },
       })
 
@@ -99,12 +113,7 @@ return {
       require("mason-null-ls").setup({
         ensure_installed = linters_and_formatters,
         automatic_installation = false,
-        handlers = {
-          eslint_d = function(source_name)
-            null_ls.register(null_ls.builtins.diagnostics[source_name])
-            null_ls.register(null_ls.builtins.code_actions[source_name])
-          end,
-        },
+        handlers = {},
       })
       null_ls.setup()
     end,
