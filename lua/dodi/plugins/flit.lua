@@ -4,7 +4,7 @@ return {
     event = { "BufNewFile", "BufReadPost" },
     opts = {
       labeled_modes = "n",
-      opts = { max_phase_one_targets = true }
+      opts = { max_phase_one_targets = true },
     },
     dependencies = {
       "tpope/vim-repeat",

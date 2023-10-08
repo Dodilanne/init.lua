@@ -1,5 +1,5 @@
 local function toggle_netrw()
-  if (vim.bo.filetype == "netrw") then
+  if vim.bo.filetype == "netrw" then
     vim.cmd("Rex")
   else
     vim.cmd("Ex")
