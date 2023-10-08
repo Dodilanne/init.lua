@@ -20,3 +20,12 @@ vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>", { desc = "Increment", silent
 
 -- Match escape key behaviour when exiting visual block mode
 vim.keymap.set("i", "<C-c>", "<Esc>")
+
+-- I'm a compulsive saver
+vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "Write file" })
+
+-- console.log
+vim.keymap.set("n", "<leader>l", [["nyiwoconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log statement on the next line" })
+vim.keymap.set("v", "<leader>l", [["nyoconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log statement on the next line" })
+vim.keymap.set("n", "<leader>L", [["nyiwOconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log statement on the previous line" })
+vim.keymap.set("v", "<leader>L", [["nyOconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log statement on the previous line" })
