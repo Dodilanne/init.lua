@@ -85,6 +85,7 @@ return {
 
         clues = {
           { mode = "n", keys = "<leader>h", desc = "+Harpoon" },
+          { mode = "n", keys = "<leader>g", desc = "+Git" },
           miniclue.gen_clues.builtin_completion(),
           miniclue.gen_clues.g(),
           miniclue.gen_clues.marks(),
