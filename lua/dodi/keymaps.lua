@@ -23,6 +23,8 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- I'm a compulsive saver
 vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "Write file" })
+-- ...and a compulsive quitter
+vim.keymap.set("n", "<leader>q", ":wq<cr>", { desc = "Write file and quit" })
 
 -- console.log
 vim.keymap.set("n", "<leader>l", [["nyiwoconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log on next line" })

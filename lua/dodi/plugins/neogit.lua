@@ -12,7 +12,14 @@ return {
         function()
           require("neogit").open()
         end,
-        desc = "Open NeoGit",
+        desc = "Open neogit status",
+      },
+      {
+        "<leader>gc",
+        function()
+          require("neogit").open({ "commit" })
+        end,
+        desc = "Open neogit commit",
       },
     },
     config = true,
