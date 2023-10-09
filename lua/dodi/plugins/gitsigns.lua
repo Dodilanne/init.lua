@@ -12,7 +12,6 @@ return {
           vim.keymap.set(mode, l, r, opts)
         end
 
-        -- Navigation
         map("n", "]h", function()
           if vim.wo.diff then
             return "]h"
@@ -33,7 +32,6 @@ return {
           return "<Ignore>"
         end, { expr = true, desc = "Prev hunk" })
 
-        -- Actions
         map("n", "<leader>gs", gs.stage_hunk, { desc = "Stage hunk" })
         map("n", "<leader>gr", gs.reset_hunk, { desc = "Reset hunk" })
         map("v", "<leader>gs", function()
