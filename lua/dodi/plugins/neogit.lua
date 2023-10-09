@@ -6,11 +6,15 @@ return {
       "nvim-telescope/telescope.nvim",
       "sindrets/diffview.nvim",
     },
-    opts = {
-      integrations = {
-        telescope = true,
-        diffview = true,
+    keys = {
+      {
+        "<leader>gn",
+        function()
+          require("neogit").open()
+        end,
+        desc = "Open NeoGit",
       },
     },
+    config = true,
   },
 }
