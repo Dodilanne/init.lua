@@ -34,6 +34,20 @@ return {
         desc = "Open symbol picker",
       },
       {
+        "<leader>j",
+        function()
+          require("telescope.builtin").jumplist()
+        end,
+        desc = "Open jumplist picker",
+      },
+      {
+        "<leader>b",
+        function()
+          require("telescope.builtin").buffers()
+        end,
+        desc = "Open buffer picker",
+      },
+      {
         "<leader>S",
         function()
           require("telescope.builtin").lsp_workspace_symbols()
