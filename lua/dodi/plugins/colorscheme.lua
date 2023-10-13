@@ -1,16 +1,10 @@
-return {
-  {
-    "rose-pine/neovim",
-    priority = 1001,
-    lazy = false,
-    name = "rose-pine",
-    config = function()
-      require("rose-pine").setup({
-        disable_italics = true,
-      })
-      vim.cmd("colorscheme rose-pine")
-    end,
-  },
+local theme = "ayu"
+local themes = {
+  { name = "rose-pine", plugin = "rose-pine/neovim", opts = { disable_italics = true } },
+  { name = "ayu", plugin = "Shatur/neovim-ayu" },
+}
+
+local M = {
   {
     "f-person/auto-dark-mode.nvim",
     priority = 1000,
@@ -32,3 +26,21 @@ return {
     end,
   },
 }
+
+for _, t in pairs(themes) do
+  if t.name == theme then
+    table.insert(M, {
+      t.plugin,
+      lazy = false,
+      priority = 1001,
+      config = function()
+        require(t.name).setup(t.opts or {})
+        vim.cmd("colorscheme " .. t.name)
+      end,
+    })
+  else
+    table.insert(M, { t.plugin, lazy = true, name = t.name })
+  end
+end
+
+return M
