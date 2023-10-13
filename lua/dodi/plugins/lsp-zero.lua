@@ -79,8 +79,6 @@ return {
         },
       })
 
-      require("neodev").setup()
-
       -- Setup lsps
       require("mason").setup()
       require("mason-lspconfig").setup({
@@ -132,7 +130,6 @@ return {
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
       "L3MON4D3/LuaSnip",
-      "folke/neodev.nvim",
     },
   },
 }
