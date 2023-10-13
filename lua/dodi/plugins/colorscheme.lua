@@ -1,4 +1,4 @@
-local theme = "ayu"
+local theme = "rose-pine"
 local themes = {
   { name = "rose-pine", plugin = "rose-pine/neovim", opts = { disable_italics = true } },
   { name = "ayu", plugin = "Shatur/neovim-ayu" },
