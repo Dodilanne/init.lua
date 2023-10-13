@@ -32,6 +32,7 @@ for _, t in pairs(themes) do
     table.insert(M, {
       t.plugin,
       lazy = false,
+      name = t.name,
       priority = 1001,
       config = function()
         require(t.name).setup(t.opts or {})
