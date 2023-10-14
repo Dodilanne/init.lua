@@ -2,8 +2,13 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     version = "0.1.x",
-
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "princejoogie/dir-telescope.nvim", config = true },
+    },
+    config = function(_, opts)
+      require("telescope").load_extension("dir")
+    end,
     keys = {
       {
         "<leader>f",
@@ -15,16 +20,23 @@ return {
       {
         "<leader>F",
         function()
-          require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir() })
+          require("telescope").extensions.dir.find_files()
         end,
-        desc = "Open file picker in curr dir",
+        desc = "Find file in specified dir",
       },
       {
         "<leader>/",
         function()
           require("telescope.builtin").live_grep()
         end,
-        desc = "Global search in workspace folder",
+        desc = "Global search in workspace dir",
+      },
+      {
+        "<leader>?",
+        function()
+          require("telescope").extensions.dir.live_grep()
+        end,
+        desc = "Global search in specified dir",
       },
       {
         "<leader>s",
@@ -67,13 +79,6 @@ return {
           require("telescope.builtin").diagnostics()
         end,
         desc = "Open workspace diagnostic picker",
-      },
-      {
-        "<leader>?",
-        function()
-          require("telescope.builtin").keymaps()
-        end,
-        desc = "Open command palette",
       },
     },
   },
