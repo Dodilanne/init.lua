@@ -6,7 +6,7 @@ return {
       "nvim-lua/plenary.nvim",
       { "princejoogie/dir-telescope.nvim", config = true },
     },
-    config = function(_, opts)
+    config = function()
       require("telescope").load_extension("dir")
     end,
     keys = {
@@ -29,7 +29,7 @@ return {
         function()
           require("telescope.builtin").live_grep()
         end,
-        desc = "Global search in workspace dir",
+        desc = "Global search in root dir",
       },
       {
         "<leader>?",
