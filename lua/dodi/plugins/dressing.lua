@@ -1,8 +1,3 @@
-local say_hello = function()
-  print("Hello from dressing.lua")
-end
-say_hello()
-
 return {
   {
     "stevearc/dressing.nvim",
