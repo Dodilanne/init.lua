@@ -59,9 +59,14 @@ return {
         -- Add lsp related keymaps
         vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Perform code action", buffer = bufnr })
         vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "Rename symbol", buffer = bufnr })
-        vim.keymap.set("n", "<leader>x", vim.lsp.buf.format, { desc = "Format the file", buffer = bufnr })
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic", buffer = bufnr })
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Goto next diagnostic", buffer = bufnr })
+        vim.keymap.set("n", "<leader>x", function()
+          vim.lsp.buf.format()
+          if vim.fn.exists(":EslintFixAll") > 0 then
+            vim.cmd("EslintFixAll")
+          end
+        end, { desc = "Format the file", buffer = bufnr })
       end)
 
       -- Setup completions
