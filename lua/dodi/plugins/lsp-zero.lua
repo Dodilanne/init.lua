@@ -15,7 +15,7 @@ local lsps = {
   "prismals",
   "rust_analyzer",
   "svelte",
-  "tailwindcss",
+  -- "tailwindcss",
   "tsserver",
   "vimls",
   "yamlls",
@@ -62,10 +62,10 @@ return {
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic", buffer = bufnr })
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Goto next diagnostic", buffer = bufnr })
         vim.keymap.set("n", "<leader>x", function()
-          vim.lsp.buf.format()
           if vim.fn.exists(":EslintFixAll") > 0 then
             vim.cmd("EslintFixAll")
           end
+          vim.lsp.buf.format()
         end, { desc = "Format the file", buffer = bufnr })
       end)
 
