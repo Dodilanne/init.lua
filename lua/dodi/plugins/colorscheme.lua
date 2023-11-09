@@ -1,7 +1,8 @@
-local theme = "rose-pine"
+local theme = "kanagawa"
 local themes = {
   { name = "rose-pine", plugin = "rose-pine/neovim", opts = { disable_italics = true } },
   { name = "ayu", plugin = "Shatur/neovim-ayu" },
+  { name = "kanagawa", plugin = "rebelot/kanagawa.nvim", opts = { background = { dark = "dragon", light = "lotus" } } },
 }
 
 local M = {
@@ -23,6 +24,17 @@ local M = {
       })
 
       auto_dark_mode.init()
+    end,
+  },
+  {
+    "xiyaowong/transparent.nvim",
+    config = function(_, opts)
+      local transparent = require("transparent")
+      transparent.setup(opts)
+      local prefixes = { "gitsigns" }
+      for _, prefix in pairs(prefixes) do
+        transparent.clear_prefix(prefix)
+      end
     end,
   },
 }

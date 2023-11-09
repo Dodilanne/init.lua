@@ -5,7 +5,7 @@ local lsps = {
   "cssmodules_ls",
   "dockerls",
   "emmet_language_server",
-  "eslint",
+  -- "eslint",
   "html",
   "intelephense",
   "jqls",
@@ -26,7 +26,7 @@ local linters_and_formatters = {
   "markdownlint",
   "phpcs",
   "proselint",
-  "yamllint",
+  -- "yamllint",
 
   -- Formatters
   "black",
@@ -36,7 +36,7 @@ local linters_and_formatters = {
   "prettierd",
   "sqlfmt",
   "stylua",
-  "yamlfix",
+  -- "yamlfix",
 }
 
 return {
@@ -54,7 +54,7 @@ return {
           preserve_mappings = false,
           exclude = { "<F2>", "<F3>", "<F4>", "gl", "[d", "]d" },
         })
-        lsp_zero.buffer_autoformat()
+        -- lsp_zero.buffer_autoformat()
 
         -- Add lsp related keymaps
         vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Perform code action", buffer = bufnr })
@@ -62,10 +62,10 @@ return {
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic", buffer = bufnr })
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Goto next diagnostic", buffer = bufnr })
         vim.keymap.set("n", "<leader>x", function()
+          vim.lsp.buf.format()
           if vim.fn.exists(":EslintFixAll") > 0 then
             vim.cmd("EslintFixAll")
           end
-          vim.lsp.buf.format()
         end, { desc = "Format the file", buffer = bufnr })
       end)
 
@@ -106,12 +106,12 @@ return {
                 client.server_capabilities.documentFormattingProvider = false
                 client.server_capabilities.documentFormattingRangeProvider = false
               end,
-              on_attach = function(_, bufnr)
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                  buffer = bufnr,
-                  command = "EslintFixAll",
-                })
-              end,
+              -- on_attach = function(_, bufnr)
+              --   vim.api.nvim_create_autocmd("BufWritePre", {
+              --     buffer = bufnr,
+              --     command = "EslintFixAll",
+              --   })
+              -- end,
             })
           end,
         },

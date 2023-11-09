@@ -7,10 +7,10 @@ return {
       suggestion = {
         auto_trigger = true,
         keymap = {
-          accept = "<m-n>",
+          accept = "<m-j>",
           accept_line = "<m-l>",
-          accept_word = "<m-h>",
-          dismiss = "<m-o>",
+          accept_word = "<m-k>",
+          dismiss = "<m-;>",
         },
       },
     },
