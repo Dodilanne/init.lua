@@ -5,7 +5,7 @@ local lsps = {
   "cssmodules_ls",
   "dockerls",
   "emmet_language_server",
-  -- "eslint",
+  "eslint",
   "html",
   "intelephense",
   "jqls",
@@ -15,7 +15,7 @@ local lsps = {
   "prismals",
   "rust_analyzer",
   "svelte",
-  -- "tailwindcss",
+  "tailwindcss",
   "tsserver",
   "vimls",
   "yamlls",
@@ -26,7 +26,7 @@ local linters_and_formatters = {
   "markdownlint",
   "phpcs",
   "proselint",
-  -- "yamllint",
+  "yamllint",
 
   -- Formatters
   "black",
@@ -36,7 +36,7 @@ local linters_and_formatters = {
   "prettierd",
   "sqlfmt",
   "stylua",
-  -- "yamlfix",
+  "yamlfix",
 }
 
 return {
@@ -62,10 +62,11 @@ return {
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Goto previous diagnostic", buffer = bufnr })
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Goto next diagnostic", buffer = bufnr })
         vim.keymap.set("n", "<leader>x", function()
-          vim.lsp.buf.format()
           if vim.fn.exists(":EslintFixAll") > 0 then
+            print("Fixing eslint errors")
             vim.cmd("EslintFixAll")
           end
+          vim.lsp.buf.format()
         end, { desc = "Format the file", buffer = bufnr })
       end)
 
