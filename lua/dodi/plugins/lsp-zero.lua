@@ -2,41 +2,42 @@ local lsps = {
   "awk_ls",
   "bashls",
   "cssls",
-  "cssmodules_ls",
+  -- "cssmodules_ls",
   "dockerls",
   "emmet_language_server",
   "eslint",
   "html",
+  "htmx",
   "intelephense",
   "jqls",
-  "jsonls",
+  -- "jsonls",
   "lua_ls",
   "marksman",
   "prismals",
   "rust_analyzer",
   "svelte",
-  "tailwindcss",
+  -- "tailwindcss",
   "tsserver",
   "vimls",
-  "yamlls",
+  -- "yamlls",
 }
 
 local linters_and_formatters = {
   -- Linters
-  "markdownlint",
+  -- "markdownlint",
   "phpcs",
   "proselint",
-  "yamllint",
+  -- "yamllint",
 
   -- Formatters
   "black",
   "beautysh",
   "jq",
   "php-cs-fixer",
-  "prettierd",
+  "prettier",
   "sqlfmt",
   "stylua",
-  "yamlfix",
+  -- "yamlfix",
 }
 
 return {

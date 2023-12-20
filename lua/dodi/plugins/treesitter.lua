@@ -14,20 +14,12 @@ local parsers = {
   "css",
   "bash",
   "awk",
-  "comment",
-  "dockerfile",
   "gitignore",
-  "http",
   "jq",
-  "json5",
-  "jsonc",
   "prisma",
-  "hlsl",
   "php",
   "phpdoc",
-  "python",
   "regex",
-  "scss",
   "ron",
   "rust",
   "toml",
@@ -42,7 +34,13 @@ return {
     event = { "BufNewFile", "BufReadPre" },
     config = function()
       local configs = require("nvim-treesitter.configs")
-      configs.setup({ ensure_installed = parsers })
+      configs.setup({
+        ensure_installed = parsers,
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+      })
     end,
   },
 }
