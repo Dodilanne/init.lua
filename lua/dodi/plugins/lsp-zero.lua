@@ -2,6 +2,7 @@ local lsps = {
   "awk_ls",
   "bashls",
   "cssls",
+  "biome",
   -- "cssmodules_ls",
   "dockerls",
   "emmet_language_server",
@@ -124,9 +125,26 @@ return {
       require("mason-null-ls").setup({
         ensure_installed = linters_and_formatters,
         automatic_installation = false,
-        handlers = {},
+        handlers = {
+          prettier = function()
+            null_ls.register(null_ls.builtins.formatting.prettier.with({
+              condition = function(utils)
+                return utils.root_has_file_matches("prettier")
+              end,
+            }))
+          end,
+          biome = function()
+            null_ls.register(null_ls.builtins.formatting.biome.with({
+              condition = function(utils)
+                return utils.root_has_file("biome.json")
+              end,
+            }))
+          end,
+        },
       })
-      null_ls.setup()
+      null_ls.setup({
+        debug = true,
+      })
     end,
     dependencies = {
       "williamboman/mason.nvim",
