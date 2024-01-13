@@ -10,8 +10,7 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- System clipboard interactions
-vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]], { desc = "Paste from clipboard after cursor" })
-vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]], { desc = "Paste from clipboard before cursor" })
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking existing selection" })
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
 
