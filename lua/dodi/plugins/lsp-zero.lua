@@ -21,6 +21,8 @@ local lsps = {
   "tsserver",
   "vimls",
   -- "yamlls",
+  "gopls",
+  "templ",
 }
 
 local linters_and_formatters = {
@@ -48,6 +50,8 @@ return {
     event = { "BufNewFile", "BufReadPre" },
     config = function()
       local lsp_zero = require("lsp-zero")
+
+      vim.filetype.add({ extension = { templ = "templ" } })
 
       -- Setup default lsp behavior
       lsp_zero.on_attach(function(_, bufnr)

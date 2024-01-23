@@ -1,5 +1,6 @@
 local parsers = {
   "lua",
+  "templ",
   "vim",
   "vimdoc",
   "javascript",
@@ -25,6 +26,7 @@ local parsers = {
   "toml",
   "sql",
   "xml",
+  "go",
 }
 
 return {
