@@ -22,12 +22,6 @@ return {
         end,
         ignore_blank_line = true,
       },
-      mappings = {
-        comment = "m",
-        comment_line = "mm",
-        comment_visual = "m",
-        textobject = "m",
-      },
     },
     dependencies = {
       {
