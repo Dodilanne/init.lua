@@ -124,6 +124,8 @@ return {
         },
       })
 
+      require("lspconfig").aiken.setup({})
+
       -- Setup linters and formatters
       local null_ls = require("null-ls")
       require("mason-null-ls").setup({
@@ -160,6 +162,7 @@ return {
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
       "L3MON4D3/LuaSnip",
+      "aiken-lang/editor-integration-nvim",
     },
   },
 }
