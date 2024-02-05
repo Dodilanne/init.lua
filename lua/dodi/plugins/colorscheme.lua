@@ -10,6 +10,13 @@ local themes = {
   {
     name = "ayu",
     plugin = "Shatur/neovim-ayu",
+    opts = {
+      overrides = function()
+        local colors = require("ayu.colors")
+        colors.generate()
+        return { LineNr = { fg = colors.comment } }
+      end,
+    },
   },
   {
     name = "kanagawa",
