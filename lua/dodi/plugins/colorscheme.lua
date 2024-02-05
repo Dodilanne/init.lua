@@ -1,4 +1,4 @@
-local theme = "rose-pine"
+local theme = "ayu"
 local themes = {
   {
     name = "rose-pine",
