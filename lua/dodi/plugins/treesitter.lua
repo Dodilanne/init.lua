@@ -52,6 +52,12 @@ return {
     },
   },
   {
+    "nvim-treesitter/playground",
+    lazy = true,
+    config = true,
+    cmd = "TSPlaygroundToggle",
+  },
+  {
     "nvim-treesitter/nvim-treesitter-context",
     event = { "BufNewFile", "BufReadPre" },
     enabled = true,
