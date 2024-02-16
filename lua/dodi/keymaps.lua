@@ -26,5 +26,5 @@ vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "Write file" })
 -- console.log
 vim.keymap.set("n", "<leader>l", [["nyiwoconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log on next line" })
 vim.keymap.set("v", "<leader>l", [["nyoconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log on next line" })
-vim.keymap.set("n", "<leader>L", [["nyiwOconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log on prev line" })
-vim.keymap.set("v", "<leader>L", [["nyOconsole.log("<C-r>n", <C-r>n);<Esc>]], { desc = "Add console log on prev line" })
+vim.keymap.set("n", "<leader>L", [["nyiwoconsole.log("<C-r>n", JSON.stringify(<C-r>n, null, 2));<Esc>]], { desc = "Add stringified console log on next line" })
+vim.keymap.set("v", "<leader>L", [["nyoconsole.log("<C-r>n", JSON.stringify(<C-r>n, null, 2));<Esc>]], { desc = "Add stringified console log on next line" })
