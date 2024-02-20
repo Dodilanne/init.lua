@@ -1,4 +1,8 @@
-local theme = "ayu"
+local theme = {
+  dark = "kanagawa",
+  light = "rose-pine",
+}
+
 local themes = {
   {
     name = "rose-pine",
@@ -51,18 +55,24 @@ local M = {
   },
 }
 
+local function insert_current_theme(t)
+  table.insert(M, {
+    t.plugin,
+    lazy = false,
+    name = t.name,
+    priority = 1001,
+    config = function()
+      require(t.name).setup(t.opts or {})
+      vim.cmd("colorscheme " .. t.name)
+    end,
+  })
+end
+
 for _, t in pairs(themes) do
-  if t.name == theme then
-    table.insert(M, {
-      t.plugin,
-      lazy = false,
-      name = t.name,
-      priority = 1001,
-      config = function()
-        require(t.name).setup(t.opts or {})
-        vim.cmd("colorscheme " .. t.name)
-      end,
-    })
+  if t.name == theme.dark and os.getenv("NEOVIM_BACKGROUND") == "dark" then
+    insert_current_theme(t)
+  elseif t.name == theme.light and os.getenv("NEOVIM_BACKGROUND") == "light" then
+    insert_current_theme(t)
   else
     table.insert(M, { t.plugin, lazy = true, name = t.name })
   end
