@@ -8,7 +8,7 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
-vim.opt.guicursor = { "i:ver1", "r:hor1", "a:blinkon1-blinkwait0" }
+vim.opt.guicursor = { "n:blinkon1-blinkwait0" }
 
 vim.opt.smartindent = true
 vim.opt.smartcase = true
