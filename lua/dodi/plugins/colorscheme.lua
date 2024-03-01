@@ -1,5 +1,5 @@
 local theme = {
-  dark = "kanagawa",
+  dark = "rose-pine",
   light = "rose-pine",
 }
 
