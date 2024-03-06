@@ -11,6 +11,7 @@ vim.opt.expandtab = true
 vim.opt.guicursor = { "n:blinkon1-blinkwait0" }
 
 vim.opt.smartindent = true
+vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.wrap = false
