@@ -1,6 +1,6 @@
 local theme = {
-  dark = "rose-pine",
-  light = "rose-pine",
+  dark = "bamboo",
+  light = "bamboo",
 }
 
 local themes = {
@@ -10,6 +10,10 @@ local themes = {
     opts = {
       styles = { italic = false },
     },
+  },
+  {
+    name = "bamboo",
+    plugin = "ribru17/bamboo.nvim",
   },
   {
     name = "ayu",
