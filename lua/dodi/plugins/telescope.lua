@@ -6,7 +6,18 @@ return {
       "nvim-lua/plenary.nvim",
       { "princejoogie/dir-telescope.nvim", config = true },
     },
-    config = function()
+    opts = {
+      defaults = {
+        path_display = { "smart" },
+        layout_config = {
+          horizontal = {
+            width = 0.95,
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      require("telescope").setup(opts)
       require("telescope").load_extension("dir")
     end,
     keys = {
