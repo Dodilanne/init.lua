@@ -44,6 +44,7 @@ return {
         },
         autotag = {
           enable = true,
+          enable_rename = false,
         },
       })
     end,
