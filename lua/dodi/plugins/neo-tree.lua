@@ -9,8 +9,8 @@ return {
     event = "CmdlineEnter",
     cmd = "Neotree",
     keys = {
-      { "<leader>e", "<cmd>Neotree toggle reveal<cr>", silent = true, desc = "Open file explorer at current buffer" },
-      { "<leader>E", "<cmd>Neotree toggle<cr>", silent = true, desc = "Open file explorer in root dir" },
+      { "<leader>e", "<cmd>Neotree toggle reveal reveal_force_cwd<cr>", silent = true, desc = "Open file explorer at current buffer" },
+      { "<leader>E", "<cmd>Neotree toggle reveal_force_cwd<cr>", silent = true, desc = "Open file explorer in root dir" },
     },
     opts = {
       enable_git_status = false,
