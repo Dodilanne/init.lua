@@ -15,9 +15,18 @@ return {
     opts = {
       enable_git_status = false,
       enable_diagnostics = false,
-      enable_normal_mode_for_inputs = true,
       window = {
         position = "current",
+      },
+      event_handlers = {
+        {
+          event = "neo_tree_popup_input_ready",
+          ---@param args { bufnr: integer, winid: integer }
+          handler = function(args)
+            vim.cmd("stopinsert")
+            vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
+          end,
+        },
       },
     },
   },
