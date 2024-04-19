@@ -13,6 +13,7 @@ return {
         ["<leader>"] = {
           h = { name = "+Harpoon" },
           g = { name = "+Git" },
+          o = { name = "+Obsidian" },
         },
       })
     end,
