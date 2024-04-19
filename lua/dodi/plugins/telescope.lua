@@ -8,7 +8,6 @@ return {
     },
     opts = {
       defaults = {
-        path_display = { "smart" },
         layout_config = {
           horizontal = {
             width = 0.95,
