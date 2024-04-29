@@ -7,9 +7,6 @@ local themes = {
   {
     name = "rose-pine",
     plugin = "rose-pine/neovim",
-    opts = {
-      styles = { italic = false },
-    },
   },
   {
     name = "bamboo",
