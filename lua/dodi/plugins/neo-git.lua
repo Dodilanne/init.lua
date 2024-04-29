@@ -8,7 +8,7 @@ return {
     },
     config = true,
     keys = {
-      { "<leader>gn", "<cmd>Neogit<cr>", desc = "Open Neogit" },
+      { "<leader>gn", "<cmd>Neogit cwd=%:p:h<cr>", desc = "Open Neogit" },
     },
   },
 }
