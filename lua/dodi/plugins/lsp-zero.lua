@@ -29,7 +29,7 @@ local linters_and_formatters = {
   -- Linters
   -- "markdownlint",
   "phpcs",
-  "proselint",
+  -- "proselint",
   -- "yamllint",
 
   -- Formatters
