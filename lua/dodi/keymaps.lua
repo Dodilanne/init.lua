@@ -26,6 +26,8 @@ vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "Write file" })
 -- I'm a compulsive quitter
 vim.keymap.set("n", "<leader>z", ":wa<cr>:q<cr>", { desc = "Write all then quit" })
 
+-- console.log debugging whoohoo!
+
 local debug_log = function(yank_motion)
   if vim.bo.filetype == "lua" then
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oprint("<C-r>n " .. <C-r>n)<Esc>', true, false, true))
@@ -36,7 +38,6 @@ local debug_log = function(yank_motion)
   end
 end
 
--- console.log
 vim.keymap.set("n", "<leader>l", function()
   debug_log("iw")
 end, { desc = "Add console log on next line" })
@@ -67,3 +68,22 @@ vim.keymap.set("n", "<leader>e", function()
     vim.cmd('let @/ = "' .. prev_search .. '"')
   end
 end, { desc = "Open file picker" })
+
+vim.keymap.set("n", "<leader>q",function()
+  local qf_exists = false
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win["quickfix"] == 1 then
+      qf_exists = true
+    end
+  end
+  if qf_exists == true then
+    vim.cmd "cclose"
+    return
+  end
+  if not vim.tbl_isempty(vim.fn.getqflist()) then
+    vim.cmd "copen"
+  end
+end, { desc = "Toggle quickfix list" })
+
+vim.keymap.set("n", "]q","<cmd>cnext<cr>", { desc = "cnext" })
+vim.keymap.set("n", "[q","<cmd>cprev<cr>", { desc = "cprev" })
