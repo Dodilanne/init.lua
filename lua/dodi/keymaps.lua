@@ -57,6 +57,13 @@ vim.keymap.set(
   { desc = "Add stringified console log on next line" }
 )
 
+vim.keymap.set("n", "<leader>E", function()
+  if vim.bo.filetype == "netrw" then
+    vim.cmd("Rex")
+  else
+    vim.cmd("Ex .")
+  end
+end, { desc = "Open file picker (cwd)" })
 vim.keymap.set("n", "<leader>e", function()
   if vim.bo.filetype == "netrw" then
     vim.cmd("Rex")
