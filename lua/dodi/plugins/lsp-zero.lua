@@ -1,38 +1,23 @@
 local lsps = {
-  "awk_ls",
   "bashls",
   "cssls",
-  -- "biome",
-  -- "cssmodules_ls",
-  "dockerls",
   "emmet_language_server",
   "eslint",
   "html",
   "htmx",
   "intelephense",
-  "jqls",
-  -- "jsonls",
   "lua_ls",
-  "marksman",
   "prismals",
   "rust_analyzer",
   "svelte",
-  -- "tailwindcss",
   "tsserver",
   "vimls",
-  -- "yamlls",
   "gopls",
   "templ",
 }
 
 local linters_and_formatters = {
-  -- Linters
-  -- "markdownlint",
   "phpcs",
-  -- "proselint",
-  -- "yamllint",
-
-  -- Formatters
   "black",
   "beautysh",
   "jq",
@@ -40,7 +25,6 @@ local linters_and_formatters = {
   "prettier",
   "sqlfmt",
   "stylua",
-  -- "yamlfix",
 }
 
 return {
@@ -113,12 +97,6 @@ return {
                 client.server_capabilities.documentFormattingProvider = false
                 client.server_capabilities.documentFormattingRangeProvider = false
               end,
-              -- on_attach = function(_, bufnr)
-              --   vim.api.nvim_create_autocmd("BufWritePre", {
-              --     buffer = bufnr,
-              --     command = "EslintFixAll",
-              --   })
-              -- end,
             })
           end,
         },
@@ -131,22 +109,6 @@ return {
       require("mason-null-ls").setup({
         ensure_installed = linters_and_formatters,
         automatic_installation = false,
-        handlers = {
-          -- prettier = function()
-          --   null_ls.register(null_ls.builtins.formatting.prettier.with({
-          --     condition = function(utils)
-          --       return utils.root_has_file_matches("prettier")
-          --     end,
-          --   }))
-          -- end,
-          -- biome = function()
-          --   null_ls.register(null_ls.builtins.formatting.biome.with({
-          --     condition = function(utils)
-          --       return utils.root_has_file("biome.json")
-          --     end,
-          --   }))
-          -- end,
-        },
       })
       null_ls.setup({
         debug = true,
