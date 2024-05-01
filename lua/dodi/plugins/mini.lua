@@ -1,5 +1,11 @@
 return {
   {
+    "echasnovski/mini.pairs",
+    version = false,
+    event = "InsertEnter",
+    config = true,
+  },
+  {
     "echasnovski/mini.surround",
     version = false,
     event = { "BufNewFile", "BufReadPost" },
