@@ -104,15 +104,13 @@ return {
 
       require("lspconfig").aiken.setup({})
 
-      -- Setup linters and formatters
-      local null_ls = require("null-ls")
       require("mason-null-ls").setup({
         ensure_installed = linters_and_formatters,
         automatic_installation = false,
+        handlers = {},
       })
-      null_ls.setup({
-        debug = true,
-      })
+
+      require("null-ls").setup()
     end,
     dependencies = {
       "williamboman/mason.nvim",
