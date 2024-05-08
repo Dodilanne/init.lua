@@ -6,6 +6,30 @@ return {
     config = true,
   },
   {
+    "echasnovski/mini.files",
+    version = "*",
+    keys = {
+      {
+        "<leader>e",
+        function()
+          require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+        end,
+      },
+      {
+        "<leader>E",
+        function()
+          require("mini.files").open(nil, false)
+        end,
+      },
+    },
+    opts = {
+      windows = {
+        preview = true,
+        width_preview = 80,
+      },
+    },
+  },
+  {
     "echasnovski/mini.surround",
     version = false,
     event = { "BufNewFile", "BufReadPost" },

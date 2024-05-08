@@ -57,25 +57,6 @@ vim.keymap.set(
   { desc = "Add stringified console log on next line" }
 )
 
-vim.keymap.set("n", "<leader>E", function()
-  if vim.bo.filetype == "netrw" then
-    vim.cmd("Rex")
-  else
-    vim.cmd("Ex .")
-  end
-end, { desc = "Open file picker (cwd)" })
-vim.keymap.set("n", "<leader>e", function()
-  if vim.bo.filetype == "netrw" then
-    vim.cmd("Rex")
-  else
-    local prev_search = vim.fn.getreg("/")
-    vim.cmd('let @/ = expand("%:t")')
-    vim.cmd("Ex")
-    vim.cmd("normal n")
-    vim.cmd('let @/ = "' .. prev_search .. '"')
-  end
-end, { desc = "Open file picker" })
-
 vim.keymap.set("n", "<leader>q",function()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do
