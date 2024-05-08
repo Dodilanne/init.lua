@@ -1,5 +1,6 @@
 local lsps = {
   "bashls",
+  "biome",
   "cssls",
   "emmet_language_server",
   "eslint",
@@ -104,13 +105,41 @@ return {
 
       require("lspconfig").aiken.setup({})
 
+      local null_ls = require("null-ls")
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.biome.with({
+            condition = function()
+              return require("null-ls.utils").root_pattern("biome.json", "biome.jsonc")(vim.api.nvim_buf_get_name(0)) ~= nil
+            end,
+          }),
+          null_ls.builtins.formatting.prettier.with({
+            condition = function()
+              return require("null-ls.utils").root_pattern(
+                ".prettierrc",
+                ".prettierrc.json",
+                ".prettierrc.yml",
+                ".prettierrc.yaml",
+                ".prettierrc.json5",
+                ".prettierrc.js",
+                ".prettierrc.cjs",
+                ".prettierrc.toml",
+                "prettier.config.js",
+                "prettier.config.cjs"
+              )(vim.api.nvim_buf_get_name(0)) ~= nil
+            end,
+          }),
+        },
+      })
+
       require("mason-null-ls").setup({
         ensure_installed = linters_and_formatters,
         automatic_installation = false,
-        handlers = {},
+        handlers = {
+          prettier = function() end,
+          biome = function() end,
+        },
       })
-
-      require("null-ls").setup()
     end,
     dependencies = {
       "williamboman/mason.nvim",
