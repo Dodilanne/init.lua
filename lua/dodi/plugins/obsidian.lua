@@ -3,7 +3,7 @@ return {
     "epwalsh/obsidian.nvim",
     version = "*",
     keys = {
-      { "<leader>oj", "<cmd>ObsidianToday<cr>", desc = "Open today's daily note" },
+      { "<leader>oo", "<cmd>ObsidianToday<cr>", desc = "Open today's daily note" },
       { "<leader>oy", "<cmd>ObsidianYesterday<cr>", desc = "Open yesterday's daily note" },
       { "<leader>ot", "<cmd>ObsidianTomorrow<cr>", desc = "Open tomorrow's daily note" },
       { "<leader>oc", "<cmd>ObsidianToggleCheckbox<cr>", desc = "Cycle through checkbox options" },
@@ -25,6 +25,7 @@ return {
           path = "~/vaults/personal",
         },
       },
+      open_notes_in = "hsplit",
       ui = {
         checkboxes = {
           [" "] = { order = 1001, char = "󰄱", hl_group = "ObsidianTodo" },
