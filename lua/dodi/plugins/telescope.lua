@@ -23,9 +23,29 @@ return {
       {
         "<leader>f",
         function()
-          require("telescope.builtin").find_files()
+          require("telescope.builtin").find_files({
+            find_command = {
+              "rg",
+              "--files",
+              "--hidden",
+            },
+          })
         end,
         desc = "Open file picker in root dir",
+      },
+      {
+        "<leader>.",
+        function()
+          require("telescope.builtin").find_files({
+            find_command = {
+              "rg",
+              "--files",
+              "-g",
+              "**/.env*",
+            },
+          })
+        end,
+        desc = "Search env files",
       },
       {
         "<leader>F",

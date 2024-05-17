@@ -23,6 +23,9 @@ return {
       },
     },
     opts = {
+      mappings = {
+        go_in_plus = "<enter>",
+      },
       windows = {
         preview = true,
         width_preview = 80,

@@ -54,7 +54,6 @@ return {
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Goto next diagnostic", buffer = bufnr })
         vim.keymap.set("n", "<leader>x", function()
           if vim.fn.exists(":EslintFixAll") > 0 then
-            print("Fixing eslint errors")
             vim.cmd("EslintFixAll")
           end
           vim.lsp.buf.format()

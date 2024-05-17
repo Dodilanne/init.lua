@@ -1,5 +1,5 @@
 local theme = {
-  dark = "rose-pine",
+  dark = "bamboo",
   light = "rose-pine",
 }
 
@@ -7,6 +7,10 @@ local themes = {
   {
     name = "rose-pine",
     plugin = "rose-pine/neovim",
+  },
+  {
+    name = "srcery",
+    plugin = "srcery-colors/srcery-vim",
   },
   {
     name = "bamboo",
@@ -63,7 +67,10 @@ local function insert_current_theme(t)
     name = t.name,
     priority = 1001,
     config = function()
-      require(t.name).setup(t.opts or {})
+      local ok, plugin = pcall(require, t.name)
+      if ok then
+        plugin.setup(t.opts or {})
+      end
       vim.cmd("colorscheme " .. t.name)
     end,
   })
