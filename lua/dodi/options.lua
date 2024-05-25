@@ -37,3 +37,4 @@ vim.opt.matchpairs:append("<:>")
 vim.opt.conceallevel = 2
 
 vim.g.netrw_banner = 0
+

@@ -24,7 +24,6 @@ local linters_and_formatters = {
   "jq",
   "php-cs-fixer",
   "prettier",
-  "sqlfmt",
   "stylua",
 }
 
