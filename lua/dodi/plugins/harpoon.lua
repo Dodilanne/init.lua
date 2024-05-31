@@ -33,21 +33,21 @@ return {
         desc = "Navigate 1",
       },
       {
-        "<leader>hr",
+        "<leader>hs",
         function()
           require("harpoon.ui").nav_file(2)
         end,
         desc = "Navigate 2",
       },
       {
-        "<leader>hs",
+        "<leader>hd",
         function()
           require("harpoon.ui").nav_file(3)
         end,
         desc = "Navigate 3",
       },
       {
-        "<leader>ht",
+        "<leader>hf",
         function()
           require("harpoon.ui").nav_file(4)
         end,
@@ -75,14 +75,14 @@ return {
         desc = "Navigate 7",
       },
       {
-        "<leader>hd",
+        "<leader>hv",
         function()
           require("harpoon.ui").nav_file(8)
         end,
         desc = "Navigate 8",
       },
       {
-        "<leader>hv",
+        "<leader>hb",
         function()
           require("harpoon.ui").nav_file(9)
         end,
