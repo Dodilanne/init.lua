@@ -102,10 +102,12 @@ return {
       })
 
       require("lspconfig").aiken.setup({})
+      require("lspconfig").gdscript.setup({})
 
       local null_ls = require("null-ls")
       null_ls.setup({
         sources = {
+          null_ls.builtins.formatting.gdformat,
           null_ls.builtins.formatting.biome.with({
             condition = function()
               return require("null-ls.utils").root_pattern("biome.json", "biome.jsonc")(vim.api.nvim_buf_get_name(0)) ~= nil
