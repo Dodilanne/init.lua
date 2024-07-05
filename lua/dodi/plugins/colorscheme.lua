@@ -1,5 +1,5 @@
 local theme = {
-  dark = "rose-pine",
+  dark = "lackluster",
   light = "rose-pine",
 }
 
@@ -7,6 +7,19 @@ local themes = {
   {
     name = "rose-pine",
     plugin = "rose-pine/neovim",
+  },
+  {
+    name = "lackluster",
+    plugin = "slugbyte/lackluster.nvim",
+    opts = {
+      theme = "mint",
+      tweak_background = {
+        normal = "#0a0a0a",
+        menu = "#0a0a0a",
+        popup = "#0a0a0a",
+        telescope = "#0a0a0a",
+      },
+    },
   },
   {
     name = "srcery",
