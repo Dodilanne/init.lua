@@ -10,9 +10,9 @@ local themes = {
   },
   {
     name = "lackluster",
+    colorscheme = "lackluster-hack",
     plugin = "slugbyte/lackluster.nvim",
     opts = {
-      theme = "mint",
       tweak_background = {
         normal = "#0a0a0a",
         menu = "#0a0a0a",
@@ -84,7 +84,7 @@ local function insert_current_theme(t)
       if ok then
         plugin.setup(t.opts or {})
       end
-      vim.cmd("colorscheme " .. t.name)
+      vim.cmd("colorscheme " .. (t.colorscheme or t.name))
     end,
   })
 end
