@@ -12,14 +12,7 @@ local themes = {
     name = "lackluster",
     colorscheme = "lackluster-hack",
     plugin = "slugbyte/lackluster.nvim",
-    opts = {
-      tweak_background = {
-        normal = "#0a0a0a",
-        menu = "#0a0a0a",
-        popup = "#0a0a0a",
-        telescope = "#0a0a0a",
-      },
-    },
+    config = true,
   },
   {
     name = "srcery",
@@ -51,26 +44,6 @@ local themes = {
 }
 
 local M = {
-  {
-    "f-person/auto-dark-mode.nvim",
-    priority = 1000,
-    lazy = false,
-    config = function()
-      local auto_dark_mode = require("auto-dark-mode")
-
-      auto_dark_mode.setup({
-        update_interval = 1000,
-        set_dark_mode = function()
-          vim.api.nvim_set_option("background", "dark")
-        end,
-        set_light_mode = function()
-          vim.api.nvim_set_option("background", "light")
-        end,
-      })
-
-      auto_dark_mode.init()
-    end,
-  },
 }
 
 local function insert_current_theme(t)
@@ -90,9 +63,10 @@ local function insert_current_theme(t)
 end
 
 for _, t in pairs(themes) do
-  if t.name == theme.dark and os.getenv("NEOVIM_BACKGROUND") == "dark" then
+  local preset = os.getenv("NEOVIM_BACKGROUND") or "dark"
+  if t.name == theme.dark and preset == "dark" then
     insert_current_theme(t)
-  elseif t.name == theme.light and os.getenv("NEOVIM_BACKGROUND") == "light" then
+  elseif t.name == theme.light and preset == "light" then
     insert_current_theme(t)
   else
     table.insert(M, { t.plugin, lazy = true, name = t.name })
