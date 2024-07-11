@@ -1,5 +1,5 @@
 local theme = {
-  dark = "lackluster",
+  dark = "kanagawa",
   light = "rose-pine",
 }
 
@@ -43,8 +43,7 @@ local themes = {
   },
 }
 
-local M = {
-}
+local M = {}
 
 local function insert_current_theme(t)
   table.insert(M, {
