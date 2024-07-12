@@ -25,6 +25,7 @@ local linters_and_formatters = {
   "php-cs-fixer",
   "prettier",
   "stylua",
+  "shfmt",
 }
 
 return {
