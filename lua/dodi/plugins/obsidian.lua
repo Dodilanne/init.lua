@@ -22,7 +22,7 @@ return {
       workspaces = {
         {
           name = "personal",
-          path = "~/vaults/personal",
+          path = "~/Documents/vaults/personal",
         },
       },
       open_notes_in = "hsplit",

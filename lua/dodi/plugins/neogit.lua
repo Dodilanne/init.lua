@@ -8,7 +8,7 @@ return {
     },
     config = true,
     keys = {
-      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit status" },
+      { "<leader>gu", "<cmd>Neogit<cr>", desc = "Neogit status" },
     },
   },
 }
