@@ -2,8 +2,10 @@ local lsps = {
   "bashls",
   "biome",
   "cssls",
+  "denols",
   "emmet_language_server",
   "eslint",
+  "gopls",
   "html",
   "htmx",
   "intelephense",
@@ -11,10 +13,9 @@ local lsps = {
   "prismals",
   "rust_analyzer",
   "svelte",
+  "templ",
   "tsserver",
   "vimls",
-  "gopls",
-  "templ",
 }
 
 local linters_and_formatters = {
@@ -82,6 +83,20 @@ return {
         ensure_installed = lsps,
         handlers = {
           lsp_zero.default_setup,
+
+          tsserver = function()
+            require("lspconfig").tsserver.setup({
+              root_dir = require("lspconfig.util").root_pattern("tsconfig.json", "package.json"),
+              single_file_support = false,
+            })
+          end,
+
+          denols = function()
+            require("lspconfig").denols.setup({
+              root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+            })
+          end,
+
           lua_ls = function()
             local lua_opts = lsp_zero.nvim_lua_ls({
               on_init = function(client)
@@ -91,6 +106,7 @@ return {
             })
             require("lspconfig").lua_ls.setup(lua_opts)
           end,
+
           eslint = function()
             require("lspconfig").eslint.setup({
               on_init = function(client)
