@@ -71,7 +71,7 @@ return {
       {
         "<leader>s",
         function()
-          require("telescope.builtin").lsp_document_symbols()
+          require("telescope.builtin").lsp_document_symbols({})
         end,
         desc = "Open symbol picker",
       },

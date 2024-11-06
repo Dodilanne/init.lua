@@ -1,5 +1,6 @@
 local lsps = {
   "bashls",
+  "volar",
   "biome",
   "cssls",
   "denols",
@@ -7,14 +8,13 @@ local lsps = {
   "eslint",
   "gopls",
   "html",
-  "htmx",
   "intelephense",
   "lua_ls",
+  "ts_ls",
   "prismals",
   "rust_analyzer",
   "svelte",
   "templ",
-  "tsserver",
   "vimls",
 }
 
@@ -84,8 +84,8 @@ return {
         handlers = {
           lsp_zero.default_setup,
 
-          tsserver = function()
-            require("lspconfig").tsserver.setup({
+          ts_ls = function()
+            require("lspconfig").ts_ls.setup({
               root_dir = require("lspconfig.util").root_pattern("tsconfig.json", "package.json"),
               single_file_support = false,
             })
@@ -94,6 +94,22 @@ return {
           denols = function()
             require("lspconfig").denols.setup({
               root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+              filetypes = {
+                "javascript",
+                "javascriptreact",
+                "javascript.jsx",
+                "typescript",
+                "typescriptreact",
+                "typescript.tsx",
+                "json",
+                "jsonc",
+              },
+            })
+          end,
+
+          volar = function()
+            require("lspconfig").volar.setup({
+              filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
             })
           end,
 
