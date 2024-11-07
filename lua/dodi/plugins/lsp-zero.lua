@@ -1,6 +1,5 @@
 local lsps = {
   "bashls",
-  "volar",
   "biome",
   "cssls",
   "denols",

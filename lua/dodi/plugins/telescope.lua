@@ -27,7 +27,7 @@ return {
             find_command = {
               "rg",
               "--files",
-              "--hidden",
+              -- "--hidden",
             },
           })
         end,
