@@ -5,9 +5,14 @@ return {
       { "<leader>R", "<cmd>lua require('spectre').toggle()<cr>", desc = "Search and replace" },
     },
     opts = {
-      default = {
-        replace = {
-          cmd = "sd",
+      replace_engine = {
+        sed = {
+          cmd = "sed",
+          args = {
+            "-i",
+            "",
+            "-E",
+          },
         },
       },
     },
