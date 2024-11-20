@@ -1,6 +1,6 @@
 local theme = {
   dark = "kanagawa",
-  light = "rose-pine",
+  light = "bamboo",
 }
 
 local themes = {
