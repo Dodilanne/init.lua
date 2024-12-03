@@ -12,7 +12,7 @@ local themes = {
     name = "lackluster",
     colorscheme = "lackluster-hack",
     plugin = "slugbyte/lackluster.nvim",
-    config = true,
+    opts = {},
   },
   {
     name = "srcery",
@@ -43,7 +43,22 @@ local themes = {
   },
 }
 
-local M = {}
+local M = {
+  {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+      update_interval = 1000,
+      set_dark_mode = function()
+        vim.cmd("colorscheme " .. theme.dark)
+        vim.api.nvim_set_option_value("background", "dark", {})
+      end,
+      set_light_mode = function()
+        vim.cmd("colorscheme " .. theme.light)
+        vim.api.nvim_set_option_value("background", "light", {})
+      end,
+    },
+  },
+}
 
 local function insert_current_theme(t)
   table.insert(M, {
@@ -68,7 +83,7 @@ for _, t in pairs(themes) do
   elseif t.name == theme.light and preset == "light" then
     insert_current_theme(t)
   else
-    table.insert(M, { t.plugin, lazy = true, name = t.name })
+    table.insert(M, { t.plugin, lazy = true, name = t.name, opts = t.opts })
   end
 end
 
