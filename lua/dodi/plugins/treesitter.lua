@@ -38,6 +38,13 @@ return {
       local configs = require("nvim-treesitter.configs")
 
       local list = require("nvim-treesitter.parsers").get_parser_configs()
+      list.reason = {
+        install_info = {
+          url = "https://github.com/reasonml-editor/tree-sitter-reason",
+          files = { "src/parser.c", "src/scanner.c" },
+          branch = "master",
+        },
+      }
       list.d2 = {
         install_info = {
           url = "https://github.com/pleshevskiy/tree-sitter-d2",
@@ -60,6 +67,13 @@ return {
           d2 = "d2",
         },
       })
+      vim.filetype.add({
+        extension = {
+          re = "reason",
+        },
+      })
+      -- (Sometimes required): Tells neovim to load reason
+      vim.treesitter.language.add("reason", { filetype = "reason" })
     end,
   },
   {

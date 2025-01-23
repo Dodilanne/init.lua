@@ -1,12 +1,16 @@
 local theme = {
   dark = "kanagawa",
-  light = "bamboo",
+  light = "rose-pine",
 }
 
 local themes = {
   {
     name = "rose-pine",
     plugin = "rose-pine/neovim",
+  },
+  {
+    name = "catppuccin",
+    plugin = "catppuccin/nvim",
   },
   {
     name = "lackluster",
@@ -76,8 +80,17 @@ local function insert_current_theme(t)
   })
 end
 
+local preset = os.getenv("NEOVIM_BACKGROUND") or "dark"
+-- local handle = io.popen("dark-mode status", "r")
+-- if handle then
+--   local status = handle:read("*l")
+--   if status == "off" then
+--     preset = "light"
+--   end
+--   handle:close()
+-- end
+
 for _, t in pairs(themes) do
-  local preset = os.getenv("NEOVIM_BACKGROUND") or "dark"
   if t.name == theme.dark and preset == "dark" then
     insert_current_theme(t)
   elseif t.name == theme.light and preset == "light" then

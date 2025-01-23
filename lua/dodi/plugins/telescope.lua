@@ -8,11 +8,7 @@ return {
     },
     opts = {
       defaults = {
-        layout_config = {
-          horizontal = {
-            width = 0.95,
-          },
-        },
+        layout_strategy = "flex",
       },
     },
     config = function(_, opts)

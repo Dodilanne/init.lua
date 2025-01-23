@@ -57,7 +57,11 @@ vim.keymap.set(
   { desc = "Add stringified console log on next line" }
 )
 
-vim.keymap.set("n", "<leader>q",function()
+vim.keymap.set("n", "<leader>t", function()
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"nyiwOconsole.time("<C-r>n");<Esc>joconsole.timeEnd("<C-r>n");<Esc>', true, false, true))
+end, { desc = "Add console log on next line" })
+
+vim.keymap.set("n", "<leader>q", function()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do
     if win["quickfix"] == 1 then
@@ -65,13 +69,13 @@ vim.keymap.set("n", "<leader>q",function()
     end
   end
   if qf_exists == true then
-    vim.cmd "cclose"
+    vim.cmd("cclose")
     return
   end
   if not vim.tbl_isempty(vim.fn.getqflist()) then
-    vim.cmd "copen"
+    vim.cmd("copen")
   end
 end, { desc = "Toggle quickfix list" })
 
-vim.keymap.set("n", "]q","<cmd>cnext<cr>", { desc = "cnext" })
-vim.keymap.set("n", "[q","<cmd>cprev<cr>", { desc = "cprev" })
+vim.keymap.set("n", "]q", "<cmd>cnext<cr>", { desc = "cnext" })
+vim.keymap.set("n", "[q", "<cmd>cprev<cr>", { desc = "cprev" })
