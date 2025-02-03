@@ -135,6 +135,7 @@ return {
 
       require("lspconfig").aiken.setup({})
       require("lspconfig").gdscript.setup({})
+      require("lspconfig").gleam.setup({})
 
       local null_ls = require("null-ls")
       null_ls.setup({

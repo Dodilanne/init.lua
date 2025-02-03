@@ -20,10 +20,27 @@ return {
         "<leader>f",
         function()
           require("telescope.builtin").find_files({
+            prompt_title = "Find Tracked Files",
             find_command = {
               "rg",
               "--files",
-              -- "--hidden",
+            },
+          })
+        end,
+        desc = "Open file picker in root dir",
+      },
+      {
+        "<leader><leader>f",
+        function()
+          require("telescope.builtin").find_files({
+            prompt_title = "Find All Files",
+            find_command = {
+              "rg",
+              "--files",
+              "--hidden",
+              "--no-ignore",
+              "--glob",
+              "!**/.git",
             },
           })
         end,
@@ -33,11 +50,12 @@ return {
         "<leader>.",
         function()
           require("telescope.builtin").find_files({
+            prompt_title = "Find Dotfiles",
             find_command = {
               "rg",
               "--files",
               "-g",
-              "**/.env*",
+              "**/.*",
             },
           })
         end,
@@ -54,6 +72,20 @@ return {
         "<leader>/",
         function()
           require("telescope.builtin").live_grep()
+        end,
+        desc = "Global search in root dir",
+      },
+      {
+        "<leader><leader>/",
+        function()
+          require("telescope.builtin").live_grep({
+            additional_args = {
+              "--hidden",
+              "--no-ignore",
+              "--glob",
+              "!**/.git",
+            },
+          })
         end,
         desc = "Global search in root dir",
       },
