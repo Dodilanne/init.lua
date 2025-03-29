@@ -1,97 +1,37 @@
 return {
   {
     "ThePrimeagen/harpoon",
+    branch = "harpoon2",
     opts = {
-      tabline = false,
-      menu = { width = math.ceil(vim.api.nvim_win_get_width(0) * 0.8) },
+      settings = {
+        save_on_ui_close = true,
+        save_on_toggle = true,
+      },
     },
     config = function(_, opts)
-      require("harpoon").setup(opts)
-      require("telescope").load_extension("harpoon")
+      local harpoon = require("harpoon")
+      harpoon:setup(opts)
+
+      local harpoon_extensions = require("harpoon.extensions")
+      harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
+
+      vim.keymap.set("n", "<leader>hg", function()
+        harpoon:list():add()
+      end, { desc = "Add mark" })
+
+      vim.keymap.set("n", "<leader>he", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end, { desc = "Open quick menu" })
+
+      local keys = { "a", "r", "s", "t", "z", "x", "c", "d", "v" }
+      for idx, key in pairs(keys) do
+        vim.keymap.set("n", "<leader>h" .. key, function()
+          harpoon:list():select(idx)
+        end, { desc = "Navigate to " .. idx })
+      end
     end,
-    keys = {
-      {
-        "<leader>hg",
-        function()
-          require("harpoon.mark").add_file()
-        end,
-        desc = "Add mark",
-      },
-      {
-        "<leader>he",
-        function()
-          require("harpoon.ui").toggle_quick_menu()
-        end,
-        desc = "Open quick menu",
-      },
-      { "<leader>hf", ":Telescope harpoon marks<cr>", desc = "Open mark picker" },
-      {
-        "<leader>ha",
-        function()
-          require("harpoon.ui").nav_file(1)
-        end,
-        desc = "Navigate 1",
-      },
-      {
-        "<leader>hr",
-        function()
-          require("harpoon.ui").nav_file(2)
-        end,
-        desc = "Navigate 2",
-      },
-      {
-        "<leader>hs",
-        function()
-          require("harpoon.ui").nav_file(3)
-        end,
-        desc = "Navigate 3",
-      },
-      {
-        "<leader>ht",
-        function()
-          require("harpoon.ui").nav_file(4)
-        end,
-        desc = "Navigate 4",
-      },
-      {
-        "<leader>hz",
-        function()
-          require("harpoon.ui").nav_file(5)
-        end,
-        desc = "Navigate 5",
-      },
-      {
-        "<leader>hx",
-        function()
-          require("harpoon.ui").nav_file(6)
-        end,
-        desc = "Navigate 6",
-      },
-      {
-        "<leader>hc",
-        function()
-          require("harpoon.ui").nav_file(7)
-        end,
-        desc = "Navigate 7",
-      },
-      {
-        "<leader>hd",
-        function()
-          require("harpoon.ui").nav_file(8)
-        end,
-        desc = "Navigate 8",
-      },
-      {
-        "<leader>hv",
-        function()
-          require("harpoon.ui").nav_file(9)
-        end,
-        desc = "Navigate 9",
-      },
-    },
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
     },
   },
 }
