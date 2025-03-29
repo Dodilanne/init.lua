@@ -26,6 +26,7 @@ local linters_and_formatters = {
   "prettier",
   "stylua",
   "shfmt",
+  "gdtoolkit",
 }
 
 return {

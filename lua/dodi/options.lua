@@ -38,3 +38,8 @@ vim.opt.conceallevel = 2
 
 vim.g.netrw_banner = 0
 
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
