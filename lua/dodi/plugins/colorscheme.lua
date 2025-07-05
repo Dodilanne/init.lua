@@ -7,9 +7,6 @@ local themes = {
   {
     name = "kanso",
     plugin = "webhooked/kanso.nvim",
-    opts = {
-      theme = "zen",
-    },
   },
   {
     name = "rose-pine",
