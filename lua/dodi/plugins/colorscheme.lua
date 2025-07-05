@@ -1,9 +1,16 @@
 local theme = {
-  dark = "kanagawa",
-  light = "rose-pine",
+  dark = "kanso",
+  light = "kanso",
 }
 
 local themes = {
+  {
+    name = "kanso",
+    plugin = "webhooked/kanso.nvim",
+    opts = {
+      theme = "zen",
+    },
+  },
   {
     name = "rose-pine",
     plugin = "rose-pine/neovim",

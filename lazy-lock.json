@@ -19,6 +19,7 @@
   "harpoon": { "branch": "harpoon2", "commit": "ed1f853847ffd04b2b61c314865665e1dadf22c7" },
   "hydra.nvim": { "branch": "main", "commit": "f4ad21b530f4bd4c561e45bec4b53c07c8082dc3" },
   "kanagawa": { "branch": "master", "commit": "709018d5af92d2e5780bfb8a6d36e9cad01a6402" },
+  "kanso": { "branch": "main", "commit": "748023fd273782e6e056620ce66a176532cdf375" },
   "lackluster": { "branch": "main", "commit": "662fba7e6719b7afc155076385c00d79290bc347" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "leap.nvim": { "branch": "main", "commit": "346a16ef942635a8ca5ff92e603d07e7e8be6cbe" },
