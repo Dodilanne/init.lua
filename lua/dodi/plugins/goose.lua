@@ -1,6 +1,7 @@
 return {
   {
     "azorng/goose.nvim",
+    enabled = false,
     opts = {
       prefered_picker = "telescope",
       default_global_keymaps = false, -- If false, disables all default global keymaps
