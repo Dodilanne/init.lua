@@ -18,6 +18,11 @@ local themes = {
   {
     name = "rose-pine",
     plugin = "rose-pine/neovim",
+    opts = {
+      styles = {
+        transparency = true
+      }
+    }
   },
   {
     name = "catppuccin",
@@ -52,7 +57,8 @@ local themes = {
     name = "kanagawa",
     plugin = "rebelot/kanagawa.nvim",
     opts = {
-      background = { dark = "dragon", light = "lotus" },
+      transparent = true,
+      background = { dark = "wave", light = "lotus" },
       colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
     },
   },

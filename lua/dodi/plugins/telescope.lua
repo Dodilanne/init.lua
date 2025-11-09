@@ -41,6 +41,8 @@ return {
               "--no-ignore",
               "--glob",
               "!**/.git",
+              "--glob",
+              "!**/node_modules",
             },
           })
         end,
@@ -84,6 +86,8 @@ return {
               "--no-ignore",
               "--glob",
               "!**/.git",
+              "--glob",
+              "!**/node_modules",
             },
           })
         end,

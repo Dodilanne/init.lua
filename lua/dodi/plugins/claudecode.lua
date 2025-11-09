@@ -4,11 +4,12 @@ return {
     dependencies = { "folke/snacks.nvim" },
     config = true,
     opts = {
+      terminal_cmd = "~/.claude/local/claude",
       terminal = {
         snacks_win_opts = {
           position = "right",
-          width = 0.4,
-          height = 1.0,
+          width = 80,
+          height = 1,
           border = "rounded",
           keys = {
             claude_hide = {
@@ -22,15 +23,18 @@ return {
           },
         },
       },
+      diff_opts = {
+        keep_terminal_focus = true,
+      },
     },
     keys = {
       { "<leader>i", nil, desc = "AI/Claude Code" },
-      { "<leader>ic", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+      { "<leader>it", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
       { "<leader>if", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
       { "<leader>ir", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
-      { "<leader>iC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+      { "<leader>ic", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
       { "<leader>im", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
-      { "<leader>ib", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+      { "<leader>ig", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
       { "<leader>is", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
       {
         "<leader>is",

@@ -107,6 +107,13 @@ return {
             })
           end,
 
+          biome = function()
+            require("lspconfig").biome.setup({
+              cmd = { "npx", "biome", "lsp-proxy" },
+              root_dir = require("lspconfig.util").root_pattern("biome.json", "biome.jsonc"),
+            })
+          end,
+
           volar = function()
             require("lspconfig").volar.setup({
               filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
