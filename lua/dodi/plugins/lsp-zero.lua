@@ -19,14 +19,11 @@ local lsps = {
 
 local linters_and_formatters = {
   "phpcs",
-  "black",
-  "beautysh",
   "jq",
   "php-cs-fixer",
   "prettier",
   "stylua",
   "shfmt",
-  "gdtoolkit",
 }
 
 return {
