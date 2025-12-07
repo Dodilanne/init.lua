@@ -69,6 +69,7 @@ return {
           completeopt = "menu,menuone,noinsert",
         },
         sources = {
+          { name = "vim-dadbod-completion" },
           { name = "nvim_lsp" },
           { name = "buffer" },
         },
