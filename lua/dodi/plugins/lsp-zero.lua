@@ -7,20 +7,14 @@ local lsps = {
   "eslint",
   "gopls",
   "html",
-  "intelephense",
   "lua_ls",
   "ts_ls",
-  "prismals",
   "rust_analyzer",
   "svelte",
-  "templ",
   "vimls",
 }
 
 local linters_and_formatters = {
-  "phpcs",
-  "jq",
-  "php-cs-fixer",
   "prettier",
   "stylua",
   "shfmt",
@@ -43,7 +37,6 @@ return {
           preserve_mappings = false,
           exclude = { "<F2>", "<F3>", "<F4>", "gl", "[d", "]d" },
         })
-        -- lsp_zero.buffer_autoformat()
 
         -- Add lsp related keymaps
         vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Perform code action", buffer = bufnr })
