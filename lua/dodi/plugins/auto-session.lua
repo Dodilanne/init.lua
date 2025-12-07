@@ -1,3 +1,6 @@
 return {
-  { "rmagatti/auto-session", config = true },
+  {
+    "rmagatti/auto-session",
+    config = true,
+  },
 }

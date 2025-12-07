@@ -5,17 +5,6 @@ local theme = {
 
 local themes = {
   {
-    name = "kanso",
-    plugin = "webhooked/kanso.nvim",
-    opts = {
-      theme = "zen",
-      background = {
-        dark = "zen",
-        light = "pearl",
-      },
-    },
-  },
-  {
     name = "rose-pine",
     plugin = "rose-pine/neovim",
     opts = {
@@ -23,35 +12,6 @@ local themes = {
         transparency = true
       }
     }
-  },
-  {
-    name = "catppuccin",
-    plugin = "catppuccin/nvim",
-  },
-  {
-    name = "lackluster",
-    colorscheme = "lackluster-hack",
-    plugin = "slugbyte/lackluster.nvim",
-    opts = {},
-  },
-  {
-    name = "srcery",
-    plugin = "srcery-colors/srcery-vim",
-  },
-  {
-    name = "bamboo",
-    plugin = "ribru17/bamboo.nvim",
-  },
-  {
-    name = "ayu",
-    plugin = "Shatur/neovim-ayu",
-    opts = {
-      overrides = function()
-        local colors = require("ayu.colors")
-        colors.generate()
-        return { LineNr = { fg = colors.comment } }
-      end,
-    },
   },
   {
     name = "kanagawa",
@@ -98,15 +58,6 @@ local function insert_current_theme(t)
 end
 
 local preset = os.getenv("NEOVIM_BACKGROUND") or "dark"
--- local handle = io.popen("dark-mode status", "r")
--- if handle then
---   local status = handle:read("*l")
---   if status == "off" then
---     preset = "light"
---   end
---   handle:close()
--- end
-
 for _, t in pairs(themes) do
   if t.name == theme.dark and preset == "dark" then
     insert_current_theme(t)
