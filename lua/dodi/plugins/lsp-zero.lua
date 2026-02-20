@@ -1,7 +1,6 @@
 local lsps = {
   "bashls",
   "biome",
-  "cssls",
   "denols",
   "emmet_language_server",
   "eslint",
