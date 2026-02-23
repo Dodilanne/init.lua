@@ -142,6 +142,27 @@ return {
         end,
         desc = "Open workspace diagnostic picker",
       },
+      {
+        "<leader>gs",
+        function()
+          require("telescope.builtin").git_status()
+        end,
+        desc = "Open git changes picker",
+      },
+      {
+        "<leader>k",
+        function()
+          require("telescope.builtin").keymaps()
+        end,
+        desc = "Open keymap picker",
+      },
+      {
+        "<leader>m",
+        function()
+          require("telescope.builtin").help_tags()
+        end,
+        desc = "Open help tag picker",
+      },
     },
   },
 }
