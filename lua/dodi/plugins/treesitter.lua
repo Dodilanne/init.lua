@@ -24,6 +24,7 @@ local parsers = {
   "sql",
   "xml",
   "go",
+  "python",
 }
 
 return {

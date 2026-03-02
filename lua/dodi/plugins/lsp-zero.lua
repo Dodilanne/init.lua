@@ -11,12 +11,14 @@ local lsps = {
   "rust_analyzer",
   "svelte",
   "vimls",
+  "pyright",
 }
 
 local linters_and_formatters = {
   "prettier",
   "stylua",
   "shfmt",
+  "black",
 }
 
 return {
