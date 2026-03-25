@@ -1,6 +1,6 @@
 local theme = {
-  dark = "kanagawa",
-  light = "rose-pine",
+  dark = "kanso",
+  light = "kanso",
 }
 
 local themes = {
@@ -9,17 +9,31 @@ local themes = {
     plugin = "rose-pine/neovim",
     opts = {
       styles = {
-        transparency = true
-      }
-    }
+        transparency = true,
+      },
+    },
   },
   {
     name = "kanagawa",
     plugin = "rebelot/kanagawa.nvim",
     opts = {
       transparent = true,
-      background = { dark = "wave", light = "lotus" },
+      background = {
+        dark = "wave",
+        light = "lotus",
+      },
       colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
+    },
+  },
+  {
+    name = "kanso",
+    plugin = "webhooked/kanso.nvim",
+    opts = {
+      transparent = true,
+      background = {
+        dark = "ink",
+        light = "pearl",
+      },
     },
   },
 }
