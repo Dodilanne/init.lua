@@ -21,10 +21,10 @@ vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>", { desc = "Increment", silent
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- I'm a compulsive saver
-vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "Write file" })
+vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Write file" })
 
 -- I'm a compulsive quitter
-vim.keymap.set("n", "<leader>z", ":wa<cr>:q<cr>", { desc = "Write all then quit" })
+vim.keymap.set("n", "<leader>z", "<cmd>wa<cr><cmd>q<cr>", { desc = "Write all then quit" })
 
 -- console.log debugging whoohoo!
 
