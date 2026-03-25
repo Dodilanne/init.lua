@@ -19,6 +19,7 @@ local linters_and_formatters = {
   "stylua",
   "shfmt",
   "black",
+  "gdtoolkit",
 }
 
 return {
