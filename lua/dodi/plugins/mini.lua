@@ -1,11 +1,5 @@
 return {
   {
-    "echasnovski/mini.pairs",
-    version = false,
-    event = "InsertEnter",
-    config = true,
-  },
-  {
     "echasnovski/mini.files",
     version = "*",
     keys = {
