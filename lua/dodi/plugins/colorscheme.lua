@@ -30,8 +30,13 @@ local themes = {
     plugin = "webhooked/kanso.nvim",
     opts = {
       transparent = true,
+      minimal = true,
+      foreground = {
+        dark = "saturated",
+        light = "saturated",
+      },
       background = {
-        dark = "ink",
+        dark = "mist",
         light = "pearl",
       },
     },
