@@ -36,7 +36,7 @@ local themes = {
         light = "saturated",
       },
       background = {
-        dark = "mist",
+        dark = "zen",
         light = "pearl",
       },
     },
