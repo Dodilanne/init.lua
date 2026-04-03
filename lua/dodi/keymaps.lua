@@ -28,21 +28,27 @@ vim.keymap.set("n", "<leader>z", "<cmd>wa<cr><cmd>q<cr>", { desc = "Write all th
 
 -- console.log debugging whoohoo!
 
-local debug_log = function(yank_motion)
+local debug_log = function(yank_motion, mode)
   if vim.bo.filetype == "lua" then
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oprint("<C-r>n " .. <C-r>n)<Esc>', true, false, true))
   elseif vim.bo.filetype == "go" then
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oprintln("<C-r>n", <C-r>n)<Esc>', true, false, true))
+  elseif vim.bo.filetype == "dart" then
+    if mode == "v" then
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. "oprint('<C-r>n: ${<C-r>n}');<Esc>", true, false, true))
+    else
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. "oprint('<C-r>n: $<C-r>n');<Esc>", true, false, true))
+    end
   else
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oconsole.log("<C-r>n", <C-r>n);<Esc>', true, false, true))
   end
 end
 
 vim.keymap.set("n", "<leader>l", function()
-  debug_log("iw")
+  debug_log("iw", "n")
 end, { desc = "Add console log on next line" })
 vim.keymap.set("v", "<leader>l", function()
-  debug_log("")
+  debug_log("", "v")
 end, { desc = "Add console log on next line" })
 vim.keymap.set(
   "n",
