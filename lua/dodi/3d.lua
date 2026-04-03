@@ -49,12 +49,38 @@ THREED = function()
     y = vim.api.nvim_win_get_height(0) - padding.y,
   }
 
+  -- Ensure the origin is really at the center of the window
+  if dims.x % 2 == 0 then
+    dims.x = dims.x - 1
+  end
+  if dims.y % 2 == 0 then
+    dims.y = dims.y - 1
+  end
+
   if dims.x < 0 or dims.y < 0 then
     print("window too small")
     return
   end
 
-  vim.api.nvim_buf_set_lines(buf, 0, 1, false, { "0" })
+  -- Fill the window with spaces
+  local row_text = string.rep(" ", dims.x)
+  local empty_lines = {}
+  for _ = 1, dims.y do
+    table.insert(empty_lines, row_text)
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, dims.y, false, empty_lines)
+
+  local points = {
+    { x = 0, y = 0 },
+  }
+  for _, point in ipairs(points) do
+    local projected = {
+      x = point.x + math.floor(dims.x / 2),
+      y = point.y + math.floor(dims.y / 2),
+    }
+    vim.api.nvim_buf_set_text(buf, projected.y, projected.x, projected.y, projected.x, { "*" })
+  end
+
   vim.api.nvim_open_win(buf, true, {
     relative = "win",
     row = padding.y / 2,
@@ -62,6 +88,7 @@ THREED = function()
     width = dims.x,
     height = dims.y,
     border = "rounded",
+    style = "minimal",
   })
 
   vim.keymap.set("n", "<leader>t", toggle, { buffer = true })
