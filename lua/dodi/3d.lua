@@ -62,6 +62,37 @@ THREED = function()
     return
   end
 
+  local function project(point)
+    return {
+      math.floor(dims.x / 2) + point[1],
+      math.floor(dims.y / 2) - point[2],
+    }
+  end
+
+  local function render_point(point)
+    vim.api.nvim_buf_set_text(buf, point[2], point[1], point[2], point[1] + 1, { "*" })
+  end
+
+  local function render_line(s, e)
+    local denom = (e[1] - s[1])
+    if denom == 0 then
+      local p = { s[2], e[2] }
+      table.sort(p)
+      for y = p[1], p[2] do
+        render_point({ s[1], y })
+      end
+    else
+      local m = (e[2] - s[2]) / denom
+      local b = s[2] - (m * s[1])
+      local p = { s[1], e[1] }
+      table.sort(p)
+      for x = p[1], p[2] do
+        local y = math.ceil(m * x + b)
+        render_point({ x, y })
+      end
+    end
+  end
+
   -- Fill the window with spaces
   local row_text = string.rep(" ", dims.x)
   local empty_lines = {}
@@ -70,15 +101,15 @@ THREED = function()
   end
   vim.api.nvim_buf_set_lines(buf, 0, dims.y, false, empty_lines)
 
-  local points = {
-    { x = 0, y = 0 },
+  local lines = {
+    { 0, 0, 0, 5 },
+    { 0, 5, 10, 5 },
+    { 10, 5, 10, 0 },
+    { 10, 0, 0, 0 },
   }
-  for _, point in ipairs(points) do
-    local projected = {
-      x = point.x + math.floor(dims.x / 2),
-      y = point.y + math.floor(dims.y / 2),
-    }
-    vim.api.nvim_buf_set_text(buf, projected.y, projected.x, projected.y, projected.x, { "*" })
+
+  for _, line in ipairs(lines) do
+    render_line(project({ line[1], line[2] }), project({ line[3], line[4] }))
   end
 
   vim.api.nvim_open_win(buf, true, {
