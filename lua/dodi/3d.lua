@@ -1,4 +1,4 @@
----@type { timer: integer?, buf: integer }?
+---@type { timer: integer?, buf: integer, dims: {x: integer, y: integer}  }?
 local state = nil
 
 local stop = function()
@@ -32,6 +32,53 @@ local toggle = function()
   end
 end
 
+local round = function(v)
+  return v >= 0 and math.floor(v + 0.5) or math.ceil(v - 0.5)
+end
+
+local function project(point)
+  return {
+    point[1] / point[3],
+    point[2] / point[3],
+  }
+end
+
+local function screen(point)
+  assert(state)
+  return {
+    round((point[1] + 1) / 2 * state.dims.x),
+    round((point[2] + 1) / 2 * state.dims.y),
+  }
+end
+
+local function render_point(point)
+  assert(state)
+
+  if point[1] > 0 and point[2] > 0 and point[1] <= state.dims.x and point[2] <= state.dims.y then
+    vim.api.nvim_buf_set_text(state.buf, point[2], point[1], point[2], point[1] + 1, { "*" })
+  end
+end
+
+local function render_line(s, e)
+  local denom = (e[1] - s[1])
+  if denom == 0 then
+    local p = { s[2], e[2] }
+    table.sort(p)
+    for y = p[1], p[2] do
+      render_point({ s[1], y })
+    end
+  else
+    local m = (e[2] - s[2]) / denom
+    local b = s[2] - (m * s[1])
+    local p = { s[1], e[1] }
+    table.sort(p)
+    for x = p[1], p[2] do
+      local y = math.ceil(m * x + b)
+      render_point({ x, y })
+    end
+  end
+end
+
 THREED = function()
   local buf = vim.api.nvim_create_buf(false, true)
 
@@ -62,37 +109,6 @@ THREED = function()
     return
   end
 
-  local function project(point)
-    return {
-      math.floor(dims.x / 2) + point[1],
-      math.floor(dims.y / 2) - point[2],
-    }
-  end
-
-  local function render_point(point)
-    vim.api.nvim_buf_set_text(buf, point[2], point[1], point[2], point[1] + 1, { "*" })
-  end
-
-  local function render_line(s, e)
-    local denom = (e[1] - s[1])
-    if denom == 0 then
-      local p = { s[2], e[2] }
-      table.sort(p)
-      for y = p[1], p[2] do
-        render_point({ s[1], y })
-      end
-    else
-      local m = (e[2] - s[2]) / denom
-      local b = s[2] - (m * s[1])
-      local p = { s[1], e[1] }
-      table.sort(p)
-      for x = p[1], p[2] do
-        local y = math.ceil(m * x + b)
-        render_point({ x, y })
-      end
-    end
-  end
-
   -- Fill the window with spaces
   local row_text = string.rep(" ", dims.x)
   local empty_lines = {}
@@ -101,15 +117,42 @@ THREED = function()
   end
   vim.api.nvim_buf_set_lines(buf, 0, dims.y, false, empty_lines)
 
-  local lines = {
-    { 0, 0, 0, 5 },
-    { 0, 5, 10, 5 },
-    { 10, 5, 10, 0 },
-    { 10, 0, 0, 0 },
+  vim.keymap.set("n", "<leader>t", toggle, { buffer = true })
+
+  state = {
+    timer = nil,
+    buf = buf,
+    dims = dims,
   }
 
-  for _, line in ipairs(lines) do
-    render_line(project({ line[1], line[2] }), project({ line[3], line[4] }))
+  local vs = {
+    { -0.5, -0.5, 1 },
+    { -0.5, 0.5, 1 },
+    { 0.5, 0.5, 1 },
+    { 0.5, -0.5, 1 },
+
+    { -0.5, -0.5, 1.5 },
+    { -0.5, 0.5, 1.5 },
+    { 0.5, 0.5, 1.5 },
+    { 0.5, -0.5, 1.5 },
+  }
+
+  local fs = {
+    { 1, 2, 3, 4 },
+    { 5, 6, 7, 8 },
+    { 1, 5 },
+    { 2, 6 },
+    { 3, 7 },
+    { 4, 8 },
+  }
+
+  for _, f in ipairs(fs) do
+    for i, vi in ipairs(f) do
+      local s = screen(project(vs[vi]))
+      local ei = i + 1 > #f and 1 or i + 1
+      local e = screen(project(vs[f[ei]]))
+      render_line(s, e)
+    end
   end
 
   vim.api.nvim_open_win(buf, true, {
@@ -121,11 +164,4 @@ THREED = function()
     border = "rounded",
     style = "minimal",
   })
-
-  vim.keymap.set("n", "<leader>t", toggle, { buffer = true })
-
-  state = {
-    timer = nil,
-    buf = buf,
-  }
 end
