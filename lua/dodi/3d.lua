@@ -1,36 +1,5 @@
----@type { timer: integer?, buf: integer, dims: {x: integer, y: integer}  }?
+---@type { timer: integer?, buf: integer, dt: integer, dims: {x: integer, y: integer}  }?
 local state = nil
-
-local stop = function()
-  if state and state.timer then
-    vim.fn.timer_stop(state.timer)
-    state.timer = nil
-  end
-end
-
-local start = function()
-  stop()
-  state.timer = vim.fn.timer_start(1000, function()
-    if state == nil then
-      return
-    end
-    local contents = vim.api.nvim_buf_get_lines(state.buf, 0, 1, false)
-    local count = tonumber(vim.fn.trim(contents[1]))
-    if count == nil then
-      print("read invalid count from buffer")
-      return
-    end
-    vim.api.nvim_buf_set_lines(state.buf, 0, 1, false, { tostring(count + 1) })
-  end, { ["repeat"] = -1 })
-end
-
-local toggle = function()
-  if state and state.timer then
-    stop()
-  else
-    start()
-  end
-end
 
 local round = function(v)
   return v >= 0 and math.floor(v + 0.5) or math.ceil(v - 0.5)
@@ -51,10 +20,32 @@ local function screen(point)
   }
 end
 
+local function rotate(point, theta)
+  local x = point[1]
+  local y = point[2]
+  local z = point[3]
+  return {
+    x * math.cos(theta) - z * math.sin(theta),
+    y,
+    x * math.sin(theta) + z * math.cos(theta),
+  }
+end
+
+local function translate(point, dz)
+  local x = point[1]
+  local y = point[2]
+  local z = point[3]
+  return {
+    x,
+    y,
+    z + dz,
+  }
+end
+
 local function render_point(point)
   assert(state)
 
-  if point[1] > 0 and point[2] > 0 and point[1] <= state.dims.x and point[2] <= state.dims.y then
+  if point[1] > 0 and point[2] > 0 and point[1] < state.dims.x and point[2] < state.dims.y then
     vim.api.nvim_buf_set_text(state.buf, point[2], point[1], point[2], point[1] + 1, { "*" })
   end
 end
@@ -76,6 +67,85 @@ local function render_line(s, e)
       local y = math.ceil(m * x + b)
       render_point({ x, y })
     end
+  end
+end
+
+local function clear()
+  assert(state)
+  -- Fill the window with spaces
+  local row_text = string.rep(" ", state.dims.x)
+  local empty_lines = {}
+  for _ = 1, state.dims.y do
+    table.insert(empty_lines, row_text)
+  end
+  vim.api.nvim_buf_set_lines(state.buf, 0, state.dims.y, false, empty_lines)
+end
+
+local function frame()
+  local vs = {
+    -- front face
+    { -0.5, -0.5, 0.5 },
+    { -0.5, 0.5, 0.5 },
+    { 0.5, 0.5, 0.5 },
+    { 0.5, -0.5, 0.5 },
+    -- back face
+    { -0.5, -0.5, -0.5 },
+    { -0.5, 0.5, -0.5 },
+    { 0.5, 0.5, -0.5 },
+    { 0.5, -0.5, -0.5 },
+  }
+
+  local fs = {
+    { 1, 2, 3, 4 },
+    { 5, 6, 7, 8 },
+    { 1, 5 },
+    { 2, 6 },
+    { 3, 7 },
+    { 4, 8 },
+  }
+
+  local transform = function(point)
+    assert(state)
+    local angle = (2 * math.pi * state.dt) % 2 * math.pi
+    return screen(project(translate(rotate(point, angle), 1.5)))
+  end
+
+  for _, f in ipairs(fs) do
+    for i, vi in ipairs(f) do
+      local s = transform(vs[vi])
+      local ei = i + 1 > #f and 1 or i + 1
+      local e = transform(vs[f[ei]])
+      render_line(s, e)
+    end
+  end
+end
+
+local function update()
+  clear()
+  frame()
+end
+
+local stop = function()
+  if state and state.timer then
+    vim.fn.timer_stop(state.timer)
+    state.timer = nil
+  end
+end
+
+local start = function()
+  stop()
+  state.timer = vim.fn.timer_start(math.floor(1000 / 60), function()
+    assert(state)
+    state.dt = state.dt + math.floor(10000 / 60)
+    update()
+  end, { ["repeat"] = -1 })
+end
+
+local toggle = function()
+  if state and state.timer then
+    stop()
+  else
+    start()
   end
 end
 
@@ -109,51 +179,14 @@ THREED = function()
     return
   end
 
-  -- Fill the window with spaces
-  local row_text = string.rep(" ", dims.x)
-  local empty_lines = {}
-  for _ = 1, dims.y do
-    table.insert(empty_lines, row_text)
-  end
-  vim.api.nvim_buf_set_lines(buf, 0, dims.y, false, empty_lines)
-
-  vim.keymap.set("n", "<leader>t", toggle, { buffer = true })
+  vim.keymap.set("n", "<leader>t", toggle, { buffer = buf })
 
   state = {
     timer = nil,
     buf = buf,
     dims = dims,
+    dt = 0,
   }
-
-  local vs = {
-    { -0.5, -0.5, 1 },
-    { -0.5, 0.5, 1 },
-    { 0.5, 0.5, 1 },
-    { 0.5, -0.5, 1 },
-
-    { -0.5, -0.5, 1.5 },
-    { -0.5, 0.5, 1.5 },
-    { 0.5, 0.5, 1.5 },
-    { 0.5, -0.5, 1.5 },
-  }
-
-  local fs = {
-    { 1, 2, 3, 4 },
-    { 5, 6, 7, 8 },
-    { 1, 5 },
-    { 2, 6 },
-    { 3, 7 },
-    { 4, 8 },
-  }
-
-  for _, f in ipairs(fs) do
-    for i, vi in ipairs(f) do
-      local s = screen(project(vs[vi]))
-      local ei = i + 1 > #f and 1 or i + 1
-      local e = screen(project(vs[f[ei]]))
-      render_line(s, e)
-    end
-  end
 
   vim.api.nvim_open_win(buf, true, {
     relative = "win",
@@ -164,4 +197,6 @@ THREED = function()
     border = "rounded",
     style = "minimal",
   })
+
+  start()
 end
