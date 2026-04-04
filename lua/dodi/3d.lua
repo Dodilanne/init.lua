@@ -179,7 +179,8 @@ THREED = function()
     return
   end
 
-  vim.keymap.set("n", "<leader>t", toggle, { buffer = buf })
+  vim.keymap.set("n", "<leader>T", toggle, { buffer = buf, desc = "Toggle animation" })
+  vim.keymap.set("n", "q", "<cmd>q<cr>", { buffer = buf, desc = "Quit demo" })
 
   state = {
     timer = nil,
@@ -200,3 +201,5 @@ THREED = function()
 
   start()
 end
+
+vim.keymap.set("n", "<leader>T", THREED, { desc = "Rotating cube demo" })
