@@ -93,6 +93,14 @@ do -- plugins
     require("mini.surround").setup()
     require("mini.bracketed").setup()
     require("mini.icons").setup()
+
+    do -- diff
+      require("mini.diff").setup({ view = { style = "sign" } })
+      vim.keymap.set("n", "<leader>go", function()
+        require("mini.diff").toggle_overlay(0)
+      end)
+    end
+
     do -- files
       require("mini.files").setup({
         mappings = { go_in_plus = "<enter>" },
@@ -105,6 +113,7 @@ do -- plugins
         require("mini.files").open(nil, false)
       end, { desc = "Open file explorer in root" })
     end
+
     do -- pick
       require("mini.pick").setup()
 
