@@ -51,22 +51,15 @@ end
 do -- tuis
   local function open_tui(cmd)
     local buf = vim.api.nvim_create_buf(false, true)
-
-    local width = math.floor(vim.o.columns * 0.85)
-    local height = math.floor(vim.o.lines * 0.85)
-    local row = math.floor((vim.o.lines - height) / 2)
-    local col = math.floor((vim.o.columns - width) / 2)
-
     local win = vim.api.nvim_open_win(buf, true, {
       relative = "editor",
-      width = width,
-      height = height,
-      row = row,
-      col = col,
+      width = vim.o.columns - 2,
+      height = vim.o.lines - 2,
+      row = 1,
+      col = 1,
       style = "minimal",
       border = "rounded",
     })
-
     vim.fn.jobstart(cmd, {
       term = true,
       on_exit = function()
@@ -194,6 +187,9 @@ do -- plugins
           command = { "rg", "--files", "--hidden", "--no-ignore", "--glob", "!**/.git", "--glob", "!**/node_modules" },
         })
       end)
+      vim.keymap.set("n", "<leader>m", function()
+        require("mini.pick").builtin.help()
+      end)
       vim.keymap.set("n", "<leader>k", function()
         require("mini.extra").pickers.keymaps()
       end)
@@ -217,14 +213,8 @@ do -- plugins
     require("kanso").setup({
       transparent = true,
       minimal = true,
-      foreground = {
-        dark = "saturated",
-        light = "saturated",
-      },
-      background = {
-        dark = "zen",
-        light = "pearl",
-      },
+      foreground = { dark = "saturated", light = "saturated" },
+      background = { dark = "zen", light = "pearl" },
     })
     vim.cmd("colorscheme kanso")
   end
