@@ -82,7 +82,9 @@ do -- tuis
     vim.cmd("startinsert")
   end
 
-  vim.keymap.set("n", "<leader>gu", function () open_tui("lazygit") end )
+  vim.keymap.set("n", "<leader>gu", function()
+    open_tui("lazygit")
+  end)
 end
 
 do -- plugins
@@ -208,6 +210,23 @@ do -- plugins
         require("mini.extra").pickers.treesitter()
       end)
     end
+  end
+
+  do -- colorscheme
+    vim.pack.add({ gh("webhooked/kanso.nvim") })
+    require("kanso").setup({
+      transparent = true,
+      minimal = true,
+      foreground = {
+        dark = "saturated",
+        light = "saturated",
+      },
+      background = {
+        dark = "zen",
+        light = "pearl",
+      },
+    })
+    vim.cmd("colorscheme kanso")
   end
 end
 

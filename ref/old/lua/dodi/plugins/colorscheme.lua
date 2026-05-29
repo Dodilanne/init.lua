@@ -31,14 +31,8 @@ local themes = {
     opts = {
       transparent = true,
       minimal = true,
-      foreground = {
-        dark = "saturated",
-        light = "saturated",
-      },
-      background = {
-        dark = "zen",
-        light = "pearl",
-      },
+      foreground = { dark = "saturated", light = "saturated" },
+      background = { dark = "zen", light = "pearl" },
     },
   },
 }
