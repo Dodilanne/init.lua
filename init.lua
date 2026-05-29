@@ -1,1 +1,1 @@
-require("dodi")
+print("dodi")
