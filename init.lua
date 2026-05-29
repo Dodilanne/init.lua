@@ -125,6 +125,7 @@ do -- plugins
     require("mini.surround").setup()
     require("mini.bracketed").setup()
     require("mini.icons").setup()
+    require("mini.jump").setup()
 
     do -- diff
       require("mini.diff").setup({ view = { style = "sign" } })
