@@ -63,9 +63,8 @@ vim.keymap.set(
   { desc = "Add stringified console log on next line" }
 )
 
-vim.keymap.set("n", "<leader>t", function()
-  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"nyiwOconsole.time("<C-r>n");<Esc>joconsole.timeEnd("<C-r>n");<Esc>', true, false, true))
-end, { desc = "Add console log on next line" })
+vim.keymap.set("n", "<leader>tt", '<cmd>r!date +"\\%H:\\%M:\\%S"<cr>', { desc = "Print current time" })
+vim.keymap.set("n", "<leader>td", "<cmd>r!date<cr>", { desc = "Print current date" })
 
 vim.keymap.set("n", "<leader>q", function()
   local qf_exists = false
@@ -85,3 +84,6 @@ end, { desc = "Toggle quickfix list" })
 
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>", { desc = "cnext" })
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>", { desc = "cprev" })
+
+vim.keymap.set("n", "]t", "<cmd>tabnext<cr>", { desc = "tabnext" })
+vim.keymap.set("n", "[t", "<cmd>tabprev<cr>", { desc = "tabprev" })
