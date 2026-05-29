@@ -171,16 +171,62 @@ do -- lsp
   end
 end
 
--- do -- formatting
---   vim.pack.add({ gh("stevearc/conform.nvim") })
---   require("conform").setup({
---     default_format_opts = { lsp_format = "fallback" },
---     formatters_by_ft = {},
---   })
---   vim.keymap.set({ "n", "v" }, "<leader>x", function()
---     require("conform").format({ async = true })
---   end, { desc = "Format buffer" })
--- end
+do -- snippets & completions
+  vim.pack.add({ { src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") } })
+  require("luasnip").setup({})
+
+  vim.pack.add({ gh("rafamadriz/friendly-snippets") })
+  require("luasnip.loaders.from_vscode").lazy_load()
+
+  vim.pack.add({ { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") } })
+  require("blink.cmp").setup({
+    keymap = { preset = "default" },
+    appearance = { nerd_font_variant = "mono" },
+    completion = { documentation = { auto_show = false, auto_show_delay_ms = 500 } },
+    sources = { default = { "lsp", "path", "snippets" } },
+    snippets = { preset = "luasnip" },
+    fuzzy = { implementation = "prefer_rust_with_warning" },
+    signature = { enabled = true },
+  })
+end
+
+do -- treesitter
+  vim.pack.add({ { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" } })
+
+  local parsers = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "markdown_inline", "query", "vim", "vimdoc" }
+  require("nvim-treesitter").install(parsers)
+
+  local available_parsers = require("nvim-treesitter").get_available()
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+      local buf, filetype = args.buf, args.match
+      local language = vim.treesitter.language.get_lang(filetype)
+      if not language then
+        return
+      end
+      local installed_parsers = require("nvim-treesitter").get_installed("parsers")
+
+      local function try_attach()
+        if not vim.treesitter.language.add(language) then
+          return
+        end
+        vim.treesitter.start(buf, language)
+        local has_indent_query = vim.treesitter.query.get(language, "indents") ~= nil
+        if has_indent_query then
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end
+
+      if vim.tbl_contains(installed_parsers, language) then
+        try_attach()
+      elseif vim.tbl_contains(available_parsers, language) then
+        require("nvim-treesitter").install(language):await(try_attach)
+      else
+        try_attach()
+      end
+    end,
+  })
+end
 
 do -- tmp
   vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
