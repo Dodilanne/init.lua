@@ -15,7 +15,7 @@ do -- foundation
   vim.o.smartcase = true
   vim.o.signcolumn = "yes"
   vim.o.updatetime = 250
-  vim.o.timeoutlen = 300
+  vim.o.timeoutlen = 750
   vim.o.splitright = true
   vim.o.splitbelow = true
   vim.o.list = true
@@ -76,6 +76,91 @@ do -- plugins
       vim.keymap.set("n", "<leader>h" .. key, function()
         harpoon:list():select(idx)
       end, { desc = "Navigate to " .. idx })
+    end
+  end
+
+  vim.pack.add({ gh("rmagatti/auto-session") })
+  require("auto-session").setup()
+
+  do -- mini
+    vim.pack.add({ gh("nvim-mini/mini.nvim") })
+    require("mini.extra").setup()
+    require("mini.align").setup()
+    require("mini.move").setup()
+    require("mini.operators").setup()
+    require("mini.pairs").setup()
+    require("mini.splitjoin").setup({ mappings = { toggle = "g<s-s>" } })
+    require("mini.surround").setup()
+    require("mini.bracketed").setup()
+    require("mini.icons").setup()
+    do -- files
+      require("mini.files").setup({
+        mappings = { go_in_plus = "<enter>" },
+        windows = { preview = true, width_preview = 80 },
+      })
+      vim.keymap.set("n", "<leader>e", function()
+        require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+      end, { desc = "Open file explorer" })
+      vim.keymap.set("n", "<leader><s-e>", function()
+        require("mini.files").open(nil, false)
+      end, { desc = "Open file explorer in root" })
+    end
+    do -- pick
+      require("mini.pick").setup()
+
+      require("mini.pick").registry.dir = function()
+        return require("mini.pick").start({
+          source = {
+            name = "Choose a directory",
+            items = function()
+              return vim.fn.systemlist({ "fd", "--type", "d" })
+            end,
+            choose = function() end,
+          },
+        })
+      end
+
+      vim.keymap.set("n", "<leader>f", function()
+        require("mini.pick").builtin.files({ tool = "git" })
+      end)
+      vim.keymap.set("n", "<leader><s-f>", function()
+        local dir = require("mini.pick").registry.dir()
+        if dir then
+          require("mini.pick").builtin.files(nil, { source = { cwd = dir } })
+        end
+      end)
+      vim.keymap.set("n", "<leader>/", function()
+        require("mini.pick").builtin.grep_live()
+      end)
+      vim.keymap.set("n", "<leader>?", function()
+        local dir = require("mini.pick").registry.dir()
+        if dir then
+          require("mini.pick").builtin.grep_live(nil, { source = { cwd = dir } })
+        end
+      end)
+      vim.keymap.set("n", "<leader>.", function()
+        require("mini.pick").builtin.cli({ command = { "rg", "--files", "-g", "**/.*" } })
+      end)
+      vim.keymap.set("n", "<leader><leader>f", function()
+        require("mini.pick").builtin.cli({
+          command = { "rg", "--files", "--hidden", "--no-ignore", "--glob", "!**/.git", "--glob", "!**/node_modules" },
+        })
+      end)
+      vim.keymap.set("n", "<leader>k", function()
+        require("mini.extra").pickers.keymaps()
+      end)
+      vim.keymap.set("n", "<leader>gs", function()
+        require("mini.extra").pickers.git_hunks()
+      end)
+      vim.keymap.set("n", "<leader>d", function()
+        require("mini.extra").pickers.diagnostic({ scope = "current" })
+      end)
+      vim.keymap.set("n", "<leader><s-d>", function()
+        require("mini.extra").pickers.diagnostic({ scope = "all" })
+      end)
+      vim.keymap.set("n", "<leader>s", function()
+        require("mini.extra").pickers.treesitter()
+      end)
     end
   end
 end

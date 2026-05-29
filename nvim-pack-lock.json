@@ -5,6 +5,10 @@
       "src": "https://github.com/L3MON4D3/LuaSnip",
       "version": "2.0.0 - 3.0.0"
     },
+    "auto-session": {
+      "rev": "3e145ee9af42eb6764908a1a481f53fe7f0bdbe5",
+      "src": "https://github.com/rmagatti/auto-session"
+    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
@@ -34,6 +38,10 @@
     "mason.nvim": {
       "rev": "bb639d4bf385a4d89f478b83af4d770be05ab7eb",
       "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "mini.nvim": {
+      "rev": "9d0b9b7188d5c24b5a87f0d8b383ec8bda7a0de4",
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-lspconfig": {
       "rev": "9573948c38bfabeec353ae7dd7d3ffec4c506a6b",
