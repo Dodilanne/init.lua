@@ -30,6 +30,9 @@ do -- foundation
   vim.opt.shiftwidth = 4
   vim.opt.expandtab = true
 
+  vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Write file" })
+  vim.keymap.set("n", "<leader>z", "<cmd>wa<cr><cmd>q<cr>", { desc = "Write all then quit" })
+
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
   vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>", { desc = "Increment number" })
@@ -423,6 +426,43 @@ do -- snippets & completions
     fuzzy = { implementation = "prefer_rust_with_warning" },
     signature = { enabled = true },
   })
+end
+
+do -- debug logging
+  local debug_log = function(yank_motion, mode)
+    if vim.bo.filetype == "lua" then
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oprint("<C-r>n " .. <C-r>n)<Esc>', true, false, true))
+    elseif vim.bo.filetype == "go" then
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oprintln("<C-r>n", <C-r>n)<Esc>', true, false, true))
+    elseif vim.bo.filetype == "dart" then
+      if mode == "v" then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. "oprint('<C-r>n: ${<C-r>n}');<Esc>", true, false, true))
+      else
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. "oprint('<C-r>n: $<C-r>n');<Esc>", true, false, true))
+      end
+    else
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"ny' .. yank_motion .. 'oconsole.log("<C-r>n", <C-r>n);<Esc>', true, false, true))
+    end
+  end
+
+  vim.keymap.set("n", "<leader>l", function()
+    debug_log("iw", "n")
+  end, { desc = "Add console log on next line" })
+  vim.keymap.set("v", "<leader>l", function()
+    debug_log("", "v")
+  end, { desc = "Add console log on next line" })
+  vim.keymap.set(
+    "n",
+    "<leader>L",
+    [["nyiwoconsole.log("<C-r>n", JSON.stringify(<C-r>n, null, 2));<Esc>]],
+    { desc = "Add stringified console log on next line" }
+  )
+  vim.keymap.set(
+    "v",
+    "<leader>L",
+    [["nyoconsole.log("<C-r>n", JSON.stringify(<C-r>n, null, 2));<Esc>]],
+    { desc = "Add stringified console log on next line" }
+  )
 end
 
 do -- treesitter
