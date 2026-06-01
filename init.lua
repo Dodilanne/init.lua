@@ -269,6 +269,10 @@ do -- plugins
       vim.keymap.set("n", "<leader>k", function()
         require("mini.extra").pickers.keymaps()
       end, { desc = "Pick keymaps" })
+      vim.keymap.del("n", "grr")
+      vim.keymap.set("n", "gr", function()
+        require("mini.extra").pickers.lsp({ scope = "references" })
+      end, { desc = "Pick symbol references" })
       vim.keymap.set("n", "<leader>gs", function()
         require("mini.extra").pickers.git_hunks()
       end, { desc = "Pick git hunks" })
@@ -278,9 +282,18 @@ do -- plugins
       vim.keymap.set("n", "<leader><s-d>", function()
         require("mini.extra").pickers.diagnostic({ scope = "all" })
       end, { desc = "Pick diagnostics (all)" })
-      vim.keymap.set("n", "<leader>s", function()
+      vim.keymap.set("n", "<leader>ts", function()
         require("mini.extra").pickers.treesitter()
       end, { desc = "Pick treesitter symbols" })
+      vim.keymap.set("n", "<leader>s", function()
+        require("mini.extra").pickers.lsp({ scope = "document_symbol" })
+      end, { desc = "Pick document symbols" })
+      vim.keymap.set("n", "<leader><s-s>", function()
+        require("mini.extra").pickers.lsp({ scope = "workspace_symbol_live" })
+      end, { desc = "Pick workspace symbols" })
+      vim.keymap.set("n", "<leader>i", function()
+        require("mini.extra").pickers.lsp({ scope = "implementation" })
+      end, { desc = "Pick implementation" })
     end
   end
 
@@ -326,7 +339,7 @@ do -- lsp
         map("<leader>x", vim.lsp.buf.format, "x", "LSP range format")
       end
       if client:supports_method("textDocument/inlayHint", event.buf) then
-        map("<leader>t", function()
+        map("<leader>th", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
         end, "n", "Toggle inlay hints")
       end
