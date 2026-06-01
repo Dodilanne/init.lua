@@ -30,19 +30,19 @@ do -- foundation
   vim.opt.shiftwidth = 4
   vim.opt.expandtab = true
 
-  vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+  vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
-  vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>")
+  vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>", { desc = "Increment number" })
 
-  vim.keymap.set("x", "<leader>p", [["_dP]])
-  vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-  vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]])
+  vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
+  vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to clipboard" })
+  vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]], { desc = "Yank line to clipboard" })
 
-  vim.keymap.set("n", "J", "mzJ`z")
-  vim.keymap.set("n", "<C-d>", "<C-d>zz")
-  vim.keymap.set("n", "<C-u>", "<C-u>zz")
-  vim.keymap.set("n", "n", "nzzzv")
-  vim.keymap.set("n", "N", "Nzzzv")
+  vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines keeping cursor position" })
+  vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+  vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+  vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result centered" })
+  vim.keymap.set("n", "N", "Nzzzv", { desc = "Prev search result centered" })
 
   vim.keymap.set("n", "<leader>q", function()
     for _, win in pairs(vim.fn.getwininfo()) do
@@ -56,7 +56,7 @@ do -- foundation
     else
       vim.cmd("copen")
     end
-  end)
+  end, { desc = "Toggle quickfix list" })
 
   vim.diagnostic.config({
     update_in_insert = false,
@@ -107,7 +107,7 @@ do -- tuis
 
   vim.keymap.set("n", "<leader>gu", function()
     open_tui("lazygit")
-  end)
+  end, { desc = "Open lazygit" })
 end
 
 do -- plugins
@@ -122,7 +122,7 @@ do -- plugins
     vim.pack.add({ gh("nvim-pack/nvim-spectre") })
     vim.keymap.set("n", "<leader><s-r>", function()
       require("spectre").toggle()
-    end)
+    end, { desc = "Search and replace" })
   end
 
   do -- harpoon
@@ -144,14 +144,14 @@ do -- plugins
 
     vim.keymap.set("n", "<leader>hg", function()
       harpoon:list():add()
-    end)
+    end, { desc = "Harpoon add file" })
     vim.keymap.set("n", "<leader>he", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
-    end)
+    end, { desc = "Harpoon menu" })
     for idx, key in pairs({ "a", "r", "s", "t", "z", "x", "c", "d", "v" }) do
       vim.keymap.set("n", "<leader>h" .. key, function()
         harpoon:list():select(idx)
-      end)
+      end, { desc = "Harpoon select " .. idx })
     end
   end
 
@@ -178,10 +178,12 @@ do -- plugins
         { mode = "n", keys = "<C-w>" },
         { mode = "i", keys = "<C-x>" },
         { mode = "c", keys = "<C-r>" },
-        { mode = "n", keys = "\"" },
+        { mode = "n", keys = '"' },
         { mode = "i", keys = "<C-r>" },
       },
       clues = {
+        { mode = "n", keys = "<leader>g", desc = "+Git" },
+        { mode = "n", keys = "<leader>h", desc = "+Harpoon" },
         require("mini.clue").gen_clues.g(),
         require("mini.clue").gen_clues.builtin_completion(),
         require("mini.clue").gen_clues.marks(),
@@ -197,7 +199,7 @@ do -- plugins
       require("mini.diff").setup({ view = { style = "sign" } })
       vim.keymap.set("n", "<leader>go", function()
         require("mini.diff").toggle_overlay(0)
-      end)
+      end, { desc = "Toggle diff overlay" })
     end
 
     do -- files
@@ -210,7 +212,7 @@ do -- plugins
       end, { desc = "File explorer" })
       vim.keymap.set("n", "<leader><s-e>", function()
         require("mini.files").open(nil, false)
-      end)
+      end, { desc = "File explorer (cwd)" })
     end
 
     do -- pick
@@ -230,48 +232,48 @@ do -- plugins
 
       vim.keymap.set("n", "<leader>f", function()
         require("mini.pick").builtin.files({ tool = "git" })
-      end)
+      end, { desc = "Pick files (git)" })
       vim.keymap.set("n", "<leader><s-f>", function()
         local dir = require("mini.pick").registry.dir()
         if dir then
           require("mini.pick").builtin.files(nil, { source = { cwd = dir } })
         end
-      end)
+      end, { desc = "Pick files in directory" })
       vim.keymap.set("n", "<leader>/", function()
         require("mini.pick").builtin.grep_live()
-      end)
+      end, { desc = "Grep live" })
       vim.keymap.set("n", "<leader>?", function()
         local dir = require("mini.pick").registry.dir()
         if dir then
           require("mini.pick").builtin.grep_live(nil, { source = { cwd = dir } })
         end
-      end)
+      end, { desc = "Grep live in directory" })
       vim.keymap.set("n", "<leader>.", function()
         require("mini.pick").builtin.cli({ command = { "rg", "--files", "-g", "**/.*" } })
-      end)
+      end, { desc = "Pick dotfiles" })
       vim.keymap.set("n", "<leader><leader>f", function()
         require("mini.pick").builtin.cli({
           command = { "rg", "--files", "--hidden", "--no-ignore", "--glob", "!**/.git", "--glob", "!**/node_modules" },
         })
-      end)
+      end, { desc = "Pick all files (no ignore)" })
       vim.keymap.set("n", "<leader>m", function()
         require("mini.pick").builtin.help()
-      end)
+      end, { desc = "Pick help tags" })
       vim.keymap.set("n", "<leader>k", function()
         require("mini.extra").pickers.keymaps()
-      end)
+      end, { desc = "Pick keymaps" })
       vim.keymap.set("n", "<leader>gs", function()
         require("mini.extra").pickers.git_hunks()
-      end)
+      end, { desc = "Pick git hunks" })
       vim.keymap.set("n", "<leader>d", function()
         require("mini.extra").pickers.diagnostic({ scope = "current" })
-      end)
+      end, { desc = "Pick diagnostics (buffer)" })
       vim.keymap.set("n", "<leader><s-d>", function()
         require("mini.extra").pickers.diagnostic({ scope = "all" })
-      end)
+      end, { desc = "Pick diagnostics (all)" })
       vim.keymap.set("n", "<leader>s", function()
         require("mini.extra").pickers.treesitter()
-      end)
+      end, { desc = "Pick treesitter symbols" })
     end
   end
 
@@ -296,30 +298,30 @@ do -- lsp
         return
       end
 
-      local map = function(keys, func, mode)
+      local map = function(keys, func, mode, desc)
         mode = mode or "n"
-        vim.keymap.set(mode, keys, func, { buffer = event.buf })
+        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
       end
 
       if client:supports_method("textDocument/rename", event.buf) then
-        map("<leader>r", vim.lsp.buf.rename)
+        map("<leader>r", vim.lsp.buf.rename, "n", "LSP rename")
       end
       if client:supports_method("textDocument/codeAction", event.buf) then
-        map("<leader>a", vim.lsp.buf.code_action, { "n", "x" })
+        map("<leader>a", vim.lsp.buf.code_action, { "n", "x" }, "LSP code action")
       end
       if client:supports_method("textDocument/declaration", event.buf) then
-        map("gd", vim.lsp.buf.declaration)
+        map("gd", vim.lsp.buf.declaration, "n", "LSP go to declaration")
       end
       if client:supports_method("textDocument/formatting", event.buf) then
-        map("<leader>x", vim.lsp.buf.format)
+        map("<leader>x", vim.lsp.buf.format, "n", "LSP format")
       end
       if client:supports_method("textDocument/rangeFormatting", event.buf) then
-        map("<leader>x", vim.lsp.buf.format, "x")
+        map("<leader>x", vim.lsp.buf.format, "x", "LSP range format")
       end
       if client:supports_method("textDocument/inlayHint", event.buf) then
         map("<leader>t", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-        end)
+        end, "n", "Toggle inlay hints")
       end
     end,
   })
