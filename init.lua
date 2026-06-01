@@ -27,6 +27,32 @@ do -- foundation
 
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+  vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>")
+
+  vim.keymap.set("x", "<leader>p", [["_dP]])
+  vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+  vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]])
+
+  vim.keymap.set("n", "J", "mzJ`z")
+  vim.keymap.set("n", "<C-d>", "<C-d>zz")
+  vim.keymap.set("n", "<C-u>", "<C-u>zz")
+  vim.keymap.set("n", "n", "nzzzv")
+  vim.keymap.set("n", "N", "Nzzzv")
+
+  vim.keymap.set("n", "<leader>q", function()
+    for _, win in pairs(vim.fn.getwininfo()) do
+      if win["quickfix"] == 1 then
+        vim.cmd("cclose")
+        return
+      end
+    end
+    if vim.tbl_isempty(vim.fn.getqflist()) then
+      print("quickfix list is empty")
+    else
+      vim.cmd("copen")
+    end
+  end)
+
   vim.diagnostic.config({
     update_in_insert = false,
     severity_sort = true,
@@ -81,6 +107,11 @@ end
 
 do -- plugins
   vim.pack.add({ gh("christoomey/vim-tmux-navigator") })
+
+  do -- guess-indent
+    vim.pack.add({ gh("nmac427/guess-indent.nvim") })
+    require("guess-indent").setup({})
+  end
 
   do -- spectre
     vim.pack.add({ gh("nvim-pack/nvim-spectre") })
@@ -156,7 +187,7 @@ do -- plugins
     end
 
     do -- pick
-      require("mini.pick").setup()
+      require("mini.pick").setup({ mappings = { mark_all = "<M-a>" } })
 
       require("mini.pick").registry.dir = function()
         return require("mini.pick").start({
