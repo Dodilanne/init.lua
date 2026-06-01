@@ -1,3 +1,8 @@
+-- missing:
+-- - search and replace
+-- - scope headers
+-- - vim tmux navigator
+
 do -- foundation
   vim.loader.enable()
 
@@ -81,6 +86,8 @@ do -- tuis
 end
 
 do -- plugins
+  vim.pack.add({ gh("christoomey/vim-tmux-navigator") })
+
   do -- harpoon
     vim.pack.add({
       { src = gh("nvim-lua/plenary.nvim") },
@@ -367,16 +374,4 @@ do -- treesitter
       end
     end,
   })
-end
-
-do -- tmp
-  vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-  vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-  vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-  vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
-  vim.opt.tabstop = 2 -- Visual width of a tab
-  vim.opt.softtabstop = 2 -- The number of spaces inserted when hitting Tab
-  vim.opt.shiftwidth = 2 -- The size of an "indent"
-  vim.opt.expandtab = true -- Use spaces instead of tabs
 end
