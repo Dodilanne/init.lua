@@ -1,8 +1,3 @@
--- missing:
--- - search and replace
--- - scope headers
--- - vim tmux navigator
-
 do -- foundation
   vim.loader.enable()
 
@@ -41,7 +36,6 @@ do -- foundation
   })
 
   vim.api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight when yanking (copying) text",
     group = vim.api.nvim_create_augroup("dodi-highlight-yank", { clear = true }),
     callback = function()
       vim.hl.on_yank()
@@ -88,6 +82,13 @@ end
 do -- plugins
   vim.pack.add({ gh("christoomey/vim-tmux-navigator") })
 
+  do -- spectre
+    vim.pack.add({ gh("nvim-pack/nvim-spectre") })
+    vim.keymap.set("n", "<leader><s-r>", function()
+      require("spectre").toggle()
+    end)
+  end
+
   do -- harpoon
     vim.pack.add({
       { src = gh("nvim-lua/plenary.nvim") },
@@ -107,14 +108,14 @@ do -- plugins
 
     vim.keymap.set("n", "<leader>hg", function()
       harpoon:list():add()
-    end, { desc = "Add mark" })
+    end)
     vim.keymap.set("n", "<leader>he", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = "Open quick menu" })
+    end)
     for idx, key in pairs({ "a", "r", "s", "t", "z", "x", "c", "d", "v" }) do
       vim.keymap.set("n", "<leader>h" .. key, function()
         harpoon:list():select(idx)
-      end, { desc = "Navigate to " .. idx })
+      end)
     end
   end
 
@@ -148,10 +149,10 @@ do -- plugins
       })
       vim.keymap.set("n", "<leader>e", function()
         require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
-      end, { desc = "Open file explorer" })
+      end)
       vim.keymap.set("n", "<leader><s-e>", function()
         require("mini.files").open(nil, false)
-      end, { desc = "Open file explorer in root" })
+      end)
     end
 
     do -- pick
@@ -237,30 +238,30 @@ do -- lsp
         return
       end
 
-      local map = function(keys, func, desc, mode)
+      local map = function(keys, func, mode)
         mode = mode or "n"
-        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+        vim.keymap.set(mode, keys, func, { buffer = event.buf })
       end
 
       if client:supports_method("textDocument/rename", event.buf) then
-        map("<leader>r", vim.lsp.buf.rename, "Rename")
+        map("<leader>r", vim.lsp.buf.rename)
       end
       if client:supports_method("textDocument/codeAction", event.buf) then
-        map("<leader>a", vim.lsp.buf.code_action, "Code actions", { "n", "x" })
+        map("<leader>a", vim.lsp.buf.code_action, { "n", "x" })
       end
       if client:supports_method("textDocument/declaration", event.buf) then
-        map("gd", vim.lsp.buf.declaration, "Goto declaration")
+        map("gd", vim.lsp.buf.declaration)
       end
       if client:supports_method("textDocument/formatting", event.buf) then
-        map("<leader>x", vim.lsp.buf.format, "Format buffer")
+        map("<leader>x", vim.lsp.buf.format)
       end
       if client:supports_method("textDocument/rangeFormatting", event.buf) then
-        map("<leader>x", vim.lsp.buf.format, "Format selection", "x")
+        map("<leader>x", vim.lsp.buf.format, "x")
       end
       if client:supports_method("textDocument/inlayHint", event.buf) then
         map("<leader>t", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-        end, "Toggle inlay hints")
+        end)
       end
     end,
   })
@@ -339,7 +340,10 @@ do -- snippets & completions
 end
 
 do -- treesitter
-  vim.pack.add({ { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" } })
+  vim.pack.add({
+    { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+    { src = gh("nvim-treesitter/nvim-treesitter-context") },
+  })
 
   local parsers = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "markdown_inline", "query", "vim", "vimdoc" }
   require("nvim-treesitter").install(parsers)
