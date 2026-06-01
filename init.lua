@@ -22,7 +22,7 @@ do -- foundation
   vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
   vim.o.inccommand = "split"
   vim.o.cursorline = true
-  vim.o.scrolloff = 0
+  vim.o.scrolloff = 4
   vim.o.confirm = true
 
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
@@ -298,8 +298,14 @@ do -- lsp
   })
 
   local servers = {
-    gopls = {},
     ts_ls = {},
+    biome = {},
+    denols = {},
+    emmet_language_server = {},
+    eslint = {},
+    html = {},
+    rust_analyzer = {},
+    gopls = {},
     stylua = {},
     lua_ls = {
       on_init = function(client)
@@ -376,7 +382,38 @@ do -- treesitter
     { src = gh("nvim-treesitter/nvim-treesitter-context") },
   })
 
-  local parsers = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "markdown_inline", "query", "vim", "vimdoc" }
+  local parsers = {
+    "templ",
+    "javascript",
+    "jsdoc",
+    "typescript",
+    "tsx",
+    "markdown",
+    "markdown_inline",
+    "json",
+    "svelte",
+    "css",
+    "awk",
+    "gitignore",
+    "jq",
+    "regex",
+    "ron",
+    "rust",
+    "toml",
+    "sql",
+    "xml",
+    "go",
+    "python",
+    "bash",
+    "c",
+    "diff",
+    "html",
+    "lua",
+    "luadoc",
+    "query",
+    "vim",
+    "vimdoc",
+  }
   require("nvim-treesitter").install(parsers)
 
   local available_parsers = require("nvim-treesitter").get_available()
