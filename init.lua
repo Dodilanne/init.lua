@@ -195,6 +195,13 @@ do -- plugins
       window = { delay = 500, config = { width = "auto" } },
     })
 
+    do -- git
+      require("mini.git").setup()
+      vim.keymap.set("n", "<leader>gb", function()
+        require("mini.git").show_at_cursor()
+      end, { desc = "Git blame" })
+    end
+
     do -- diff
       require("mini.diff").setup({ view = { style = "sign" } })
       vim.keymap.set("n", "<leader>go", function()
@@ -309,8 +316,8 @@ do -- lsp
       if client:supports_method("textDocument/codeAction", event.buf) then
         map("<leader>a", vim.lsp.buf.code_action, { "n", "x" }, "LSP code action")
       end
-      if client:supports_method("textDocument/declaration", event.buf) then
-        map("gd", vim.lsp.buf.declaration, "n", "LSP go to declaration")
+      if client:supports_method("textDocument/definition", event.buf) then
+        map("gd", vim.lsp.buf.definition, "n", "LSP go to definition")
       end
       if client:supports_method("textDocument/formatting", event.buf) then
         map("<leader>x", vim.lsp.buf.format, "n", "LSP format")
