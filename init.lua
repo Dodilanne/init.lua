@@ -25,6 +25,11 @@ do -- foundation
   vim.o.scrolloff = 4
   vim.o.confirm = true
 
+  vim.opt.tabstop = 4
+  vim.opt.softtabstop = 4
+  vim.opt.shiftwidth = 4
+  vim.opt.expandtab = true
+
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
   vim.keymap.set({ "n", "v", "i" }, "<C-b>", "<C-a>")
@@ -165,6 +170,28 @@ do -- plugins
     require("mini.bracketed").setup()
     require("mini.icons").setup()
     require("mini.jump").setup()
+    require("mini.clue").setup({
+      triggers = {
+        { mode = "n", keys = "g" },
+        { mode = "n", keys = "z" },
+        { mode = "n", keys = "<leader>" },
+        { mode = "n", keys = "<C-w>" },
+        { mode = "i", keys = "<C-x>" },
+        { mode = "c", keys = "<C-r>" },
+        { mode = "n", keys = "\"" },
+        { mode = "i", keys = "<C-r>" },
+      },
+      clues = {
+        require("mini.clue").gen_clues.g(),
+        require("mini.clue").gen_clues.builtin_completion(),
+        require("mini.clue").gen_clues.marks(),
+        require("mini.clue").gen_clues.square_brackets(),
+        require("mini.clue").gen_clues.registers(),
+        require("mini.clue").gen_clues.windows(),
+        require("mini.clue").gen_clues.z(),
+      },
+      window = { delay = 500, config = { width = "auto" } },
+    })
 
     do -- diff
       require("mini.diff").setup({ view = { style = "sign" } })
@@ -180,7 +207,7 @@ do -- plugins
       })
       vim.keymap.set("n", "<leader>e", function()
         require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
-      end)
+      end, { desc = "File explorer" })
       vim.keymap.set("n", "<leader><s-e>", function()
         require("mini.files").open(nil, false)
       end)
