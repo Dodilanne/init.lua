@@ -30,6 +30,9 @@ do -- foundation
   vim.opt.shiftwidth = 4
   vim.opt.expandtab = true
 
+  vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
+  vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
+
   vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Write file" })
   vim.keymap.set("n", "<leader>z", "<cmd>wa<cr><cmd>q<cr>", { desc = "Write all then quit" })
 
@@ -116,6 +119,8 @@ end
 do -- plugins
   vim.pack.add({ gh("christoomey/vim-tmux-navigator") })
 
+  vim.pack.add({ gh("tpope/vim-abolish") })
+
   do -- guess-indent
     vim.pack.add({ gh("nmac427/guess-indent.nvim") })
     require("guess-indent").setup({})
@@ -165,7 +170,6 @@ do -- plugins
     vim.pack.add({ gh("nvim-mini/mini.nvim") })
     require("mini.extra").setup()
     require("mini.align").setup()
-    require("mini.move").setup()
     require("mini.operators").setup()
     require("mini.pairs").setup()
     require("mini.splitjoin").setup({ mappings = { toggle = "g<s-s>" } })
@@ -359,6 +363,7 @@ do -- lsp
     rust_analyzer = {},
     gopls = {},
     stylua = {},
+    cssls = {},
     lua_ls = {
       on_init = function(client)
         client.server_capabilities.documentFormattingProvider = false
@@ -472,6 +477,7 @@ do -- treesitter
   })
 
   local parsers = {
+    "nu",
     "templ",
     "javascript",
     "jsdoc",
