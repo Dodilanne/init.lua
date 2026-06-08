@@ -163,8 +163,18 @@ do -- plugins
     end
   end
 
-  vim.pack.add({ gh("rmagatti/auto-session") })
-  require("auto-session").setup()
+  do -- auto-session
+    vim.pack.add({ gh("rmagatti/auto-session") })
+    require("auto-session").setup()
+  end
+
+  do -- undotree
+    vim.pack.add({ gh("mbbill/undotree") })
+    vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { desc = "Toggle undo tree" })
+    vim.g.undotree_SplitWidth = 40
+    vim.g.undotree_WindowLayout = 3
+    vim.g.undotree_SetFocusWhenToggle = 1
+  end
 
   do -- mini
     vim.pack.add({ gh("nvim-mini/mini.nvim") })
@@ -364,6 +374,8 @@ do -- lsp
     gopls = {},
     stylua = {},
     cssls = {},
+    yamlls = {},
+    templ = {},
     lua_ls = {
       on_init = function(client)
         client.server_capabilities.documentFormattingProvider = false
