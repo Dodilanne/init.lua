@@ -133,6 +133,26 @@ do -- plugins
     end, { desc = "Search and replace" })
   end
 
+  do -- obsidian
+    vim.pack.add({
+      { src = gh("nvim-lua/plenary.nvim") },
+      { src = gh("epwalsh/obsidian.nvim") },
+    })
+
+    require("obsidian").setup({
+      templates = { subdir = "_templates" },
+      daily_notes = { folder = "daily", template = "daily.md" },
+      workspaces = { { name = "personal", path = "~/Documents/vaults/personal" } },
+      open_notes_in = "hsplit",
+      ui = { enable = false },
+    })
+
+    vim.keymap.set("n", "<leader>on", "<cmd>ObsidianToday<cr>", { desc = "Open today's daily note" })
+    vim.keymap.set("n", "<leader>oy", "<cmd>ObsidianYesterday<cr>", { desc = "Open yesterday's daily note" })
+    vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianTomorrow<cr>", { desc = "Open tomorrow's daily note" })
+    vim.keymap.set("n", "<leader>oc", "<cmd>ObsidianToggleCheckbox<cr>", { desc = "Cycle through checkbox options" })
+  end
+
   do -- harpoon
     vim.pack.add({
       { src = gh("nvim-lua/plenary.nvim") },

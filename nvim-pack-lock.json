@@ -68,6 +68,10 @@
       "rev": "b311b30818951d01f7b4bf650521b868b3fece16",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
+    "obsidian.nvim": {
+      "rev": "726b60c89f4bafef267a714ea1faa1335bdd414a",
+      "src": "https://github.com/epwalsh/obsidian.nvim"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
