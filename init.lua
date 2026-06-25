@@ -183,6 +183,20 @@ do -- plugins
     end
   end
 
+  do -- supermaven
+    vim.pack.add({ gh("supermaven-inc/supermaven-nvim") })
+    require("supermaven-nvim").setup({
+      keymaps = {
+        accept_suggestion = "<m-n>",
+        clear_suggestion = "<m-i>",
+        accept_word = "<m-h>",
+      },
+      condition = function()
+        return false
+      end,
+    })
+  end
+
   do -- auto-session
     vim.pack.add({ gh("rmagatti/auto-session") })
     require("auto-session").setup()
@@ -396,6 +410,7 @@ do -- lsp
     cssls = {},
     yamlls = {},
     templ = {},
+    ols = {},
     lua_ls = {
       on_init = function(client)
         client.server_capabilities.documentFormattingProvider = false
