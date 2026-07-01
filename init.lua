@@ -523,6 +523,12 @@ do -- treesitter
     { src = gh("nvim-treesitter/nvim-treesitter-context") },
   })
 
+  require("treesitter-context").setup({
+    max_lines = 5,
+    mode = "cursor",
+    multiline_threshold = 1,
+  })
+
   local parsers = {
     "nu",
     "templ",
