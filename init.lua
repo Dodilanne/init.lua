@@ -30,6 +30,10 @@ do -- foundation
   vim.opt.shiftwidth = 4
   vim.opt.expandtab = true
 
+  vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>", { desc = "Next tab" })
+  vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
+  vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<cr>", { desc = "Close tab" })
+
   vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
   vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 
@@ -127,7 +131,13 @@ do -- plugins
   end
 
   do -- spectre
-    vim.pack.add({ gh("nvim-pack/nvim-spectre") })
+    vim.pack.add({
+      { src = gh("nvim-lua/plenary.nvim") },
+      { src = gh("nvim-pack/nvim-spectre") },
+    })
+    require("spectre").setup({
+      replace_engine = { sed = { cmd = "sed", args = { "-i", "", "-E" } } },
+    })
     vim.keymap.set("n", "<leader><s-r>", function()
       require("spectre").toggle()
     end, { desc = "Search and replace" })
@@ -246,20 +256,6 @@ do -- plugins
       window = { delay = 500, config = { width = "auto" } },
     })
 
-    do -- git
-      require("mini.git").setup()
-      vim.keymap.set("n", "<leader>gb", function()
-        require("mini.git").show_at_cursor()
-      end, { desc = "Git blame" })
-    end
-
-    do -- diff
-      require("mini.diff").setup({ view = { style = "sign" } })
-      vim.keymap.set("n", "<leader>go", function()
-        require("mini.diff").toggle_overlay(0)
-      end, { desc = "Toggle diff overlay" })
-    end
-
     do -- files
       require("mini.files").setup({
         mappings = { go_in_plus = "<enter>" },
@@ -324,7 +320,7 @@ do -- plugins
       vim.keymap.set("n", "gr", function()
         require("mini.extra").pickers.lsp({ scope = "references" })
       end, { desc = "Pick symbol references" })
-      vim.keymap.set("n", "<leader>gs", function()
+      vim.keymap.set("n", "<leader>gh", function()
         require("mini.extra").pickers.git_hunks()
       end, { desc = "Pick git hunks" })
       vim.keymap.set("n", "<leader>d", function()
@@ -346,6 +342,62 @@ do -- plugins
         require("mini.extra").pickers.lsp({ scope = "implementation" })
       end, { desc = "Pick implementation" })
     end
+  end
+
+  do -- diff
+    vim.pack.add({ gh("sindrets/diffview.nvim") })
+    vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diffview open" })
+  end
+
+  do -- git
+    vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
+    require("gitsigns").setup({
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        map("n", "]h", function()
+          if vim.wo.diff then
+            return "]h"
+          end
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
+          return "<Ignore>"
+        end, { expr = true, desc = "Next hunk" })
+
+        map("n", "[h", function()
+          if vim.wo.diff then
+            return "[h"
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
+          return "<Ignore>"
+        end, { expr = true, desc = "Prev hunk" })
+
+        map("n", "<leader>gs", gs.stage_hunk, { desc = "Stage hunk" })
+        map("v", "<leader>gs", function()
+          gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, { desc = "Stage selection" })
+        map("n", "<leader>gS", gs.stage_buffer, { desc = "Stage buffer" })
+        map("n", "<leader>gr", gs.reset_hunk, { desc = "Reset hunk" })
+        map("v", "<leader>gr", function()
+          gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, { desc = "Reset selection" })
+        map("n", "<leader>gR", gs.reset_buffer, { desc = "Reset buffer" })
+        map("n", "<leader>gp", gs.preview_hunk, { desc = "Preview hunk" })
+        map("n", "<leader>gb", function()
+          gs.blame_line({ full = true })
+        end, { desc = "Blame line" })
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+      end,
+    })
   end
 
   do -- colorscheme
