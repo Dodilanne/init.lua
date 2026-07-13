@@ -24,6 +24,7 @@ do -- foundation
   vim.o.cursorline = true
   vim.o.scrolloff = 4
   vim.o.confirm = true
+  vim.o.showmode = false
 
   vim.opt.tabstop = 4
   vim.opt.softtabstop = 4
@@ -231,6 +232,7 @@ do -- plugins
     require("mini.bracketed").setup()
     require("mini.icons").setup()
     require("mini.jump").setup()
+    require("mini.statusline").setup()
     require("mini.clue").setup({
       triggers = {
         { mode = "n", keys = "g" },
