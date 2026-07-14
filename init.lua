@@ -167,21 +167,56 @@ do -- plugins
   do -- dap
     vim.pack.add({ gh("mfussenegger/nvim-dap") })
     local dap = require("dap")
+
+    -- @param adapter_name string
+    local function attach_config(adapter_name)
+      return {
+        type = adapter_name,
+        name = "Attach to process",
+        request = "attach",
+        mode = "local",
+        processId = function()
+          local base = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+          vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniPickStart",
+            once = true,
+            callback = function()
+              require("mini.pick").set_picker_query({ base })
+            end,
+          })
+          return require("dap.utils").pick_process()
+        end,
+      }
+    end
+
+    dap.configurations.odin = { attach_config("lldb") }
+    dap.configurations.go = { attach_config("delve") }
+
+    -- adapters
     dap.adapters.lldb = {
       type = "executable",
       command = "/opt/homebrew/opt/llvm/bin/lldb-dap",
       name = "lldb",
     }
-    dap.configurations.odin = {
-      {
-        type = "lldb",
-        request = "attach",
-        name = "Attach to odin",
-        attachCommands = {
-          "attach -n ${workspaceFolderBasename} -w",
-        },
-      },
-    }
+    dap.adapters.delve = function(callback, config)
+      if config.mode == "remote" and config.request == "attach" then
+        callback({
+          type = "server",
+          host = config.host or "127.0.0.1",
+          port = config.port or "38697",
+        })
+      else
+        callback({
+          type = "server",
+          port = "${port}",
+          executable = {
+            command = "dlv",
+            args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
+            detached = vim.fn.has("win32") == 0,
+          },
+        })
+      end
+    end
 
     local function focus_repl_if_open()
       for _, win in ipairs(vim.api.nvim_list_wins()) do
