@@ -164,6 +164,53 @@ do -- plugins
     vim.keymap.set("n", "<leader>oc", "<cmd>ObsidianToggleCheckbox<cr>", { desc = "Cycle through checkbox options" })
   end
 
+  do -- dap
+    vim.pack.add({ gh("mfussenegger/nvim-dap") })
+    local dap = require("dap")
+    dap.adapters.lldb = {
+      type = "executable",
+      command = "/opt/homebrew/opt/llvm/bin/lldb-dap",
+      name = "lldb",
+    }
+    dap.configurations.odin = {
+      {
+        type = "lldb",
+        request = "attach",
+        name = "Attach to odin",
+        attachCommands = {
+          "attach -n ${workspaceFolderBasename} -w",
+        },
+      },
+    }
+
+    local function focus_repl_if_open()
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.bo[buf].filetype == "dap-repl" then
+          vim.api.nvim_set_current_win(win)
+          vim.cmd("normal! G")
+          vim.cmd("startinsert")
+          return
+        end
+      end
+    end
+
+    dap.listeners.before.event_initialized["open_repl_on_start"] = function()
+      dap.repl.open()
+      focus_repl_if_open()
+    end
+
+    vim.keymap.set("n", "<leader>bn", "<cmd>DapNew<cr>", { desc = "New session" })
+    vim.keymap.set("n", "<leader>br", function()
+      dap.repl.toggle()
+      focus_repl_if_open()
+    end, { desc = "Toggle REPL" })
+    vim.keymap.set("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle breakpoint" })
+    vim.keymap.set("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step into" })
+    vim.keymap.set("n", "<leader>bo", "<cmd>DapStepOver<cr>", { desc = "Step over" })
+    vim.keymap.set("n", "<leader>be", "<cmd>DapStepOut<cr>", { desc = "Step out" })
+  end
+
   do -- harpoon
     vim.pack.add({
       { src = gh("nvim-lua/plenary.nvim") },
@@ -247,6 +294,9 @@ do -- plugins
       clues = {
         { mode = "n", keys = "<leader>g", desc = "+Git" },
         { mode = "n", keys = "<leader>h", desc = "+Harpoon" },
+        { mode = "n", keys = "<leader>o", desc = "+Obsidian" },
+        { mode = "n", keys = "<leader>t", desc = "+Toggles" },
+        { mode = "n", keys = "<leader>b", desc = "+Debug" },
         require("mini.clue").gen_clues.g(),
         require("mini.clue").gen_clues.builtin_completion(),
         require("mini.clue").gen_clues.marks(),
@@ -347,7 +397,10 @@ do -- plugins
   end
 
   do -- diff
-    vim.pack.add({ gh("sindrets/diffview.nvim") })
+    vim.pack.add({
+      { src = gh("sindrets/diffview.nvim") },
+      { src = gh("nvim-tree/nvim-web-devicons") },
+    })
     vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diffview open" })
   end
 

@@ -59,6 +59,10 @@
       "rev": "9d0b9b7188d5c24b5a87f0d8b383ec8bda7a0de4",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
+    "nvim-dap": {
+      "rev": "9e848e09a697ee95302a3ef2dd43fd6eb709e570",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
     "nvim-lspconfig": {
       "rev": "9573948c38bfabeec353ae7dd7d3ffec4c506a6b",
       "src": "https://github.com/neovim/nvim-lspconfig"
@@ -75,6 +79,10 @@
     "nvim-treesitter-context": {
       "rev": "b311b30818951d01f7b4bf650521b868b3fece16",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
+    },
+    "nvim-web-devicons": {
+      "rev": "09d1324e264c6950262dbe02a9bce2933a6800db",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "obsidian.nvim": {
       "rev": "726b60c89f4bafef267a714ea1faa1335bdd414a",
