@@ -89,6 +89,17 @@ local function gh(repo)
   return "https://github.com/" .. repo
 end
 
+-- Prefill the next opened mini.pick picker with `query`.
+local function set_next_picker_query(query)
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniPickStart",
+    once = true,
+    callback = function()
+      require("mini.pick").set_picker_query({ query })
+    end,
+  })
+end
+
 do -- tuis
   local function open_tui(cmd)
     local buf = vim.api.nvim_create_buf(false, true)
@@ -168,29 +179,32 @@ do -- plugins
     vim.pack.add({ gh("mfussenegger/nvim-dap") })
     local dap = require("dap")
 
-    -- @param adapter_name string
-    local function attach_config(adapter_name)
-      return {
-        type = adapter_name,
+    dap.configurations.odin = {
+      {
+        type = "lldb",
+        name = "Attach to process",
+        request = "attach",
+        mode = "local",
+        pid = function()
+          local base = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+          set_next_picker_query(base)
+          return require("dap.utils").pick_process()
+        end,
+      },
+    }
+    dap.configurations.go = {
+      {
+        type = "delve",
         name = "Attach to process",
         request = "attach",
         mode = "local",
         processId = function()
           local base = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-          vim.api.nvim_create_autocmd("User", {
-            pattern = "MiniPickStart",
-            once = true,
-            callback = function()
-              require("mini.pick").set_picker_query({ base })
-            end,
-          })
+          set_next_picker_query(base)
           return require("dap.utils").pick_process()
         end,
-      }
-    end
-
-    dap.configurations.odin = { attach_config("lldb") }
-    dap.configurations.go = { attach_config("delve") }
+      },
+    }
 
     -- adapters
     dap.adapters.lldb = {
@@ -241,6 +255,8 @@ do -- plugins
       focus_repl_if_open()
     end, { desc = "Toggle REPL" })
     vim.keymap.set("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle breakpoint" })
+    vim.keymap.set("n", "<leader>bc", "<cmd>DapContinue<cr>", { desc = "Continue" })
+    vim.keymap.set("n", "<leader>bd", "<cmd>DapClearBreakpoints<cr>", { desc = "Clear breakpoints" })
     vim.keymap.set("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step into" })
     vim.keymap.set("n", "<leader>bo", "<cmd>DapStepOver<cr>", { desc = "Step over" })
     vim.keymap.set("n", "<leader>be", "<cmd>DapStepOut<cr>", { desc = "Step out" })
@@ -389,6 +405,17 @@ do -- plugins
           require("mini.pick").builtin.grep_live(nil, { source = { cwd = dir } })
         end
       end, { desc = "Grep live in directory" })
+      local function grep_live_with_query(query)
+        set_next_picker_query(query)
+        require("mini.pick").builtin.grep_live()
+      end
+      vim.keymap.set("n", "<leader><leader>/", function()
+        grep_live_with_query(vim.fn.expand("<cword>"))
+      end, { desc = "Grep live (word under cursor)" })
+      vim.keymap.set("x", "<leader><leader>/", function()
+        vim.cmd('noautocmd normal! "vy')
+        grep_live_with_query(vim.fn.getreg("v"))
+      end, { desc = "Grep live (selection)" })
       vim.keymap.set("n", "<leader>.", function()
         require("mini.pick").builtin.cli({ command = { "rg", "--files", "-g", "**/.*" } })
       end, { desc = "Pick dotfiles" })
