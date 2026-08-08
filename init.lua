@@ -24,7 +24,13 @@ do -- foundation
   vim.o.cursorline = true
   vim.o.scrolloff = 4
   vim.o.confirm = true
-  vim.o.showmode = false
+
+  vim.filetype.add({
+    extension = {
+      fs = "glsl",
+      vs = "glsl",
+    },
+  })
 
   vim.opt.tabstop = 4
   vim.opt.softtabstop = 4
@@ -37,6 +43,8 @@ do -- foundation
 
   vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
   vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
+  vim.keymap.set("v", ">", ">gv", { desc = "Indent selection" })
+  vim.keymap.set("v", "<", "<gv", { desc = "Deindent selection" })
 
   vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Write file" })
   vim.keymap.set("n", "<leader>z", "<cmd>wa<cr><cmd>q<cr>", { desc = "Write all then quit" })
@@ -142,6 +150,17 @@ do -- plugins
     require("guess-indent").setup({})
   end
 
+  do -- octo
+    vim.pack.add({
+      { src = gh("nvim-tree/nvim-web-devicons") },
+      { src = gh("nvim-lua/plenary.nvim") },
+      { src = gh("pwntester/octo.nvim") },
+    })
+    require("octo").setup({
+      picker = "default",
+    })
+  end
+
   do -- spectre
     vim.pack.add({
       { src = gh("nvim-lua/plenary.nvim") },
@@ -176,7 +195,12 @@ do -- plugins
   end
 
   do -- dap
-    vim.pack.add({ gh("mfussenegger/nvim-dap") })
+    vim.pack.add({
+      { src = gh("mfussenegger/nvim-dap") },
+      { src = gh("nvim-neotest/nvim-nio") },
+      { src = gh("rcarriga/nvim-dap-ui") },
+    })
+
     local dap = require("dap")
 
     dap.configurations.odin = {
@@ -260,6 +284,8 @@ do -- plugins
     vim.keymap.set("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step into" })
     vim.keymap.set("n", "<leader>bo", "<cmd>DapStepOver<cr>", { desc = "Step over" })
     vim.keymap.set("n", "<leader>be", "<cmd>DapStepOut<cr>", { desc = "Step out" })
+
+    require("dapui").setup()
   end
 
   do -- harpoon
@@ -292,20 +318,6 @@ do -- plugins
     end
   end
 
-  do -- supermaven
-    vim.pack.add({ gh("supermaven-inc/supermaven-nvim") })
-    require("supermaven-nvim").setup({
-      keymaps = {
-        accept_suggestion = "<m-n>",
-        clear_suggestion = "<m-i>",
-        accept_word = "<m-h>",
-      },
-      condition = function()
-        return false
-      end,
-    })
-  end
-
   do -- auto-session
     vim.pack.add({ gh("rmagatti/auto-session") })
     require("auto-session").setup()
@@ -327,10 +339,11 @@ do -- plugins
     require("mini.pairs").setup()
     require("mini.splitjoin").setup({ mappings = { toggle = "g<s-s>" } })
     require("mini.surround").setup()
-    require("mini.bracketed").setup()
+    require("mini.bracketed").setup({
+      comment = { suffix = "" },
+    })
     require("mini.icons").setup()
     require("mini.jump").setup()
-    require("mini.statusline").setup()
     require("mini.clue").setup({
       triggers = {
         { mode = "n", keys = "g" },
@@ -730,6 +743,7 @@ do -- treesitter
     "query",
     "vim",
     "vimdoc",
+    "glsl",
   }
   require("nvim-treesitter").install(parsers)
 
