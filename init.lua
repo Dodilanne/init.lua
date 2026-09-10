@@ -25,6 +25,12 @@ do -- foundation
   vim.o.scrolloff = 4
   vim.o.confirm = true
 
+  vim.opt.foldmethod = "marker"
+  vim.opt.foldmarker = "//#region,//#endregion"
+  vim.opt.foldlevel = 99
+  vim.opt.foldlevelstart = 99
+  vim.opt.foldenable = true
+
   vim.filetype.add({
     extension = {
       fs = "glsl",
@@ -37,8 +43,11 @@ do -- foundation
   vim.opt.shiftwidth = 4
   vim.opt.expandtab = true
 
-  vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>", { desc = "Next tab" })
-  vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
+  vim.keymap.set("t", "<C-Space>", "<C-\\><C-n>", { desc = "Exit term mode" })
+
+  vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
+  vim.keymap.set("n", "<leader>tl", "<cmd>tabnext<cr>", { desc = "Next tab" })
+  vim.keymap.set("n", "<leader>th", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
   vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<cr>", { desc = "Close tab" })
 
   vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
@@ -386,7 +395,60 @@ do -- plugins
     end
 
     do -- pick
-      require("mini.pick").setup({ mappings = { mark_all = "<M-a>" } })
+      local run_keys = function(keys, rep)
+        vim.api.nvim_input(string.rep(keys, rep or 1))
+      end
+
+      local move_caret = function(next_caret)
+        local caret = MiniPick.get_picker_state().caret
+        local query = MiniPick.get_picker_query()
+        next_caret = math.max(1, math.min(next_caret, #query + 1))
+        local move = next_caret - caret
+        run_keys(move >= 0 and "<Right>" or "<Left>", math.abs(move))
+      end
+
+      local prev_word_regex = vim.regex([=[\([^[:keyword:][:space:]]\+\|\k\+\)\s*$]=])
+      local next_word_regex = vim.regex([=[^\([^[:keyword:][:space:]]\+\|\k\+\)\s*]=])
+
+      require("mini.pick").setup({
+        mappings = {
+          mark_all = "<M-a>",
+          caret_start = {
+            char = "<Home>",
+            func = function()
+              move_caret(1)
+            end,
+          },
+          caret_end = {
+            char = "<End>",
+            func = function()
+              move_caret(math.huge)
+            end,
+          },
+          prev_word = {
+            char = "<C-Left>",
+            func = function()
+              local query = MiniPick.get_picker_query()
+              local query_str = table.concat(query or {})
+              local caret = MiniPick.get_picker_state().caret
+              local from, _ = prev_word_regex:match_str(string.sub(query_str, 1, caret - 1))
+              local prev_word_start = from and from + 1 or nil
+              move_caret(prev_word_start or 1)
+            end,
+          },
+          next_word = {
+            char = "<C-Right>",
+            func = function()
+              local query = MiniPick.get_picker_query()
+              local query_str = table.concat(query or {})
+              local caret = MiniPick.get_picker_state().caret
+              local _, to = next_word_regex:match_str(string.sub(query_str, caret))
+              local next_word_start = to and to + caret or nil
+              move_caret(next_word_start or #query_str + 1)
+            end,
+          },
+        },
+      })
 
       require("mini.pick").registry.dir = function()
         return require("mini.pick").start({
