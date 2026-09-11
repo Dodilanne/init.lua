@@ -840,3 +840,8 @@ do -- treesitter
     end,
   })
 end
+
+if vim.g.neovide then
+  vim.g.neovide_cursor_short_animation_length = 0.04
+  vim.g.neovide_cursor_trail_size = 0.2
+end
