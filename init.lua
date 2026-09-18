@@ -643,10 +643,16 @@ do -- lsp
 
   local servers = {
     ts_ls = {},
-    biome = {},
-    denols = {},
+    biome = { root_markers = { "biome.json", "biome.jsonc" } },
+    prettier = { root_markers = { ".prettierrc" } },
+    denols = { root_markers = { "deno.json", "deno.jsonc" } },
     emmet_language_server = {},
-    eslint = {},
+    eslint = {
+      on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentFormattingRangeProvider = false
+      end,
+    },
     html = {},
     rust_analyzer = {},
     gopls = {},
