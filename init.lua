@@ -45,10 +45,10 @@ do -- foundation
 
   vim.keymap.set("t", "<C-Space>", "<C-\\><C-n>", { desc = "Exit term mode" })
 
-  vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
-  vim.keymap.set("n", "<leader>tl", "<cmd>tabnext<cr>", { desc = "Next tab" })
-  vim.keymap.set("n", "<leader>th", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
-  vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<cr>", { desc = "Close tab" })
+  vim.keymap.set("n", "<leader>Tn", "<cmd>tabnew<cr>", { desc = "New tab" })
+  vim.keymap.set("n", "<leader>Tl", "<cmd>tabnext<cr>", { desc = "Next tab" })
+  vim.keymap.set("n", "<leader>Th", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
+  vim.keymap.set("n", "<leader>Tc", "<cmd>tabclose<cr>", { desc = "Close tab" })
 
   vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
   vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
@@ -368,7 +368,8 @@ do -- plugins
         { mode = "n", keys = "<leader>g", desc = "+Git" },
         { mode = "n", keys = "<leader>h", desc = "+Harpoon" },
         { mode = "n", keys = "<leader>o", desc = "+Obsidian" },
-        { mode = "n", keys = "<leader>t", desc = "+Toggles" },
+        { mode = "n", keys = "<leader>t", desc = "+Tasks" },
+        { mode = "n", keys = "<leader>T", desc = "+Tabs & Toggles" },
         { mode = "n", keys = "<leader>b", desc = "+Debug" },
         require("mini.clue").gen_clues.g(),
         require("mini.clue").gen_clues.builtin_completion(),
@@ -518,7 +519,7 @@ do -- plugins
       vim.keymap.set("n", "<leader><s-d>", function()
         require("mini.extra").pickers.diagnostic({ scope = "all" })
       end, { desc = "Pick diagnostics (all)" })
-      vim.keymap.set("n", "<leader>ts", function()
+      vim.keymap.set("n", "<leader>Ts", function()
         require("mini.extra").pickers.treesitter()
       end, { desc = "Pick treesitter symbols" })
       vim.keymap.set("n", "<leader>s", function()
@@ -539,6 +540,48 @@ do -- plugins
       { src = gh("nvim-tree/nvim-web-devicons") },
     })
     vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diffview open" })
+  end
+
+  do -- tatr
+    MiniPick.registry.tatr_ls = function(local_opts)
+      local_opts = local_opts or {}
+      local query = local_opts.query or ""
+
+      local command = { "tatr", "ls" }
+      if query ~= "" then
+        vim.list_extend(command, vim.split(query, "%s+"))
+      end
+
+      return MiniPick.start({
+        source = {
+          name = "Tatr tasks",
+          items = function()
+            MiniPick.set_picker_items_from_cli(command, {
+              postprocess = function(lines)
+                local items = {}
+                for _, line in ipairs(lines) do
+                  if line ~= "" then
+                    local path, lnum, text = line:match("^(.-):(%d+):%s*%u+%s*%[PRIORITY:%s*%d+%]%s*(.*)$")
+                    text = text:gsub('^%[.-%]%s*', '')
+                    if path then
+                      table.insert(items, { path = path, lnum = tonumber(lnum), text = text })
+                    end
+                  end
+                end
+                return items
+              end,
+            })
+          end,
+          choose_marked = MiniPick.default_choose_marked,
+        },
+      })
+    end
+
+    vim.keymap.set("n", "<leader>tl", "<cmd>Pick tatr_ls<cr>", { desc = "List tasks" })
+    vim.keymap.set("n", "<leader>tq", function()
+      local query = vim.fn.input("query: ")
+      MiniPick.registry.tatr_ls({ query = query })
+    end, { desc = "Query tasks" })
   end
 
   do -- git
@@ -634,7 +677,7 @@ do -- lsp
         map("<leader>x", vim.lsp.buf.format, "x", "LSP range format")
       end
       if client:supports_method("textDocument/inlayHint", event.buf) then
-        map("<leader>th", function()
+        map("<leader>Th", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
         end, "n", "Toggle inlay hints")
       end
