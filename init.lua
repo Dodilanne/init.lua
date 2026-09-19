@@ -45,10 +45,10 @@ do -- foundation
 
   vim.keymap.set("t", "<C-Space>", "<C-\\><C-n>", { desc = "Exit term mode" })
 
-  vim.keymap.set("n", "<leader>Tn", "<cmd>tabnew<cr>", { desc = "New tab" })
-  vim.keymap.set("n", "<leader>Tl", "<cmd>tabnext<cr>", { desc = "Next tab" })
-  vim.keymap.set("n", "<leader>Th", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
-  vim.keymap.set("n", "<leader>Tc", "<cmd>tabclose<cr>", { desc = "Close tab" })
+  vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
+  vim.keymap.set("n", "<leader>tl", "<cmd>tabnext<cr>", { desc = "Next tab" })
+  vim.keymap.set("n", "<leader>th", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
+  vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<cr>", { desc = "Close tab" })
 
   vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
   vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
@@ -368,8 +368,8 @@ do -- plugins
         { mode = "n", keys = "<leader>g", desc = "+Git" },
         { mode = "n", keys = "<leader>h", desc = "+Harpoon" },
         { mode = "n", keys = "<leader>o", desc = "+Obsidian" },
-        { mode = "n", keys = "<leader>t", desc = "+Tasks" },
-        { mode = "n", keys = "<leader>T", desc = "+Tabs & Toggles" },
+        { mode = "n", keys = "<leader>T", desc = "+Tasks" },
+        { mode = "n", keys = "<leader>t", desc = "+Tabs & Toggles" },
         { mode = "n", keys = "<leader>b", desc = "+Debug" },
         require("mini.clue").gen_clues.g(),
         require("mini.clue").gen_clues.builtin_completion(),
@@ -519,7 +519,7 @@ do -- plugins
       vim.keymap.set("n", "<leader><s-d>", function()
         require("mini.extra").pickers.diagnostic({ scope = "all" })
       end, { desc = "Pick diagnostics (all)" })
-      vim.keymap.set("n", "<leader>Ts", function()
+      vim.keymap.set("n", "<leader>ts", function()
         require("mini.extra").pickers.treesitter()
       end, { desc = "Pick treesitter symbols" })
       vim.keymap.set("n", "<leader>s", function()
@@ -562,7 +562,7 @@ do -- plugins
                 for _, line in ipairs(lines) do
                   if line ~= "" then
                     local path, lnum, text = line:match("^(.-):(%d+):%s*%u+%s*%[PRIORITY:%s*%d+%]%s*(.*)$")
-                    text = text:gsub('^%[.-%]%s*', '')
+                    text = text:gsub("^%[.-%]%s*", "")
                     if path then
                       table.insert(items, { path = path, lnum = tonumber(lnum), text = text })
                     end
@@ -577,8 +577,8 @@ do -- plugins
       })
     end
 
-    vim.keymap.set("n", "<leader>tl", "<cmd>Pick tatr_ls<cr>", { desc = "List tasks" })
-    vim.keymap.set("n", "<leader>tq", function()
+    vim.keymap.set("n", "<leader>Tl", "<cmd>Pick tatr_ls<cr>", { desc = "List tasks" })
+    vim.keymap.set("n", "<leader>Tq", function()
       local query = vim.fn.input("query: ")
       MiniPick.registry.tatr_ls({ query = query })
     end, { desc = "Query tasks" })
@@ -670,14 +670,32 @@ do -- lsp
       if client:supports_method("textDocument/definition", event.buf) then
         map("gd", vim.lsp.buf.definition, "n", "LSP go to definition")
       end
-      if client:supports_method("textDocument/formatting", event.buf) then
-        map("<leader>x", vim.lsp.buf.format, "n", "LSP format")
-      end
-      if client:supports_method("textDocument/rangeFormatting", event.buf) then
-        map("<leader>x", vim.lsp.buf.format, "x", "LSP range format")
-      end
+
+      map("<leader>x", vim.lsp.buf.format, "n", "LSP format")
+
+      map("<leader>X", function()
+        for _, action_client in ipairs(vim.lsp.get_clients({ bufnr = event.buf, method = "textDocument/codeAction" })) do
+          local response = action_client:request_sync("textDocument/codeAction", {
+            textDocument = { uri = vim.uri_from_bufnr(event.buf) },
+            range = {
+              start = { line = 0, character = 0 },
+              ["end"] = { line = math.max(vim.api.nvim_buf_line_count(event.buf) - 1, 0), character = 0 },
+            },
+            context = { diagnostics = {}, only = { "source.organizeImports.biome" } },
+          }, 2000, event.buf)
+          for _, action in ipairs(response and response.result or {}) do
+            if action.edit then
+              vim.lsp.util.apply_workspace_edit(action.edit, action_client.offset_encoding)
+            end
+          end
+        end
+        vim.lsp.buf.format({ bufnr = event.buf })
+      end, "n", "LSP organize imports and format")
+
+      map("<leader>x", vim.lsp.buf.format, "x", "LSP range format")
+
       if client:supports_method("textDocument/inlayHint", event.buf) then
-        map("<leader>Th", function()
+        map("<leader>th", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
         end, "n", "Toggle inlay hints")
       end
@@ -685,17 +703,22 @@ do -- lsp
   })
 
   local servers = {
-    ts_ls = {},
-    biome = { root_markers = { "biome.json", "biome.jsonc" } },
-    prettier = { root_markers = { ".prettierrc" } },
-    denols = { root_markers = { "deno.json", "deno.jsonc" } },
-    emmet_language_server = {},
-    eslint = {
+    ts_ls = {
       on_init = function(client)
         client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentFormattingRangeProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
       end,
     },
+    biome = {
+      on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = true
+        client.server_capabilities.documentRangeFormattingProvider = true
+      end,
+    },
+    prettier = {},
+    denols = {},
+    emmet_language_server = {},
+    eslint = {},
     html = {},
     rust_analyzer = {},
     gopls = {},
@@ -704,6 +727,7 @@ do -- lsp
     yamlls = {},
     templ = {},
     ols = {},
+    clangd = { cmd = { "clangd", "--clang-tidy" } },
     lua_ls = {
       on_init = function(client)
         client.server_capabilities.documentFormattingProvider = false
